@@ -1,0 +1,29 @@
+{
+  "name": "traveler-api",
+  "version": "1.0.0",
+  "description": "REST API for collaborative travel plans with PostgreSQL",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs",
+    "test": "tests"
+  },
+  "scripts": {
+    "start": "node src/server.js",
+    "db:init": "node scripts/init-db.js",
+    "test": "node --test tests/*.test.js",
+    "test:hurl": "hurl --test tests/*.hurl --variables-file tests/variables.properties"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "express": "^5.2.1",
+    "pg": "^8.23.0"
+  },
+  "devDependencies": {
+    "@electric-sql/pglite": "^0.5.8",
+    "@electric-sql/pglite-socket": "^0.2.11",
+    "@orangeopensource/hurl": "^8.0.4"
+  }
+}
