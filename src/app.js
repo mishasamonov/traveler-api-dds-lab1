@@ -94,6 +94,7 @@ app.post('/api/travel-plans/:id/locations', async (req, res) => {
 
 app.put('/api/locations/:id', async (req, res) => {
   checkId(req.params.id);
+  const version = req.body && req.body.version;
   const fields = validate(req.body, 'location', true);
   const location = await transaction(async client => {
     // Lock the parent first, just like create, so position shifts cannot interleave.
@@ -103,6 +104,7 @@ app.put('/api/locations/:id', async (req, res) => {
     if (!plan.rows.length) throw notFound('Location');
     const current = await client.query('SELECT * FROM locations WHERE id = $1 FOR UPDATE', [req.params.id]);
     if (!current.rows.length) throw notFound('Location');
+    if (current.rows[0].version !== version) throw new ApiError(409, 'Conflict: location was modified; read the plan again', { current_version: current.rows[0].version });
     checkCombinedDates(fields, current.rows[0], 'location');
 
     if (fields.visit_order !== undefined && fields.visit_order !== current.rows[0].visit_order) {
@@ -110,13 +112,16 @@ app.put('/api/locations/:id', async (req, res) => {
       const max = await client.query('SELECT MAX(visit_order) AS last FROM locations WHERE travel_plan_id = $1', [parent.rows[0].travel_plan_id]);
       if (next > max.rows[0].last) throw new ApiError(400, 'Validation error: visit_order exceeds last location');
       await client.query('SET CONSTRAINTS unique_plan_order DEFERRED');
-      if (next < old) await client.query('UPDATE locations SET visit_order = visit_order + 1 WHERE travel_plan_id = $1 AND visit_order >= $2 AND visit_order < $3', [parent.rows[0].travel_plan_id, next, old]);
-      else await client.query('UPDATE locations SET visit_order = visit_order - 1 WHERE travel_plan_id = $1 AND visit_order > $2 AND visit_order <= $3', [parent.rows[0].travel_plan_id, old, next]);
+      if (next < old) await client.query('UPDATE locations SET visit_order = visit_order + 1, version = version + 1 WHERE travel_plan_id = $1 AND visit_order >= $2 AND visit_order < $3', [parent.rows[0].travel_plan_id, next, old]);
+      else await client.query('UPDATE locations SET visit_order = visit_order - 1, version = version + 1 WHERE travel_plan_id = $1 AND visit_order > $2 AND visit_order <= $3', [parent.rows[0].travel_plan_id, old, next]);
     }
 
-    if (!Object.keys(fields).length) return current.rows[0];
-    const { rows } = await client.query(`UPDATE locations SET ${changes(fields)} WHERE id = $${Object.keys(fields).length + 1} RETURNING *`,
-      [...Object.values(fields), req.params.id]);
+    const values = Object.values(fields);
+    const assignment = changes(fields);
+    const { rows } = await client.query(`UPDATE locations SET ${assignment ? assignment + ', ' : ''}version = version + 1
+      WHERE id = $${values.length + 1} AND version = $${values.length + 2} RETURNING *`,
+      [...values, req.params.id, version]);
+    if (!rows.length) throw new ApiError(409, 'Conflict: location was modified; read the plan again');
     return rows[0];
   });
   res.json(location);

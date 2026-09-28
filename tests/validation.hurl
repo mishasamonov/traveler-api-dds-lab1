@@ -314,7 +314,8 @@ PUT {{host}}/api/locations/{{valid_location_id}}
 Content-Type: application/json
 {
   "name": "Updated Location",
-  "latitude": -91.0
+  "latitude": -91.0,
+  "version": 1
 }
 
 HTTP 400
@@ -326,7 +327,8 @@ PUT {{host}}/api/locations/{{valid_location_id}}
 Content-Type: application/json
 {
   "arrival_date": "2025-06-02T18:00:00Z",
-  "departure_date": "2025-06-02T08:00:00Z"
+  "departure_date": "2025-06-02T08:00:00Z",
+  "version": 1
 }
 
 HTTP 400
@@ -352,7 +354,8 @@ jsonpath "$.error" exists
 PUT {{host}}/api/locations/00000000-0000-0000-0000-000000000000
 Content-Type: application/json
 {
-  "name": "Ghost Location"
+  "name": "Ghost Location",
+  "version": 1
 }
 
 HTTP 404

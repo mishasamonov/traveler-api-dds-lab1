@@ -27,6 +27,7 @@ Content-Type: application/json
 HTTP 201
 [Captures]
 location1_id: jsonpath "$.id"
+location1_version: jsonpath "$.version"
 
 [Asserts]
 jsonpath "$.name" == "Eiffel Tower"
@@ -84,7 +85,8 @@ Content-Type: application/json
 {
   "name": "Eiffel Tower (Night Visit)",
   "budget": 30.00,
-  "notes": "Amazing night illumination"
+  "notes": "Amazing night illumination",
+  "version": {{location1_version}}
 }
 
 HTTP 200
@@ -92,6 +94,18 @@ HTTP 200
 jsonpath "$.name" == "Eiffel Tower (Night Visit)"
 jsonpath "$.budget" == 30.00
 jsonpath "$.notes" == "Amazing night illumination"
+jsonpath "$.version" == 2
+
+# This client still holds the old version; it must not overwrite the update.
+PUT {{host}}/api/locations/{{location1_id}}
+Content-Type: application/json
+{
+  "notes": "Stale notes",
+  "version": {{location1_version}}
+}
+HTTP 409
+[Asserts]
+jsonpath "$.current_version" == 2
 
 # Test 6: Delete location
 DELETE {{host}}/api/locations/{{location2_id}}

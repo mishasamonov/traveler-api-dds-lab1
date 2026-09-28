@@ -6,6 +6,8 @@ const { pool } = require('../src/db');
   try {
     const sql = fs.readFileSync(path.join(__dirname, '../db/schema.sql'), 'utf8');
     await pool.query(sql);
+    const migration = fs.readFileSync(path.join(__dirname, '../db/002_location_version.sql'), 'utf8');
+    await pool.query(migration);
     console.log('PostgreSQL schema applied');
   } finally {
     await pool.end();

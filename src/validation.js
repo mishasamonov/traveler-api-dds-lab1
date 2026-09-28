@@ -32,7 +32,7 @@ function validate(body, kind, update = false) {
   if (!body || typeof body !== 'object' || Array.isArray(body)) bad('JSON object required');
   const allowed = kind === 'plan' ? planFields : locationFields;
   const fields = { ...body };
-  if (kind === 'plan' && update) {
+  if (update) {
     if (!Number.isSafeInteger(fields.version) || fields.version < 1) bad('version must be a positive integer');
     delete fields.version;
   }

@@ -28,6 +28,7 @@ CREATE TABLE IF NOT EXISTS locations (
   departure_date TIMESTAMPTZ,
   budget NUMERIC(10,2) CHECK (budget >= 0),
   notes TEXT,
+  version INTEGER NOT NULL DEFAULT 1 CHECK (version > 0),
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   CONSTRAINT location_dates CHECK (departure_date IS NULL OR arrival_date IS NULL OR departure_date >= arrival_date),
   CONSTRAINT unique_plan_order UNIQUE (travel_plan_id, visit_order) DEFERRABLE INITIALLY IMMEDIATE
@@ -42,5 +43,5 @@ BEGIN
   RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
-CREATE TRIGGER touch_plan BEFORE UPDATE ON travel_plans
+CREATE OR REPLACE TRIGGER touch_plan BEFORE UPDATE ON travel_plans
   FOR EACH ROW EXECUTE FUNCTION touch_plan_updated_at();

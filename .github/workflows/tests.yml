@@ -1,0 +1,35 @@
+name: TravelerAPI tests
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: traveler
+          POSTGRES_PASSWORD: traveler
+          POSTGRES_DB: traveler
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U traveler -d traveler"
+          --health-interval 3s
+          --health-timeout 3s
+          --health-retries 15
+    env:
+      DATABASE_URL: postgres://traveler:traveler@localhost:5432/traveler
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci
+      - run: npm run db:init
+      - run: bash scripts/run-ci-tests.sh
+
