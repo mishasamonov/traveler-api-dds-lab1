@@ -1,0 +1,59 @@
+name: Lab2 k6 performance
+on:
+  push:
+    branches: [lab2-k6]
+    paths:
+      - '.github/workflows/performance.yml'
+      - 'src/**'
+      - 'tests/performance-tests/**'
+      - 'scripts/run-performance*.sh'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  performance:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 55
+    env:
+      DATABASE_URL: postgres://traveler:traveler@127.0.0.1:5432/traveler
+      API_URL: http://127.0.0.1:4567
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - name: Native PostgreSQL 16 and k6
+        run: |
+          sudo systemctl start postgresql
+          sudo -u postgres psql -c "CREATE ROLE traveler LOGIN PASSWORD 'traveler';"
+          sudo -u postgres createdb -O traveler traveler
+          curl -fsSL https://github.com/grafana/k6/releases/download/v1.3.0/k6-v1.3.0-linux-amd64.tar.gz | tar xz
+          sudo install k6-v1.3.0-linux-amd64/k6 /usr/local/bin/k6
+          k6 version
+          psql "$DATABASE_URL" -c 'SELECT version();'
+      - run: npm ci
+      - run: npm run db:init
+      - name: Start API and record environment
+        run: |
+          mkdir -p tests/performance-tests/reports
+          node src/server.js > tests/performance-tests/reports/server.log 2>&1 &
+          echo $! > /tmp/traveler-api.pid
+          for i in $(seq 1 30); do curl -fsS "$API_URL/health" && break || sleep 1; done
+          curl -fsS "$API_URL/health"
+          { date -u; uname -a; lscpu; free -m; node --version; k6 version; psql "$DATABASE_URL" -c 'SHOW server_version;'; psql "$DATABASE_URL" -c 'SHOW default_transaction_isolation;'; } > tests/performance-tests/reports/environment.txt
+      - name: Existing functional and concurrency checks
+        run: |
+          npm run test:hurl
+          npm test
+      - name: All five k6 scenarios including 30 minute endurance
+        run: bash scripts/run-performance-suite.sh
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: lab2-k6-results
+          path: tests/performance-tests/reports/
+          retention-days: 30
+      - name: Stop API
+        if: always()
+        run: kill "$(cat /tmp/traveler-api.pid)" || true
