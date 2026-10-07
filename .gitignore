@@ -4,3 +4,6 @@ node_modules/
 coverage/
 *.log
 
+
+tests/performance-tests/reports/
+k6-v*-linux-amd64/
