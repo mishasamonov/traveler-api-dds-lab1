@@ -90,3 +90,17 @@ k6 run tests/performance-tests/smoke-test.js 2>&1 | Tee-Object tests/performance
 Критерії: p95 читань < 500 мс, p95 записів < 1000 мс, частка неочікуваних HTTP помилок < 1%, успішність checks > 99%. Для окремих фаз додатково перевіряється загальний p95 < 1000 мс. Найбільша протестована кількість VU є межею перевіреного діапазону; абсолютну межу API можна назвати лише якщо відповідне порушення фактично зафіксоване.
 
 Додатково виконано GitHub Actions (+1) та експорт у dashboard k6 як аналогічний інструмент графіків (+1). Експерименти з рівнями ізоляції та кешем до цієї роботи не входять.
+
+
+## Розширений Stress
+
+Для пошуку межі після основного циклу додано `tests/stress-probe/stress-limit-test.js` зі стадіями 25, 1000, 2000, 4000, 8000 VU та відновленням до 25. Тривалість стадій — 3 хв 20 с. Автоматичний запуск — `.github/workflows/stress-probe.yml`. Він запускається окремо і не повторює Endurance.
+
+```bash
+mkdir -p tests/performance-tests/reports
+TEST_NAME=stress-probe K6_WEB_DASHBOARD=true K6_WEB_DASHBOARD_PORT=-1 K6_WEB_DASHBOARD_PERIOD=2s K6_WEB_DASHBOARD_EXPORT=tests/performance-tests/reports/stress-probe-dashboard.html k6 run tests/stress-probe/stress-limit-test.js
+```
+
+У Windows PowerShell задайте `$env:TEST_NAME = "stress-probe"` та відповідний шлях `$env:K6_WEB_DASHBOARD_EXPORT`, після чого виконайте `k6 run tests/stress-probe/stress-limit-test.js`.
+
+Зведення фактичних результатів: [lab2-results/README.md](lab2-results/README.md).
