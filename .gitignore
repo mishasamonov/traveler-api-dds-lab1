@@ -1,5 +1,7 @@
 node_modules/
 .env
+.lab2-local/
+tools/
 .pgdata/
 coverage/
 *.log

@@ -10,6 +10,10 @@
   "scripts": {
     "start": "node src/server.js",
     "db:init": "node scripts/init-db.js",
+    "lab2:check": "node scripts/run-local-baseline.js --check",
+    "lab2:smoke": "node scripts/run-local-baseline.js --smoke",
+    "lab2:local": "node scripts/run-local-baseline.js",
+    "test:launcher": "node --test tests/local-baseline-launcher.test.js",
     "test": "node --test tests/*.test.js",
     "test:hurl": "hurl --test tests/*.hurl --variables-file tests/variables.properties"
   },

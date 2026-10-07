@@ -1,0 +1,44 @@
+name: Lab2 local launcher checks
+on:
+  push:
+    branches: [lab2-k6]
+    paths:
+      - '.github/workflows/local-launcher.yml'
+      - 'scripts/run-local-baseline.js'
+      - 'scripts/local-baseline-server.js'
+      - 'tests/local-baseline-launcher.test.js'
+      - 'package*.json'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  launcher:
+    strategy:
+      matrix:
+        os: [ubuntu-24.04, windows-2022]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci
+      - run: npm run test:launcher
+      - name: Native k6 for Linux preflight
+        if: runner.os == 'Linux'
+        run: |
+          curl -fsSL https://github.com/grafana/k6/releases/download/v1.3.0/k6-v1.3.0-linux-amd64.tar.gz | tar xz
+          mkdir -p tools
+          cp k6-v1.3.0-linux-amd64/k6 tools/k6
+      - name: Native k6 for Windows preflight
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          Invoke-WebRequest https://github.com/grafana/k6/releases/download/v1.3.0/k6-v1.3.0-windows-amd64.zip -OutFile k6.zip
+          Expand-Archive k6.zip -DestinationPath k6-unpacked
+          New-Item -ItemType Directory -Force tools | Out-Null
+          Copy-Item k6-unpacked/k6-v1.3.0-windows-amd64/k6.exe tools/k6.exe
+      - name: Check tools only, not a physical PC baseline
+        run: npm run lab2:check
