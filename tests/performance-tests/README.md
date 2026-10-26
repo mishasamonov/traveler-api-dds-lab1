@@ -51,3 +51,12 @@ two random helper functions, so k6 does not download remote modules at runtime.
 The adapted client checks the expected status on every call and passes the
 latest location `version` when updating. It never changes the API to make a
 performance test pass.
+
+Native Windows restart instructions are in `docs/lab2-native-windows.md`.
+Optional Python dependencies for plots and the Word report are listed in
+`requirements-report.txt`. Run `scripts/analyze-performance.py --plot` after
+measurement has finished, followed by `scripts/verify-performance-results.py`.
+The analyzer compares stable plateaus using request completion timestamps and
+excludes five seconds at each edge. Recovery requires three consecutive
+five-second windows meeting the SLO. Full raw samples are included in the local
+result archive; Git contains summaries, analyses, charts and original dashboards.

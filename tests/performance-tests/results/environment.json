@@ -1,0 +1,15 @@
+{
+  "capturedUtc": "2026-10-26T18:21:35.246Z",
+  "cpu": "11th Gen Intel(R) Core(TM) i5-11300H @ 3.10GHz",
+  "logicalCpus": 8,
+  "memoryGB": 15.788383483886719,
+  "node": "v22.18.0",
+  "platform": "win32",
+  "release": "10.0.26200",
+  "postgres": {
+    "version": "PostgreSQL 16.15, compiled by Visual C++ build 1944, 64-bit",
+    "isolation": "read committed",
+    "shared_buffers": "128MB",
+    "max_connections": "100"
+  }
+}
