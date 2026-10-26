@@ -129,9 +129,11 @@ def plot(folder, results):
     import matplotlib
     matplotlib.use('Agg')
     import matplotlib.pyplot as plt
+    from matplotlib.ticker import MaxNLocator, FormatStrFormatter
     plt.rcParams.update({'font.family':'DejaVu Sans','font.size':11})
     for result in results:
-        fig,axes=plt.subplots(3,1,figsize=(9,6.3),sharex=True,layout='constrained')
+        fig,axes=plt.subplots(3,1,figsize=(9,6.3),sharex=True)
+        fig.subplots_adjust(left=.12,right=.98,bottom=.1,top=.91,hspace=.17)
         rows=result['windows_5s'];offset=result['time_origin_unix']-result['scenario_start_unix']
         x=[(r['start_s']+offset)/60 for r in rows]
         if result['test']=='endurance':
@@ -149,8 +151,11 @@ def plot(folder, results):
         duration_ax.set_ylabel('p95, ms');duration_ax.legend(loc='upper left',fontsize=9)
         rate_ax.plot(x,[r['requests']/5 for r in rows],color='#26725a',lw=1.5);rate_ax.set_ylabel('Requests/s')
         axes[2].set_xlabel('Elapsed time, minutes')
+        axes[2].xaxis.set_major_locator(MaxNLocator(nbins=6))
+        axes[2].xaxis.set_major_formatter(FormatStrFormatter('%g'))
         for ax in axes: ax.grid(alpha=.2);ax.spines[['top','right']].set_visible(False)
         fig.suptitle(f'TravelerAPI {result["test"]} - native Windows baseline',fontsize=15)
+        fig.canvas.draw()
         fig.savefig(folder/f'{result["test"]}-chart.png',dpi=180,bbox_inches='tight',pad_inches=.12);plt.close(fig)
 
 if __name__=='__main__':

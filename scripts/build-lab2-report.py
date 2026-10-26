@@ -37,7 +37,8 @@ def paragraph(doc,text='',style=None):
     p=doc.add_paragraph(text,style);return p
 
 def heading(doc,text,level=1):return doc.add_heading(text,level)
-def page(doc,title):doc.add_page_break();heading(doc,title)
+def page(doc,title):
+    p=heading(doc,title);p.paragraph_format.page_break_before=True
 
 def table(doc,headers,rows,widths):
     t=doc.add_table(rows=1,cols=len(headers));t.alignment=WD_TABLE_ALIGNMENT.CENTER;t.autofit=False
@@ -169,7 +170,7 @@ def main(output):
     breaking=[r for k,r in plateaus.items() if k!='recovery' and (r['p95_ms']>=2000 or r['failure_rate']>=.01)]
     recovery=plateaus['recovery'];rec=data['stress']['recovery']['seconds_after_nominal_down_end']
     paragraph(d,f'Перший перевірений деградований рівень - {failing[0]["target_vus"]} VU. Операційна межа за обраним критерієм досягнута на {breaking[0]["target_vus"]} VU. Повної відмови процесу та HTTP помилок у цьому запуску не виявлено. Код k6 99 означає, що поріг затримки не виконано.')
-    paragraph(d,f'Після зниження навантаження p95 сталого відновлення становив {ms(recovery["p95_ms"])}; цей сталий фрагмент виміряно після 30 с graceful завершення та ще 5 с стабілізації. За часовими вікнами повернення до SLO відбулося приблизно через {number(rec,1)} с після заданого спаду. Оцінка має крок 5 с і враховує завершення запитів попередніх користувачів.')
+    paragraph(d,f'Сталий фрагмент відновлення: p95 {ms(recovery["p95_ms"])} після 30 с graceful завершення та 5 с стабілізації. Повернення до SLO - приблизно {number(rec,1)} с після спаду, з кроком оцінки 5 с.')
 
     page(d,'5 Тестування сплеску Spike')
     commit(d,'spike')
@@ -194,10 +195,7 @@ def main(output):
         paragraph(d,f'За обраним SLO деградації не виявлено: p95 у кожній із 30 хвилин залишався нижчим за 500 мс. Діапазон хвилинних p95 - від {ms(min(row["p95_ms"] for row in minute_values))} до {ms(max(row["p95_ms"] for row in minute_values))}.')
     else:
         paragraph(d,'Окремі хвилинні інтервали порушили обраний SLO; часовий графік показує їхнє розташування. Підсумкові агрегати слід оцінювати разом із цими відхиленнями.')
-    paragraph(d,f'Приватна пам’ять API: початок {number(mem["first_mb"],1)} МБ, кінець {number(mem["last_mb"],1)} МБ, максимум {number(mem["peak_mb"],1)} МБ. Медіани перших та останніх п’яти хвилин сталого навантаження - {number(mem["first_5min_median_mb"],1)} та {number(mem["last_5min_median_mb"],1)} МБ. Початкове зростання припало на розгін. Для доведення відсутності витоків потрібні довші запуски та профілювання heap.')
-    chk=load(R/'endurance-data-check.json')
-    paragraph(d,f'Після запуску в БД: {count(chk["plans"])} планів, {count(chk["locations"])} локацій, тимчасових планів - {chk["temporary_plans"]}, локацій без батьківського плану - {chk["orphan_locations"]}.')
-
+    paragraph(d,f'Медіани приватної пам’яті API у перших та останніх п’яти хвилинах сталого навантаження - {number(mem["first_5min_median_mb"],1)} та {number(mem["last_5min_median_mb"],1)} МБ, максимум - {number(mem["peak_mb"],1)} МБ. Початкове зростання припало на розгін. Для перевірки витоків потрібні довші запуски та профілювання heap.')
     page(d,'7 Додаткові завдання та відтворення')
     heading(d,'GitHub Actions',2);commit(d,'ci','Коміт CI та експорту метрик 11adce7')
     paragraph(d,'Додав окремий workflow k6 performance smoke. Він запускає PostgreSQL як нативний сервіс runner-а, встановлює Node.js і k6, готує тестову БД, очікує /health, виконує smoke зі строгими порогами й зберігає HTML звіт та JSON метрики як artifact. Цей запуск є перевіркою регресій; його швидкодію не порівнюю з локальним Windows baseline.')
@@ -221,6 +219,10 @@ def main(output):
         else:p.add_run(label)
         p.paragraph_format.space_after=Pt(3)
     paragraph(d,'Підготовка коду та звіту виконувалася за допомогою ChatGPT Codex. Числові результати отримані під час локальних запусків k6.')
+    # The bundled Word template adds a blue rule to Title. Keep academic titles plain.
+    for root in (d.element,d.styles.element):
+        for border in list(root.xpath('.//w:pBdr')):
+            border.getparent().remove(border)
     output=Path(output);output.parent.mkdir(parents=True,exist_ok=True);d.save(output)
     print(output)
 
