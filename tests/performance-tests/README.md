@@ -57,6 +57,7 @@ Optional Python dependencies for plots and the Word report are listed in
 `requirements-report.txt`. Run `scripts/analyze-performance.py --plot` after
 measurement has finished, followed by `scripts/verify-performance-results.py`.
 The analyzer compares stable plateaus using request completion timestamps and
-excludes five seconds at each edge. Recovery requires three consecutive
+excludes five seconds at each edge; settled recovery also excludes the configured
+30-second graceful drain. Recovery time requires three consecutive
 five-second windows meeting the SLO. Full raw samples are included in the local
 result archive; Git contains summaries, analyses, charts and original dashboards.

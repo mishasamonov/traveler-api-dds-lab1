@@ -63,7 +63,10 @@ def analyze(folder, name):
     schedule=[];elapsed=0;previous=0
     for seconds,target,label in profile:
         if target>0 and target==previous and seconds>=30:
-            schedule.append((elapsed+5,elapsed+seconds-5,label,target))
+            # Downscaling permits old iterations to drain for 30 seconds.
+            # Compare settled recovery only after that explicit grace period.
+            trim=35 if label=='recovery' else 5
+            schedule.append((elapsed+trim,elapsed+seconds-5,label,target))
         elapsed+=seconds;previous=target
     stable_d,stable_e=defaultdict(list),defaultdict(list)
     for t,metric,value in samples:
@@ -72,7 +75,7 @@ def analyze(folder, name):
                 (stable_d if metric=='http_req_duration' else stable_e)[label].append(value);break
     result['stable_plateaus']={label:{'target_vus':target,'from_s':a,'to_s':b,
         **stats(stable_d[label],stable_e[label]),'rps':len(stable_d[label])/(b-a)} for a,b,label,target in schedule}
-    result['plateau_note']='HTTP completion times; first and last 5 seconds of each plateau excluded'
+    result['plateau_note']='HTTP completion times; 5 seconds excluded at each edge; recovery also excludes the configured 30-second graceful drain'
     if name in ('stress','spike'):
         down_end=0
         for seconds,_,label in profile:
@@ -100,8 +103,8 @@ def analyze(folder, name):
         if memory:
             result['api_memory']={'first_mb':memory[0]['private_mb'],'last_mb':memory[-1]['private_mb'],
                 'peak_mb':max(r['private_mb'] for r in memory),
-                'first_5min_median_mb':statistics.median(r['private_mb'] for r in memory if r['elapsed_s']<330),
-                'last_5min_median_mb':statistics.median(r['private_mb'] for r in memory if r['elapsed_s']>max(x['elapsed_s'] for x in memory)-300)}
+                'first_5min_median_mb':statistics.median(r['private_mb'] for r in memory if (30<=r['elapsed_s']<330 if name=='endurance' else r['elapsed_s']<330)),
+                'last_5min_median_mb':statistics.median(r['private_mb'] for r in memory if (1530<=r['elapsed_s']<1830 if name=='endurance' else r['elapsed_s']>max(x['elapsed_s'] for x in memory)-300))}
     # Minute comparisons for the 30-minute plateau are based on steady-tagged requests.
     if name=='endurance':
         steady=30
@@ -148,7 +151,7 @@ def plot(folder, results):
         axes[2].set_xlabel('Elapsed time, minutes')
         for ax in axes: ax.grid(alpha=.2);ax.spines[['top','right']].set_visible(False)
         fig.suptitle(f'TravelerAPI {result["test"]} - native Windows baseline',fontsize=15)
-        fig.savefig(folder/f'{result["test"]}-chart.png',dpi=180);plt.close(fig)
+        fig.savefig(folder/f'{result["test"]}-chart.png',dpi=180,bbox_inches='tight',pad_inches=.12);plt.close(fig)
 
 if __name__=='__main__':
     p=argparse.ArgumentParser();p.add_argument('tests',nargs='*',default=['load','stress','spike','endurance']);p.add_argument('--folder',default='tests/performance-tests/results');p.add_argument('--plot',action='store_true');a=p.parse_args()
