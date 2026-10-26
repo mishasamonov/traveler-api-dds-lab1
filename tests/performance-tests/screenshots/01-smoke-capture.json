@@ -1,0 +1,10 @@
+{
+  "name": "01-smoke",
+  "sourceFile": "tests/performance-tests/results/smoke-summary.txt",
+  "capturedUtc": "2026-10-26T20:35:27.2124456Z",
+  "sharexFile": "Notepad_egZj35iA1W.png",
+  "rawSha256": "063A360A96335A234180800B7EE8342C2C5FA7F67C9F740FE10B19DE531D960F",
+  "sourceSha256": "C78504AEEB733FD6DEEA16722A7B1FC22BB484FBA67A631F5A058FA85BC2CF67",
+  "pngSha256": "E77CEE03799DA57A7481044C674350427B444134F5120C26F8A6FC2EAFE4FBDF",
+  "method": "ShareX ActiveWindow; lossless body crop (10,94,1416,693); no resampling or content editing"
+}

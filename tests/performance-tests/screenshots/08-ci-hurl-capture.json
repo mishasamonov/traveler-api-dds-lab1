@@ -1,0 +1,10 @@
+{
+  "name": "08-ci-hurl",
+  "sourceFile": "tests/performance-tests/results/ci-functional-test-step.txt",
+  "capturedUtc": "2026-10-26T20:42:39.4385016+00:00",
+  "sharexFile": "Notepad_Y14rvLTznx.png",
+  "rawSha256": "CE30479EA4FA82A6083F79C38A5061B32BD6D9121AF314EE5748A1D4CB8F6D12",
+  "sourceSha256": "B2B5E2E1136D6FA8189FA9756ED016DF6275B703D0A78F1563A1D82F371EE190",
+  "pngSha256": "025F985F329DDACDF9920EE24D886FA675654981FF976BF0E79E1DB9CC5473A0",
+  "method": "ShareX ActiveWindow; lossless body crop; no resampling or content editing"
+}

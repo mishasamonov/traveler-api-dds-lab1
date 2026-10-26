@@ -61,3 +61,19 @@ excludes five seconds at each edge; settled recovery also excludes the configure
 30-second graceful drain. Recovery time requires three consecutive
 five-second windows meeting the SLO. Full raw samples are included in the local
 result archive; Git contains summaries, analyses, charts and original dashboards.
+
+## Screenshot evidence
+
+`screenshots/` contains nine native ShareX PNG captures of the saved k6 logs
+and the successful functional CI log displayed in Windows Notepad. These were
+captured after execution; they are not live terminal captures. Only the log
+body was cropped, without resampling or editing its contents. Matching
+`*-capture.json` files identify each source log and its SHA-256 digest.
+The Word report includes all nine images with captions and source filenames.
+
+`results/ci-functional-proof.json` records three successful runs on commit
+`3b59534`: the functional suite and both k6 smoke triggers. The functional
+runner is pinned to Ubuntu 24.04 with `libxml2` installed for Hurl. Its original
+test step is preserved in `results/ci-functional-test-step.txt` (56 Hurl
+requests and three concurrency tests passed). Old failed runs remain in GitHub
+history; current PR checks must be assessed on its latest commit.

@@ -1,0 +1,10 @@
+{
+  "name": "02-load",
+  "sourceFile": "tests/performance-tests/results/load-summary.txt",
+  "capturedUtc": "2026-10-26T20:39:06.6071750+00:00",
+  "sharexFile": "Notepad_veyaDcdMhE.png",
+  "rawSha256": "E58CBFF0E1F34784B134CD34F65A1E63A4CA5FC6324A937860246898155D59CB",
+  "sourceSha256": "36E8F70357C5D4D66B9FF3B225522C64420607DCF43503EEB5E6D6C825651DBB",
+  "pngSha256": "3E53CE490D6ED2A770E921165C3FB8AF3231ED7427849514A58E22A9963626C7",
+  "method": "ShareX ActiveWindow; lossless body crop; no resampling or content editing"
+}

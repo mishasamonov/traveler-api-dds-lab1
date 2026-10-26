@@ -1,0 +1,10 @@
+{
+  "name": "04-spike",
+  "sourceFile": "tests/performance-tests/results/spike-summary.txt",
+  "capturedUtc": "2026-10-26T20:40:12.4893414+00:00",
+  "sharexFile": "Notepad_W0FehxdQD6.png",
+  "rawSha256": "98BD9BD72FF04F281811202022A2448CC3E4FC7399503A7736F3CAB9E56042B7",
+  "sourceSha256": "03E3A1FAF57B3031815BB88399B5D60201E8BCAC076FE68FF57C0DCDB41AB1F8",
+  "pngSha256": "A3DEDAAEB413369AE514884B148D4D09059C4ABCF16AFD27B4B8C27E8FD365DD",
+  "method": "ShareX ActiveWindow; lossless body crop; no resampling or content editing"
+}

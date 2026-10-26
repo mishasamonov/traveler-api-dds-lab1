@@ -11,6 +11,7 @@ from docx.opc.constants import RELATIONSHIP_TYPE as RT
 
 ROOT=Path(__file__).resolve().parent.parent
 R=ROOT/'tests/performance-tests/results'
+SHOTS=ROOT/'tests/performance-tests/screenshots'
 BASE='https://github.com/mishasamonov/traveler-api-dds-lab1'
 COMMITS={
  'smoke':'2701b0997fb4a56d72c3bb83efac98c4004e4ca8',
@@ -75,6 +76,12 @@ def image(doc,path,caption,width=6.85):
     shape=p.add_run().add_picture(str(path),width=Inches(width));shape._inline.docPr.set('descr',caption)
     cap=doc.add_paragraph(caption,'Caption');cap.alignment=WD_ALIGN_PARAGRAPH.CENTER
     return cap
+
+def screenshot(doc,name,number_,caption,source):
+    image(doc,SHOTS/f'{name}.png',f'Рисунок {number_}  {caption}')
+    p=paragraph(doc,f'Джерело: results/{source}.')
+    p.paragraph_format.space_after=Pt(9)
+    for r in p.runs:r.font.size=Pt(9)
 
 def commit(doc,key,label=None):
     sha=COMMITS[key];p=doc.add_paragraph();hyperlink(p,label or f'Коміт {sha[:7]}',f'{BASE}/commit/{sha}')
@@ -219,6 +226,37 @@ def main(output):
         else:p.add_run(label)
         p.paragraph_format.space_after=Pt(3)
     paragraph(d,'Підготовка коду та звіту виконувалася за допомогою ChatGPT Codex. Числові результати отримані під час локальних запусків k6.')
+
+    page(d,'Додаток А. Smoke і Load: знімки результатів')
+    paragraph(d,'Нижче наведені PNG знімки збережених журналів k6 і GitHub Actions, відкритих у Блокноті та захоплених ShareX. Знімки зроблені після завершення запусків; вміст журналів не змінювався. Підсумки k6 охоплюють увесь запуск, а таблиці розділів 3–6 — окремі сталі інтервали, тому їхні p95 можуть відрізнятися.')
+    screenshot(d,'01-smoke',5,'Smoke: 1 222 запити, 1 504 успішні перевірки, 94 очікувані конфлікти версій','smoke-summary.txt')
+    screenshot(d,'02-load',6,'Load: 139 410 запитів; усі пороги для повного запуску виконані','load-summary.txt')
+
+    page(d,'Додаток Б. Stress і Spike: перевантаження')
+    paragraph(d,'FAIL для загального p95 тут фіксує заплановану деградацію при перевантаженні. Перевірки відповідей, частки HTTP помилок і p95 фази відновлення успішні; це узгоджується з аналізом у розділах 4–5.')
+    screenshot(d,'03-stress',7,'Stress: перевищено поріг затримки; поріг відновлення виконано','stress-summary.txt')
+    screenshot(d,'04-spike',8,'Spike: 75 207 запитів без HTTP помилок; після сплеску SLO відновлено','spike-summary.txt')
+
+    page(d,'Додаток В. Endurance: підсумок і профіль')
+    screenshot(d,'05-endurance',9,'Endurance: 869 465 запитів; усі перевірки та пороги успішні','endurance-summary.txt')
+    screenshot(d,'06-endurance-start',10,'Початок журналу Endurance: 25 VU, три стадії, профіль 31 хвилина','endurance-console.txt')
+    paragraph(d,'Сталий інтервал навантаження становить 30 хвилин. Ще по 30 секунд передбачено для розгону і завершення; максимальна тривалість із graceful stop у конфігурації — 31 хв 30 с.')
+
+    page(d,'Додаток Г. Завершення Endurance і Hurl у CI')
+    screenshot(d,'07-endurance-finish',11,'Завершення за 31 хв 00,2 с: 84 408 повних ітерацій, перерваних немає','endurance-console.txt')
+    screenshot(d,'08-ci-hurl',12,'GitHub Actions: 4 файли Hurl, 56 HTTP запитів, 100 % успіху','ci-functional-test-step.txt')
+
+    page(d,'Додаток Д. Конкурентні тести та стан CI')
+    screenshot(d,'09-ci-concurrency',13,'GitHub Actions: три тести конкурентного доступу пройдено, помилок немає','ci-functional-test-step.txt')
+    heading(d,'Виправлення середовища GitHub Actions',2)
+    paragraph(d,'Попередній функціональний workflow завершувався ще до виконання тестів: Hurl не знаходив libxml2.so.2 у новому ubuntu-latest. У гілці другої лабораторної зафіксував runner ubuntu-24.04 і додав встановлення libxml2. Реалізацію API та схему БД не змінював.')
+    proof=load(R/'ci-functional-proof.json')
+    p=paragraph(d);hyperlink(p,'Коміт виправлення CI '+proof['head_sha'][:7],BASE+'/commit/'+proof['head_sha'])
+    table(d,['Перевірка на цьому коміті','Результат'],[[r['name']+' / '+r['event'],r['conclusion']] for r in proof['runs']],[5.45,1.55])
+    for r in proof['runs']:
+        p=paragraph(d);hyperlink(p,r['name']+' ('+r['event']+') — запуск '+str(r['id']),r['url'])
+        p.paragraph_format.space_after=Pt(3)
+    paragraph(d,'Старі червоні позначки залишаються в історії попередніх комітів. Вони не змінюють результат успішних запусків після виправлення. Оригінали PNG, журнали й метадані захоплення з SHA-256 збережені в архіві роботи.')
     # The bundled Word template adds a blue rule to Title. Keep academic titles plain.
     for root in (d.element,d.styles.element):
         for border in list(root.xpath('.//w:pBdr')):

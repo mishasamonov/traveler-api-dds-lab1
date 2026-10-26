@@ -1,0 +1,10 @@
+{
+  "name": "06-endurance-start",
+  "sourceFile": "tests/performance-tests/results/endurance-console.txt",
+  "capturedUtc": "2026-10-26T20:40:52.3390771+00:00",
+  "sharexFile": "Notepad_NtE2tQsAcz.png",
+  "rawSha256": "4445C44B2F69A7E12C978BFBF88FB0C59F74B5EA41AE79F197CBD19FA8856C87",
+  "sourceSha256": "2E9465966D7407B7C763D987F593DCA4368CBCE63554D51314D96146C457A751",
+  "pngSha256": "D09BCE564E49263B179F90FC7DED2E11C0BC9C7C2F364638E501658C9C7182B0",
+  "method": "ShareX ActiveWindow; lossless body crop; no resampling or content editing"
+}

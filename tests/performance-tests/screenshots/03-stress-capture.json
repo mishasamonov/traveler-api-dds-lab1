@@ -1,0 +1,10 @@
+{
+  "name": "03-stress",
+  "sourceFile": "tests/performance-tests/results/stress-summary.txt",
+  "capturedUtc": "2026-10-26T20:40:00.0555035+00:00",
+  "sharexFile": "Notepad_3icG6sdbk4.png",
+  "rawSha256": "D306CB02A5BBCC02DF30185D7B95256635B8D07434AB66667E23535390DD2CB8",
+  "sourceSha256": "60E631845E20E5992519F83362449B6788A6811DA290CC38F7DC7E80E77E18FA",
+  "pngSha256": "1FB1F8CD49E9A55AC54BBF3B33A800566CF961B373F9496D8F05EA72D6AB37B9",
+  "method": "ShareX ActiveWindow; lossless body crop; no resampling or content editing"
+}

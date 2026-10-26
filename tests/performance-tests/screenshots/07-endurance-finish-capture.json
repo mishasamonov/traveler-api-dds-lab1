@@ -1,0 +1,10 @@
+{
+  "name": "07-endurance-finish",
+  "sourceFile": "tests/performance-tests/results/endurance-console.txt",
+  "capturedUtc": "2026-10-26T20:41:13.9993534+00:00",
+  "sharexFile": "Notepad_ZylKfRNJQt.png",
+  "rawSha256": "070C2106644011DB64D9ADB9F6EB2AA67C8759E75EFB66F56DB9EB68CE479345",
+  "sourceSha256": "2E9465966D7407B7C763D987F593DCA4368CBCE63554D51314D96146C457A751",
+  "pngSha256": "975F2C520660A37883DC4D4E4981FF8C6ED53DF2B4600A12DB215570D0547E82",
+  "method": "ShareX ActiveWindow; lossless body crop; no resampling or content editing"
+}
