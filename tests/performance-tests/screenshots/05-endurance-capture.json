@@ -1,0 +1,10 @@
+{
+  "name": "05-endurance",
+  "sourceFile": "tests/performance-tests/results/endurance-summary.txt",
+  "capturedUtc": "2026-10-26T20:40:26.3647983+00:00",
+  "sharexFile": "Notepad_V3OCq63D93.png",
+  "rawSha256": "E22DFCD2FB9B32F7781A93A02203B9BF16BB0F727692614CD29DF1EFDA7C7FF8",
+  "sourceSha256": "EB45FD7F336304CAF181045261487C34094FAB7644ABFEAC96A358D795C080B2",
+  "pngSha256": "354992F75E82F7B5EA0416E44B6FC15AE5D1033A9C0E07CED9EC64E4D60E09D2",
+  "method": "ShareX ActiveWindow; lossless body crop; no resampling or content editing"
+}

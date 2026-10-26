@@ -1,0 +1,10 @@
+{
+  "name": "09-ci-concurrency",
+  "sourceFile": "tests/performance-tests/results/ci-functional-test-step.txt",
+  "capturedUtc": "2026-10-26T20:43:43.9864061+00:00",
+  "sharexFile": "Notepad_MR76YjUPoS.png",
+  "rawSha256": "DD4BE85C965D3DC3C7D84F7B3CC1060F379651BEC37242CE79B9348FC7D72E56",
+  "sourceSha256": "B2B5E2E1136D6FA8189FA9756ED016DF6275B703D0A78F1563A1D82F371EE190",
+  "pngSha256": "9BCB19C84943B67EFD6883E37449576269F5DADE87C03FFD65AD4E8F49A185EA",
+  "method": "ShareX ActiveWindow; lossless body crop; no resampling or content editing"
+}

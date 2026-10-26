@@ -4,3 +4,10 @@ node_modules/
 coverage/
 *.log
 
+
+tests/performance-tests/seed.json
+tests/performance-tests/results/*.json.gz
+__pycache__/
+*.pyc
+output/
+

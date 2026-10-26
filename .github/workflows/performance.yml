@@ -1,0 +1,56 @@
+name: k6 performance smoke
+on:
+  push:
+    branches: [lab2-performance]
+  pull_request:
+    paths: ['tests/performance-tests/**', 'scripts/*performance*', '.github/workflows/performance.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      DATABASE_URL: postgres://traveler:traveler@127.0.0.1:5432/traveler_lab2
+      K6_WEB_DASHBOARD: 'true'
+      K6_WEB_DASHBOARD_PORT: '-1'
+      K6_WEB_DASHBOARD_PERIOD: '1s'
+      K6_WEB_DASHBOARD_EXPORT: tests/performance-tests/results/ci-smoke-dashboard.html
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - uses: grafana/setup-k6-action@v1
+        with:
+          k6-version: '2.3.0'
+      - name: Start native PostgreSQL on the runner
+        run: |
+          sudo systemctl start postgresql
+          sudo -u postgres psql -v ON_ERROR_STOP=1 -c "CREATE USER traveler WITH PASSWORD 'traveler';"
+          sudo -u postgres createdb -O traveler traveler_lab2
+      - run: npm ci --omit=dev
+      - run: npm run db:init
+      - run: node scripts/seed-performance.cjs
+      - name: Start API and wait for database health
+        run: |
+          node src/server.js > api.log 2>&1 &
+          for attempt in $(seq 1 30); do
+            if curl --fail --silent http://127.0.0.1:4567/health; then exit 0; fi
+            sleep 1
+          done
+          cat api.log
+          exit 1
+      - name: Execute k6 smoke with strict thresholds
+        run: k6 run tests/performance-tests/smoke-test.js | tee tests/performance-tests/results/ci-smoke-console.txt
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: k6-smoke-${{ github.sha }}
+          path: |
+            tests/performance-tests/results/*summary*
+            tests/performance-tests/results/ci-*
+            api.log
+          retention-days: 30

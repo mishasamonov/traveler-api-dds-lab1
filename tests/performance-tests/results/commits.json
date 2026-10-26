@@ -1,0 +1,8 @@
+{
+  "smoke": "2701b0997fb4a56d72c3bb83efac98c4004e4ca8",
+  "load": "c0a05e1e4252de6c43aa08353eec41606c21690f",
+  "stress": "6d7089ca32fb7e9ea97b437ea1b686f354278ce6",
+  "spike": "a29825981078ee352d06ecddaaa297a8420abd54",
+  "endurance": "33e7a61e2f9e02231bdd67c7605897fd01c6cede",
+  "ci": "11adce763332e3aca928fa617624363404405166"
+}

@@ -6,7 +6,8 @@ on:
 
 jobs:
   tests:
-    runs-on: ubuntu-latest
+    # Hurl 8 from npm requires the libxml2.so.2 ABI supplied by Ubuntu 24.04.
+    runs-on: ubuntu-24.04
     services:
       postgres:
         image: postgres:16
@@ -29,6 +30,8 @@ jobs:
         with:
           node-version: '24'
           cache: npm
+      - name: Install Hurl runtime dependency
+        run: sudo apt-get update && sudo apt-get install -y libxml2
       - run: npm ci
       - run: npm run db:init
       - run: bash scripts/run-ci-tests.sh

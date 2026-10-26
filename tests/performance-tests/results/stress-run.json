@@ -1,0 +1,17 @@
+{
+  "test": "stress",
+  "startedUtc": "2026-10-26T18:09:09.6690992+00:00",
+  "apiUrl": "http://127.0.0.1:4567",
+  "database": "traveler_lab2",
+  "seedPlans": 2000,
+  "seedLocations": 6000,
+  "node": "v22.18.0",
+  "k6": "k6.exe v2.3.0 (commit/e088784614, go1.26.8, windows/amd64)",
+  "pgPoolMax": 20,
+  "databaseMode": "native Windows PostgreSQL, no virtualization",
+  "command": "k6 run --out json=tests/performance-tests/results/stress-raw.json.gz tests/performance-tests/stress-test.js",
+  "apiPid": 16544,
+  "finishedUtc": "2026-10-26T18:14:11.8050632+00:00",
+  "exitCode": 99,
+  "elapsedSeconds": 302.1372393
+}

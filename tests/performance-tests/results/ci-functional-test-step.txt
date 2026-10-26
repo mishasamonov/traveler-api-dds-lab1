@@ -1,0 +1,29 @@
+2026-10-26T20:29:37.8687272Z > traveler-api@1.0.0 test:hurl
+2026-10-26T20:29:37.8688146Z > hurl --test tests/*.hurl --variables-file tests/variables.properties
+2026-10-26T20:29:37.8688798Z 
+2026-10-26T20:29:37.9661925Z Success tests/crud.hurl (6 request(s) in 47 ms)
+2026-10-26T20:29:37.9982480Z Success tests/race-conditions.hurl (9 request(s) in 79 ms)
+2026-10-26T20:29:38.0042370Z Success tests/management.hurl (10 request(s) in 87 ms)
+2026-10-26T20:29:38.0057642Z Success tests/validation.hurl (31 request(s) in 84 ms)
+2026-10-26T20:29:38.0068207Z --------------------------------------------------------------------------------
+2026-10-26T20:29:38.0069485Z Executed files:    4
+2026-10-26T20:29:38.0069951Z Executed requests: 56 (622.2/s)
+2026-10-26T20:29:38.0070412Z Succeeded files:   4 (100.0%)
+2026-10-26T20:29:38.0070838Z Failed files:      0 (0.0%)
+2026-10-26T20:29:38.0071283Z Duration:          90 ms (0h:0m:0s:90ms)
+2026-10-26T20:29:38.0071574Z 
+2026-10-26T20:29:38.1284217Z 
+2026-10-26T20:29:38.1284870Z > traveler-api@1.0.0 test
+2026-10-26T20:29:38.1285475Z > node --test tests/*.test.js
+2026-10-26T20:29:38.1285767Z 
+2026-10-26T20:29:38.3071195Z ✔ two concurrent plan edits with the same version: one update, one conflict (79.54102ms)
+2026-10-26T20:29:38.4188730Z ✔ concurrent location additions get unique orders and reorder shifts neighbors (113.884473ms)
+2026-10-26T20:29:38.4410591Z ✔ two concurrent location edits reject a stale version, then allow safe retry (23.93511ms)
+2026-10-26T20:29:38.4552421Z ℹ tests 3
+2026-10-26T20:29:38.4552898Z ℹ suites 0
+2026-10-26T20:29:38.4553335Z ℹ pass 3
+2026-10-26T20:29:38.4553734Z ℹ fail 0
+2026-10-26T20:29:38.4554387Z ℹ cancelled 0
+2026-10-26T20:29:38.4554987Z ℹ skipped 0
+2026-10-26T20:29:38.4555454Z ℹ todo 0
+2026-10-26T20:29:38.4556035Z ℹ duration_ms 288.783028

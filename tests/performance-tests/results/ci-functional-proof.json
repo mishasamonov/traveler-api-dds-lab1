@@ -1,0 +1,29 @@
+{
+  "head_sha": "3b5953404089b63db1150e5babc65e973d044892",
+  "runs": [
+    {
+      "id": 40396051322,
+      "name": "k6 performance smoke",
+      "event": "pull_request",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/mishasamonov/traveler-api-dds-lab1/actions/runs/40396051322"
+    },
+    {
+      "id": 40396040943,
+      "name": "k6 performance smoke",
+      "event": "push",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/mishasamonov/traveler-api-dds-lab1/actions/runs/40396040943"
+    },
+    {
+      "id": 40396040951,
+      "name": "TravelerAPI tests",
+      "event": "push",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/mishasamonov/traveler-api-dds-lab1/actions/runs/40396040951"
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "test": "load",
+  "startedUtc": "2026-10-26T18:05:25.5128667+00:00",
+  "apiUrl": "http://127.0.0.1:4567",
+  "database": "traveler_lab2",
+  "seedPlans": 2000,
+  "seedLocations": 6000,
+  "node": "v22.18.0",
+  "k6": "k6.exe v2.3.0 (commit/e088784614, go1.26.8, windows/amd64)",
+  "pgPoolMax": 20,
+  "databaseMode": "native Windows PostgreSQL, no virtualization",
+  "command": "k6 run --out json=tests/performance-tests/results/load-raw.json.gz tests/performance-tests/load-test.js",
+  "finishedUtc": "2026-10-26T18:08:21.7669001+00:00",
+  "exitCode": 0,
+  "elapsedSeconds": 176.2554121
+}

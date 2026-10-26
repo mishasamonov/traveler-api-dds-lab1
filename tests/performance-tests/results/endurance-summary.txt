@@ -1,0 +1,14 @@
+k6 ENDURANCE TEST
+API: http://127.0.0.1:4567
+
+http_reqs: {"count":869465,"rate":467.4042899470613}
+iterations: {"rate":45.37579006153388,"count":84408}
+checks: {"rate":1,"passes":869465,"fails":0}
+http_req_failed: {"rate":0,"passes":0,"fails":869465}
+http_req_duration: {"avg":3.716031336971713,"min":0,"med":2.7223,"max":642.2607,"p(90)":6.74,"p(95)":8.1495,"p(99)":11.236071999999998}
+api_errors: {"rate":0,"passes":0,"fails":869465}
+
+THRESHOLDS
+PASS http_req_duration: p(95)<500
+PASS checks: rate>0.99
+PASS http_req_failed: rate<0.01
