@@ -5,8 +5,10 @@ import { request, json } from './utils/api-client.js';
 import { generateTravelPlan, generateLocation } from './utils/data-generator.js';
 import { summary } from './utils/summary.js';
 export const options = {
-  stages: [{ duration: '5s', target: 2 }, { duration: '10s', target: 5 }, { duration: '5s', target: 0 }],
-  gracefulRampDown: '20s', summaryTrendStats: ['avg', 'min', 'med', 'max', 'p(90)', 'p(95)', 'p(99)'],
+  scenarios: { default: { executor: 'ramping-vus', startVUs: 0,
+    stages: [{ duration: '5s', target: 2 }, { duration: '10s', target: 5 }, { duration: '5s', target: 0 }],
+    gracefulRampDown: '30s', gracefulStop: '30s' } },
+  summaryTrendStats: ['avg', 'min', 'med', 'max', 'p(90)', 'p(95)', 'p(99)'],
   thresholds: { http_req_failed: ['rate==0'], http_req_duration: ['p(95)<500'], checks: ['rate==1'], api_errors: ['rate==0'] },
 };
 export default function () {
