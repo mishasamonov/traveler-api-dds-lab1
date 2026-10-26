@@ -39,6 +39,7 @@ function phase(name) {
   return 'drain';
 }
 export function journey(name) {
+  if (__VU === 1 && __ITER === 0) console.log(`K6_SCENARIO_START=${new Date(exec.scenario.startTime).toISOString()}`);
   const tags = { phase: phase(name) };
   const owned = seed[(__VU - 1) % seed.length];
   if (!current) current = json(request('GET', E.TRAVEL_PLAN_BY_ID(owned.id), null, 200, tags));

@@ -1,0 +1,17 @@
+{
+  "test": "spike",
+  "startedUtc": "2026-10-26T18:16:13.5113271+00:00",
+  "apiUrl": "http://127.0.0.1:4567",
+  "database": "traveler_lab2",
+  "seedPlans": 2000,
+  "seedLocations": 6000,
+  "node": "v22.18.0",
+  "k6": "k6.exe v2.3.0 (commit/e088784614, go1.26.8, windows/amd64)",
+  "pgPoolMax": 20,
+  "databaseMode": "native Windows PostgreSQL, no virtualization",
+  "command": "k6 run --out json=tests/performance-tests/results/spike-raw.json.gz tests/performance-tests/spike-test.js",
+  "apiPid": 16544,
+  "finishedUtc": "2026-10-26T18:18:30.2375451+00:00",
+  "exitCode": 99,
+  "elapsedSeconds": 136.7274178
+}

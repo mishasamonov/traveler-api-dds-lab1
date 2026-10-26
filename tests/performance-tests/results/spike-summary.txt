@@ -1,0 +1,15 @@
+k6 SPIKE TEST
+API: http://127.0.0.1:4567
+
+http_reqs: {"count":75207,"rate":567.5389319542592}
+iterations: {"rate":53.005617270290216,"count":7024}
+checks: {"rate":1,"passes":75207,"fails":0}
+http_req_failed: {"rate":0,"passes":0,"fails":75207}
+http_req_duration: {"p(90)":1157.6608800000004,"p(95)":1293.21891,"p(99)":1556.3543320000003,"avg":464.82956918637746,"min":0,"med":422.3218,"max":2452.4946}
+api_errors: {"rate":0,"passes":0,"fails":75207}
+
+THRESHOLDS
+FAIL http_req_duration: p(95)<500
+PASS http_req_duration{phase:recovery}: p(95)<500
+PASS checks: rate>0.99
+PASS http_req_failed: rate<0.01
