@@ -69,7 +69,8 @@ and the successful functional CI log displayed in Windows Notepad. These were
 captured after execution; they are not live terminal captures. Only the log
 body was cropped, without resampling or editing its contents. Matching
 `*-capture.json` files identify each source log and its SHA-256 digest.
-The Word report includes all nine images with captions and source filenames.
+The Word report includes all nine images with short captions. Source filenames
+and capture details are retained here in the repository metadata.
 
 `results/ci-functional-proof.json` records three successful runs on commit
 `3b59534`: the functional suite and both k6 smoke triggers. The functional

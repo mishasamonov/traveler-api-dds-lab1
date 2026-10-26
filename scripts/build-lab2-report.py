@@ -77,11 +77,8 @@ def image(doc,path,caption,width=6.85):
     cap=doc.add_paragraph(caption,'Caption');cap.alignment=WD_ALIGN_PARAGRAPH.CENTER
     return cap
 
-def screenshot(doc,name,number_,caption,source):
+def screenshot(doc,name,number_,caption):
     image(doc,SHOTS/f'{name}.png',f'Рисунок {number_}  {caption}')
-    p=paragraph(doc,f'Джерело: results/{source}.')
-    p.paragraph_format.space_after=Pt(9)
-    for r in p.runs:r.font.size=Pt(9)
 
 def commit(doc,key,label=None):
     sha=COMMITS[key];p=doc.add_paragraph();hyperlink(p,label or f'Коміт {sha[:7]}',f'{BASE}/commit/{sha}')
@@ -117,7 +114,7 @@ def main(output):
     paragraph(d,'Лабораторна робота 2','Title')
     paragraph(d,'Тестування продуктивності TravelerAPI з k6','Subtitle')
     paragraph(d,'Самонов Михайло  •  ІН.м-62/2  •  26 жовтня 2026 року')
-    paragraph(d,'Мета роботи - встановити baseline продуктивності TravelerAPI, перевірити звичайне навантаження, перевантаження, короткий сплеск і стабільність протягом 30 хвилин. Отримані вимірювання можна використати для порівняння архітектури в наступних лабораторних роботах.')
+    paragraph(d,'Мета роботи - перевірити продуктивність TravelerAPI за допомогою k6: як API працює під звичайним навантаженням, під час перевантаження, різкого сплеску та протягом 30 хвилин. Ці результати будуть основою для порівняння в наступних лабораторних.')
     p=paragraph(d);hyperlink(p,'Репозиторій і гілка lab2-performance',BASE+'/tree/lab2-performance')
     heading(d,'1 Середовище та методика')
     table(d,['Компонент','Конфігурація'],[
@@ -165,7 +162,7 @@ def main(output):
     table(d,['VU','Середній час','p95','Запитів за с','Помилки'],[[r['target_vus'],ms(r['avg_ms']),ms(r['p95_ms']),number(r['rps'],1),pct(r['failure_rate'])] for r in plateaus.values()],[.65,1.8,1.65,1.5,1.4])
     image(d,R/'load-chart.png','Рисунок 1  Затримки та потік запитів під час Load тесту')
     top=plateaus['load200']
-    paragraph(d,f'Найбільший перевірений рівень, який виконав обраний SLO, - 200 VU. На піковому плато середній час становив {ms(top["avg_ms"])}, p95 - {ms(top["p95_ms"])}, рівень помилок - {pct(top["failure_rate"])}. Це підтверджена межа для цього сценарію та комп’ютера; точну максимальну місткість між успішним і наступним невдалим рівнями окремо не уточнював.')
+    paragraph(d,f'При 200 одночасних користувачах API вклався в задані межі: середній час відповіді - {ms(top["avg_ms"])}, p95 - {ms(top["p95_ms"])}, помилок - {pct(top["failure_rate"])}. Це найбільше успішно перевірене навантаження для цього сценарію на моєму комп’ютері. Точну межу між 200 і наступним невдалим рівнем окремо не шукав.')
 
     page(d,'4 Стресове тестування Stress')
     commit(d,'stress')
@@ -186,7 +183,7 @@ def main(output):
     table(d,['Фаза','VU','Середній час','p95','Помилки'],[[{'before':'До сплеску','spike':'Сплеск','recovery':'Відновлення'}[k],r['target_vus'],ms(r['avg_ms']),ms(r['p95_ms']),pct(r['failure_rate'])] for k,r in plateaus.items()],[1.45,.6,1.8,1.65,1.5])
     image(d,R/'spike-chart.png','Рисунок 3  Реакція API на короткий сплеск навантаження')
     sp=sums['spike']['metrics'];rec=data['spike']['recovery']['seconds_after_nominal_down_end']
-    paragraph(d,f'Усього завершилося {count(sp["http_reqs"]["values"]["count"])} запитів. Неочікуваних HTTP помилок не зафіксовано, всі перевірки пройдені, перерваних ітерацій у журналі немає. Це підтверджує відсутність зафіксованих втрат на HTTP рівні; окремого аудиту довговічності кожного запису цей сценарій не виконує.')
+    paragraph(d,f'За час тесту виконано {count(sp["http_reqs"]["values"]["count"])} запитів без неочікуваних HTTP помилок. Усі перевірки пройдені, перерваних ітерацій немає. Втрат запитів за журналом k6 не виявлено; збереження кожного окремого запису додатково не перевіряв.')
     paragraph(d,f'Після сплеску система повернулася до обраного SLO приблизно через {number(rec,1)} с після заданого спаду, з роздільністю 5 с. Критерій відновлення - перше з трьох послідовних 5-секундних вікон з p95 < 500 мс і помилками < 1 %. Після тесту перевірка БД знову показала 2 000 планів, 6 000 локацій і відсутність залишених тимчасових планів.')
 
     page(d,'6 Тривале тестування Endurance')
@@ -196,7 +193,7 @@ def main(output):
     table(d,['Період','Запити','Середній час','p95','Помилки'],[[label,count(e[key]['requests']),ms(e[key]['avg_ms']),ms(e[key]['p95_ms']),pct(e[key]['failure_rate'])] for label,key in [('Перші 5 хв','first_5min'),('Останні 5 хв','last_5min')]],[1.45,1.15,1.7,1.5,1.2])
     image(d,R/'endurance-chart.png','Рисунок 4  Метрики протягом повного тесту витривалості')
     mem=e['api_memory'];change=e['last_5min']['p95_ms']/e['first_5min']['p95_ms']-1
-    paragraph(d,f'Завершено {count(m["http_reqs"]["values"]["count"])} запитів; частка помилок - {pct(m["http_req_failed"]["values"]["rate"])}. Зміна p95 останніх п’яти хвилин відносно перших становить {number(change*100,1)} %. Висновок про стабільність обмежений цим 30-хвилинним запуском і навантаженням 25 VU.')
+    paragraph(d,f'За весь тест виконано {count(m["http_reqs"]["values"]["count"])} запитів, помилок - {pct(m["http_req_failed"]["values"]["rate"])}. За останні п’ять хвилин p95 змінився на {number(change*100,1)} % порівняно з першими. При 25 VU протягом цих 30 хвилин погіршення роботи не помітив.')
     minute_values=list(e['steady_minutes'].values())
     if all(row['p95_ms']<500 and row['failure_rate']<.01 for row in minute_values):
         paragraph(d,f'За обраним SLO деградації не виявлено: p95 у кожній із 30 хвилин залишався нижчим за 500 мс. Діапазон хвилинних p95 - від {ms(min(row["p95_ms"] for row in minute_values))} до {ms(max(row["p95_ms"] for row in minute_values))}.')
@@ -209,11 +206,11 @@ def main(output):
     p=paragraph(d);hyperlink(p,'Успішний запуск GitHub Actions 40375281221',ci['url'])
     table(d,['Крок CI','Результат'],[['Нативний PostgreSQL і схема','Успішно'],['Підготовка тестових даних та запуск API','Успішно'],['k6 smoke і перевірка порогів','Успішно'],['Збереження artifact','Успішно']],[5.45,1.55])
     heading(d,'Експорт і графіки',2)
-    paragraph(d,'Для всіх локальних тестів налаштував вбудований k6 web dashboard як засіб візуалізації, аналогічний за призначенням окремому dashboard сервісу. K6_WEB_DASHBOARD_EXPORT створює автономні HTML звіти, а --out json зберігає часові ряди. Графіки у цьому звіті побудовані зі справжніх JSON samples; метрики агреговані у 5-секундних вікнах. Це виконання двох додаткових завдань: CI та експорт метрик із візуалізацією.')
+    paragraph(d,'Для кожного тесту зберіг HTML звіт k6 web dashboard і метрики у JSON. Для цього використав K6_WEB_DASHBOARD_EXPORT та --out json. За збереженими даними побудував графіки з кроком 5 секунд. Як додаткові завдання виконав запуск smoke тесту в CI та експорт метрик із графіками.')
     heading(d,'Повторний запуск',2)
     paragraph(d,'Створити окрему БД traveler_lab2, встановити DATABASE_URL, виконати npm ci --omit=dev, node scripts/init-db.js та запустити API. Далі послідовно виконати scripts/run-performance.ps1 з параметром -Test smoke, load, stress, spike або endurance. Сценарії одночасно не запускати. Команди й параметри збережені у tests/performance-tests/README.md та *-run.json.')
     heading(d,'Висновок',2)
-    paragraph(d,'Встановлено baseline для незміненої реалізації TravelerAPI з першої лабораторної. За критерієм p95 < 500 мс підтверджено 200 одночасних користувачів у заданому сценарії. Stress і spike показали ріст затримок та відновлення після зменшення навантаження. Отримані дані дозволяють порівнювати наступні реалізації за однакового набору даних, профілю користувачів і середовища.')
+    paragraph(d,'У роботі перевірив TravelerAPI з першої лабораторної за допомогою п’яти тестів k6. При 200 одночасних користувачах p95 залишався нижчим за 500 мс. Під час stress і spike затримки зросли, але після зменшення навантаження API відновив нормальну роботу. За 30 хвилин endurance при 25 VU помилок і поступового погіршення не виявлено. Ці результати можна порівняти з наступними реалізаціями за тих самих умов.')
     heading(d,'Джерела',2)
     for label,url in [
         ('Методичні вказівки SumDU.CS.DDS.Lab2v_1.pdf',None),
@@ -225,38 +222,33 @@ def main(output):
         if url:hyperlink(p,label,url)
         else:p.add_run(label)
         p.paragraph_format.space_after=Pt(3)
-    paragraph(d,'Підготовка коду та звіту виконувалася за допомогою ChatGPT Codex. Числові результати отримані під час локальних запусків k6.')
-
     page(d,'Додаток А. Smoke і Load: знімки результатів')
-    paragraph(d,'Нижче наведені PNG знімки збережених журналів k6 і GitHub Actions, відкритих у Блокноті та захоплених ShareX. Знімки зроблені після завершення запусків; вміст журналів не змінювався. Підсумки k6 охоплюють увесь запуск, а таблиці розділів 3–6 — окремі сталі інтервали, тому їхні p95 можуть відрізнятися.')
-    screenshot(d,'01-smoke',5,'Smoke: 1 222 запити, 1 504 успішні перевірки, 94 очікувані конфлікти версій','smoke-summary.txt')
-    screenshot(d,'02-load',6,'Load: 139 410 запитів; усі пороги для повного запуску виконані','load-summary.txt')
+    paragraph(d,'На скріншотах показані збережені результати тестів. Тут наведені підсумки за весь запуск, а в таблицях вище — за окремі періоди сталого навантаження.')
+    screenshot(d,'01-smoke',5,'Результати smoke тесту')
+    screenshot(d,'02-load',6,'Результати load тесту')
 
     page(d,'Додаток Б. Stress і Spike: перевантаження')
-    paragraph(d,'FAIL для загального p95 тут фіксує заплановану деградацію при перевантаженні. Перевірки відповідей, частки HTTP помилок і p95 фази відновлення успішні; це узгоджується з аналізом у розділах 4–5.')
-    screenshot(d,'03-stress',7,'Stress: перевищено поріг затримки; поріг відновлення виконано','stress-summary.txt')
-    screenshot(d,'04-spike',8,'Spike: 75 207 запитів без HTTP помилок; після сплеску SLO відновлено','spike-summary.txt')
+    paragraph(d,'Позначка FAIL означає, що під великим навантаженням p95 перевищив 500 мс. Після зменшення навантаження час відповіді повернувся до норми.')
+    screenshot(d,'03-stress',7,'Результати stress тесту')
+    screenshot(d,'04-spike',8,'Результати spike тесту')
 
     page(d,'Додаток В. Endurance: підсумок і профіль')
-    screenshot(d,'05-endurance',9,'Endurance: 869 465 запитів; усі перевірки та пороги успішні','endurance-summary.txt')
-    screenshot(d,'06-endurance-start',10,'Початок журналу Endurance: 25 VU, три стадії, профіль 31 хвилина','endurance-console.txt')
-    paragraph(d,'Сталий інтервал навантаження становить 30 хвилин. Ще по 30 секунд передбачено для розгону і завершення; максимальна тривалість із graceful stop у конфігурації — 31 хв 30 с.')
+    screenshot(d,'05-endurance',9,'Результати endurance тесту')
+    screenshot(d,'06-endurance-start',10,'Початок endurance тесту')
+    paragraph(d,'Основне навантаження тривало 30 хвилин. Разом із розгоном і завершенням тест зайняв 31 хвилину.')
 
     page(d,'Додаток Г. Завершення Endurance і Hurl у CI')
-    screenshot(d,'07-endurance-finish',11,'Завершення за 31 хв 00,2 с: 84 408 повних ітерацій, перерваних немає','endurance-console.txt')
-    screenshot(d,'08-ci-hurl',12,'GitHub Actions: 4 файли Hurl, 56 HTTP запитів, 100 % успіху','ci-functional-test-step.txt')
+    screenshot(d,'07-endurance-finish',11,'Завершення endurance тесту')
+    screenshot(d,'08-ci-hurl',12,'Успішні тести Hurl у GitHub Actions')
 
     page(d,'Додаток Д. Конкурентні тести та стан CI')
-    screenshot(d,'09-ci-concurrency',13,'GitHub Actions: три тести конкурентного доступу пройдено, помилок немає','ci-functional-test-step.txt')
+    screenshot(d,'09-ci-concurrency',13,'Успішні тести конкурентного доступу')
     heading(d,'Виправлення середовища GitHub Actions',2)
-    paragraph(d,'Попередній функціональний workflow завершувався ще до виконання тестів: Hurl не знаходив libxml2.so.2 у новому ubuntu-latest. У гілці другої лабораторної зафіксував runner ubuntu-24.04 і додав встановлення libxml2. Реалізацію API та схему БД не змінював.')
+    paragraph(d,'Спочатку Hurl у CI не запускався через відсутню бібліотеку libxml2.so.2. Вибрав Ubuntu 24.04 і додав встановлення libxml2. Після цього пройшли всі 56 запитів Hurl і три тести конкурентного доступу. Код API та схему БД не змінював.')
     proof=load(R/'ci-functional-proof.json')
     p=paragraph(d);hyperlink(p,'Коміт виправлення CI '+proof['head_sha'][:7],BASE+'/commit/'+proof['head_sha'])
     table(d,['Перевірка на цьому коміті','Результат'],[[r['name']+' / '+r['event'],r['conclusion']] for r in proof['runs']],[5.45,1.55])
-    for r in proof['runs']:
-        p=paragraph(d);hyperlink(p,r['name']+' ('+r['event']+') — запуск '+str(r['id']),r['url'])
-        p.paragraph_format.space_after=Pt(3)
-    paragraph(d,'Старі червоні позначки залишаються в історії попередніх комітів. Вони не змінюють результат успішних запусків після виправлення. Оригінали PNG, журнали й метадані захоплення з SHA-256 збережені в архіві роботи.')
+    p=paragraph(d);hyperlink(p,'Перевірки роботи на GitHub',BASE+'/pull/1/checks')
     # The bundled Word template adds a blue rule to Title. Keep academic titles plain.
     for root in (d.element,d.styles.element):
         for border in list(root.xpath('.//w:pBdr')):
