@@ -32,6 +32,8 @@ def hyperlink(p,text,url):
     run=OxmlElement('w:r');props=OxmlElement('w:rPr')
     font=OxmlElement('w:rFonts');font.set(qn('w:ascii'),'Arial');font.set(qn('w:hAnsi'),'Arial');props.append(font)
     color=OxmlElement('w:color');color.set(qn('w:val'),'0563C1');props.append(color)
+    underline=OxmlElement('w:u');underline.set(qn('w:val'),'single');props.append(underline)
+    size=OxmlElement('w:sz');size.set(qn('w:val'),'19');props.append(size)
     run.append(props);t=OxmlElement('w:t');t.text=text;run.append(t);link.append(run);p._p.append(link)
 
 def paragraph(doc,text='',style=None):
@@ -39,7 +41,7 @@ def paragraph(doc,text='',style=None):
 
 def heading(doc,text,level=1):return doc.add_heading(text,level)
 def page(doc,title):
-    p=heading(doc,title);p.paragraph_format.page_break_before=True
+    p=heading(doc,title);p.paragraph_format.page_break_before=False
 
 def table(doc,headers,rows,widths):
     t=doc.add_table(rows=1,cols=len(headers));t.alignment=WD_TABLE_ALIGNMENT.CENTER;t.autofit=False
@@ -66,6 +68,7 @@ def table(doc,headers,rows,widths):
                 shade=OxmlElement('w:shd');shade.set(qn('w:fill'),'DFE9F3');tcpr.append(shade)
             for p in c.paragraphs:
                 p.paragraph_format.space_before=Pt(0);p.paragraph_format.space_after=Pt(0);p.paragraph_format.line_spacing=1.05
+                p.paragraph_format.keep_with_next=(ri<len(t.rows)-1 if len(t.rows)<=3 else ri==0)
                 if ci>0 or headers[0]=='VU':p.alignment=WD_ALIGN_PARAGRAPH.CENTER
                 for run in p.runs:run.font.size=Pt(10.2);run.bold=ri==0
     doc.add_paragraph().paragraph_format.space_after=Pt(0)
@@ -77,20 +80,39 @@ def image(doc,path,caption,width=6.85):
     cap=doc.add_paragraph(caption,'Caption');cap.alignment=WD_ALIGN_PARAGRAPH.CENTER
     return cap
 
-def screenshot(doc,name,number_,caption,source):
+def screenshot(doc,name,number_,caption):
     image(doc,SHOTS/f'{name}.png',f'Рисунок {number_}  {caption}')
-    p=paragraph(doc,f'Джерело: results/{source}.')
-    p.paragraph_format.space_after=Pt(9)
-    for r in p.runs:r.font.size=Pt(9)
 
-def commit(doc,key,label=None):
-    sha=COMMITS[key];p=doc.add_paragraph();hyperlink(p,label or f'Коміт {sha[:7]}',f'{BASE}/commit/{sha}')
-    p.paragraph_format.space_after=Pt(7)
+def commit(links,key,label):
+    links.append((f'{BASE}/commit/{COMMITS[key]}',label))
 
 def metrics(doc,summary):
     m=summary['metrics'];return table(doc,['Запити','Середній час','p95','HTTP помилки'],[[count(m['http_reqs']['values']['count']),ms(m['http_req_duration']['values']['avg']),ms(m['http_req_duration']['values']['p(95)']),pct(m['http_req_failed']['values']['rate'])]],[1.3,1.8,1.7,2.2])
 
+
+def apply_times_14(doc):
+    for style in doc.styles:
+        if hasattr(style,'font'):
+            style.font.name='Times New Roman';style.font.size=Pt(14)
+    for name in ('Title','Heading 1','Heading 2'):
+        doc.styles[name].font.bold=True
+    for root in (doc.element,doc.styles.element,doc.sections[0].footer._element):
+        for r in root.xpath('.//w:r'):
+            if r.find(qn('w:rPr')) is None:r.insert(0,OxmlElement('w:rPr'))
+        for props in root.xpath('.//w:rPr'):
+            fonts=props.find(qn('w:rFonts'))
+            if fonts is None:fonts=OxmlElement('w:rFonts');props.insert(0,fonts)
+            for key in list(fonts.attrib):
+                if key.endswith('Theme'):del fonts.attrib[key]
+            for key in ('ascii','hAnsi','eastAsia','cs'):
+                fonts.set(qn('w:'+key),'Times New Roman')
+            for tag in ('sz','szCs'):
+                size=props.find(qn('w:'+tag))
+                if size is None:size=OxmlElement('w:'+tag);props.append(size)
+                size.set(qn('w:val'),'28')
+
 def main(output):
+    links=[]
     sums={n:load(R/f'{n}-summary.json') for n in ('smoke','load','stress','spike','endurance')}
     data={n:load(R/f'{n}-analysis.json') for n in ('load','stress','spike','endurance')}
     env=load(R/'environment.json');ci=load(R/'ci-proof.json')
@@ -116,9 +138,9 @@ def main(output):
 
     paragraph(d,'Лабораторна робота 2','Title')
     paragraph(d,'Тестування продуктивності TravelerAPI з k6','Subtitle')
-    paragraph(d,'Самонов Михайло  •  ІН.м-62/2  •  26 жовтня 2026 року')
-    paragraph(d,'Мета роботи - встановити baseline продуктивності TravelerAPI, перевірити звичайне навантаження, перевантаження, короткий сплеск і стабільність протягом 30 хвилин. Отримані вимірювання можна використати для порівняння архітектури в наступних лабораторних роботах.')
-    p=paragraph(d);hyperlink(p,'Репозиторій і гілка lab2-performance',BASE+'/tree/lab2-performance')
+    paragraph(d,'Самонов Михайло  •  ІН.м-62/2')
+    paragraph(d,'Мета роботи - перевірити продуктивність TravelerAPI за допомогою k6: як API працює під звичайним навантаженням, під час перевантаження, різкого сплеску та протягом 30 хвилин. Ці результати будуть основою для порівняння в наступних лабораторних.')
+    links.append((BASE+'/tree/lab2-performance','Репозиторій роботи, гілка lab2-performance'))
     heading(d,'1 Середовище та методика')
     table(d,['Компонент','Конфігурація'],[
         ['Комп’ютер','Intel Core i5-11300H, 8 логічних процесорів, 15,79 ГБ RAM'],
@@ -138,9 +160,10 @@ def main(output):
     ],[1.55,5.45])
 
     page(d,'2 Базовий запуск і перевірка версій')
-    commit(d,'smoke','Коміт baseline 2701b09')
+    commit(links,'smoke','Smoke — коміт із базовим тестом')
     paragraph(d,'Адаптував конфігурацію endpoint-ів і клієнт із наданого викладачем проєкту. Оригінальні файли та MIT ліцензія збережені в instructor. Для генератора даних прибрав зовнішнє завантаження двох допоміжних функцій, тому під час тесту k6 не залежить від віддалених JavaScript модулів.')
-    paragraph(d,'Базовий URL: http://127.0.0.1:4567. Команда запуску:')
+    paragraph(d,'API запускав локально на порту 4567. Команда запуску тесту:')
+    links.append(('http://127.0.0.1:4567','Локальна адреса API, працює після запуску сервера'))
     p=paragraph(d,'k6 run tests/performance-tests/smoke-test.js');p.runs[0].font.name='Consolas';p.runs[0].font.size=Pt(10)
     metrics(d,sums['smoke'])
     sm=sums['smoke']['metrics'];conf=sm['expected_version_conflicts']['values']['count'];checks=sm['checks']['values']
@@ -156,111 +179,109 @@ def main(output):
     heading(d,'Збережений вивід k6',2)
     for line in [f'http_reqs: {sm["http_reqs"]["values"]["count"]}',f'http_req_failed: {sm["http_req_failed"]["values"]["rate"]}',f'http_req_duration p(95): {sm["http_req_duration"]["values"]["p(95)"]:.5f} ms',f'checks: {checks["passes"]} passed, {checks["fails"]} failed',f'expected_version_conflicts: {conf}']:
         p=paragraph(d,line);p.paragraph_format.space_after=Pt(2);p.runs[0].font.name='Consolas';p.runs[0].font.size=Pt(10)
-    p=paragraph(d);hyperlink(p,'Оригінальний HTML звіт smoke',BASE+'/blob/lab2-performance/tests/performance-tests/results/smoke-dashboard.html')
+        p.paragraph_format.keep_with_next=not line.startswith('expected_version_conflicts:')
+    links.append((BASE+'/blob/lab2-performance/tests/performance-tests/results/smoke-dashboard.html','HTML звіт smoke у репозиторії'))
+
+    paragraph(d,'На скріншотах показані збережені результати тестів. Тут наведені підсумки за весь запуск, а в таблицях вище — за окремі періоди сталого навантаження.')
+    screenshot(d,'01-smoke',1,'Результати smoke тесту')
 
     page(d,'3 Навантажувальне тестування Load')
-    commit(d,'load')
+    commit(links,'load','Load — коміт із навантажувальним тестом')
     paragraph(d,'Навантаження підвищував поетапно до 200 одночасних користувачів. Нижче наведені вимірювання сталих частин плато: перші й останні 5 секунд кожного плато відкинуті, щоб зменшити вплив переходів.')
     plateaus=data['load']['stable_plateaus']
     table(d,['VU','Середній час','p95','Запитів за с','Помилки'],[[r['target_vus'],ms(r['avg_ms']),ms(r['p95_ms']),number(r['rps'],1),pct(r['failure_rate'])] for r in plateaus.values()],[.65,1.8,1.65,1.5,1.4])
-    image(d,R/'load-chart.png','Рисунок 1  Затримки та потік запитів під час Load тесту')
+    image(d,R/'load-chart.png','Рисунок 2  Затримки та потік запитів під час Load тесту')
     top=plateaus['load200']
-    paragraph(d,f'Найбільший перевірений рівень, який виконав обраний SLO, - 200 VU. На піковому плато середній час становив {ms(top["avg_ms"])}, p95 - {ms(top["p95_ms"])}, рівень помилок - {pct(top["failure_rate"])}. Це підтверджена межа для цього сценарію та комп’ютера; точну максимальну місткість між успішним і наступним невдалим рівнями окремо не уточнював.')
+    paragraph(d,f'При 200 одночасних користувачах API вклався в задані межі: середній час відповіді - {ms(top["avg_ms"])}, p95 - {ms(top["p95_ms"])}, помилок - {pct(top["failure_rate"])}. Це найбільше успішно перевірене навантаження для цього сценарію на моєму комп’ютері. Точну межу між 200 і наступним невдалим рівнем окремо не шукав.')
+
+    screenshot(d,'02-load',3,'Результати load тесту')
 
     page(d,'4 Стресове тестування Stress')
-    commit(d,'stress')
+    commit(links,'stress','Stress — коміт зі стресовим тестом')
     paragraph(d,'Стресовий профіль підвищує навантаження до 2 000 VU, а потім зменшує його до 20 VU. Деградацією вважаю перевищення p95 500 мс. Операційну межу відмови визначив як p95 ≥ 2 000 мс або HTTP помилки ≥ 1 %; повне припинення роботи оцінюю окремо.')
     plateaus=data['stress']['stable_plateaus']
     table(d,['VU','Середній час','p95','Запитів за с','Помилки'],[[r['target_vus'],ms(r['avg_ms']),ms(r['p95_ms']),number(r['rps'],1),pct(r['failure_rate'])] for k,r in plateaus.items() if k!='recovery'],[.65,1.8,1.65,1.5,1.4])
-    image(d,R/'stress-chart.png','Рисунок 2  Деградація та відновлення під час Stress тесту')
+    image(d,R/'stress-chart.png','Рисунок 4  Деградація та відновлення під час Stress тесту')
     failing=[r for k,r in plateaus.items() if k!='recovery' and r['p95_ms']>=500]
     breaking=[r for k,r in plateaus.items() if k!='recovery' and (r['p95_ms']>=2000 or r['failure_rate']>=.01)]
     recovery=plateaus['recovery'];rec=data['stress']['recovery']['seconds_after_nominal_down_end']
     paragraph(d,f'Перший перевірений деградований рівень - {failing[0]["target_vus"]} VU. Операційна межа за обраним критерієм досягнута на {breaking[0]["target_vus"]} VU. Повної відмови процесу та HTTP помилок у цьому запуску не виявлено. Код k6 99 означає, що поріг затримки не виконано.')
     paragraph(d,f'Сталий фрагмент відновлення: p95 {ms(recovery["p95_ms"])} після 30 с graceful завершення та 5 с стабілізації. Повернення до SLO - приблизно {number(rec,1)} с після спаду, з кроком оцінки 5 с.')
 
+    paragraph(d,'Позначка FAIL означає, що під великим навантаженням p95 перевищив 500 мс. Після зменшення навантаження час відповіді повернувся до норми.')
+    screenshot(d,'03-stress',5,'Результати stress тесту')
+
     page(d,'5 Тестування сплеску Spike')
-    commit(d,'spike')
+    commit(links,'spike','Spike — коміт із тестом сплеску')
     paragraph(d,'Після сталого рівня 20 VU за 1 секунду підвищував навантаження до 1 000 VU, утримував його 30 секунд і за 1 секунду повертав до 20 VU. Активним ітераціям дозволено завершитися протягом gracefulRampDown 30 с. Сталу частину відновлення в таблиці виміряно після цього інтервалу та ще 5 с стабілізації; графік показує весь перехід.')
     plateaus=data['spike']['stable_plateaus']
     table(d,['Фаза','VU','Середній час','p95','Помилки'],[[{'before':'До сплеску','spike':'Сплеск','recovery':'Відновлення'}[k],r['target_vus'],ms(r['avg_ms']),ms(r['p95_ms']),pct(r['failure_rate'])] for k,r in plateaus.items()],[1.45,.6,1.8,1.65,1.5])
-    image(d,R/'spike-chart.png','Рисунок 3  Реакція API на короткий сплеск навантаження')
+    image(d,R/'spike-chart.png','Рисунок 6  Реакція API на короткий сплеск навантаження')
     sp=sums['spike']['metrics'];rec=data['spike']['recovery']['seconds_after_nominal_down_end']
-    paragraph(d,f'Усього завершилося {count(sp["http_reqs"]["values"]["count"])} запитів. Неочікуваних HTTP помилок не зафіксовано, всі перевірки пройдені, перерваних ітерацій у журналі немає. Це підтверджує відсутність зафіксованих втрат на HTTP рівні; окремого аудиту довговічності кожного запису цей сценарій не виконує.')
+    paragraph(d,f'За час тесту виконано {count(sp["http_reqs"]["values"]["count"])} запитів без неочікуваних HTTP помилок. Усі перевірки пройдені, перерваних ітерацій немає. Втрат запитів за журналом k6 не виявлено; збереження кожного окремого запису додатково не перевіряв.')
     paragraph(d,f'Після сплеску система повернулася до обраного SLO приблизно через {number(rec,1)} с після заданого спаду, з роздільністю 5 с. Критерій відновлення - перше з трьох послідовних 5-секундних вікон з p95 < 500 мс і помилками < 1 %. Після тесту перевірка БД знову показала 2 000 планів, 6 000 локацій і відсутність залишених тимчасових планів.')
 
+    screenshot(d,'04-spike',7,'Результати spike тесту')
+
     page(d,'6 Тривале тестування Endurance')
-    commit(d,'endurance')
+    commit(links,'endurance','Endurance — коміт із 30-хвилинним тестом')
     paragraph(d,'Виконав повний 30-хвилинний інтервал при 25 VU. Разом із 30-секундним розгоном і 30-секундним завершенням профіль триває 31 хвилину. Перші й останні п’ять хвилин сталого інтервалу порівняв окремо; розгін до цих значень не включений.')
+    screenshot(d,'06-endurance-start',8,'Початок endurance тесту')
+    paragraph(d,'Основне навантаження тривало 30 хвилин. Разом із розгоном і завершенням тест зайняв 31 хвилину.')
     e=data['endurance'];m=sums['endurance']['metrics']
     table(d,['Період','Запити','Середній час','p95','Помилки'],[[label,count(e[key]['requests']),ms(e[key]['avg_ms']),ms(e[key]['p95_ms']),pct(e[key]['failure_rate'])] for label,key in [('Перші 5 хв','first_5min'),('Останні 5 хв','last_5min')]],[1.45,1.15,1.7,1.5,1.2])
-    image(d,R/'endurance-chart.png','Рисунок 4  Метрики протягом повного тесту витривалості')
+    image(d,R/'endurance-chart.png','Рисунок 9  Метрики протягом повного тесту витривалості')
     mem=e['api_memory'];change=e['last_5min']['p95_ms']/e['first_5min']['p95_ms']-1
-    paragraph(d,f'Завершено {count(m["http_reqs"]["values"]["count"])} запитів; частка помилок - {pct(m["http_req_failed"]["values"]["rate"])}. Зміна p95 останніх п’яти хвилин відносно перших становить {number(change*100,1)} %. Висновок про стабільність обмежений цим 30-хвилинним запуском і навантаженням 25 VU.')
+    paragraph(d,f'За весь тест виконано {count(m["http_reqs"]["values"]["count"])} запитів, помилок - {pct(m["http_req_failed"]["values"]["rate"])}. За останні п’ять хвилин p95 змінився на {number(change*100,1)} % порівняно з першими. При 25 VU протягом цих 30 хвилин погіршення роботи не помітив.')
     minute_values=list(e['steady_minutes'].values())
     if all(row['p95_ms']<500 and row['failure_rate']<.01 for row in minute_values):
         paragraph(d,f'За обраним SLO деградації не виявлено: p95 у кожній із 30 хвилин залишався нижчим за 500 мс. Діапазон хвилинних p95 - від {ms(min(row["p95_ms"] for row in minute_values))} до {ms(max(row["p95_ms"] for row in minute_values))}.')
     else:
         paragraph(d,'Окремі хвилинні інтервали порушили обраний SLO; часовий графік показує їхнє розташування. Підсумкові агрегати слід оцінювати разом із цими відхиленнями.')
     paragraph(d,f'Медіани приватної пам’яті API у перших та останніх п’яти хвилинах сталого навантаження - {number(mem["first_5min_median_mb"],1)} та {number(mem["last_5min_median_mb"],1)} МБ, максимум - {number(mem["peak_mb"],1)} МБ. Початкове зростання припало на розгін. Для перевірки витоків потрібні довші запуски та профілювання heap.')
+    screenshot(d,'05-endurance',10,'Результати endurance тесту')
+    screenshot(d,'07-endurance-finish',11,'Завершення endurance тесту')
+
     page(d,'7 Додаткові завдання та відтворення')
-    heading(d,'GitHub Actions',2);commit(d,'ci','Коміт CI та експорту метрик 11adce7')
+    heading(d,'GitHub Actions',2);commit(links,'ci','Коміт із налаштуванням CI та експорту метрик')
     paragraph(d,'Додав окремий workflow k6 performance smoke. Він запускає PostgreSQL як нативний сервіс runner-а, встановлює Node.js і k6, готує тестову БД, очікує /health, виконує smoke зі строгими порогами й зберігає HTML звіт та JSON метрики як artifact. Цей запуск є перевіркою регресій; його швидкодію не порівнюю з локальним Windows baseline.')
-    p=paragraph(d);hyperlink(p,'Успішний запуск GitHub Actions 40375281221',ci['url'])
+    links.append((ci['url'],'Успішний запуск smoke у GitHub Actions'))
     table(d,['Крок CI','Результат'],[['Нативний PostgreSQL і схема','Успішно'],['Підготовка тестових даних та запуск API','Успішно'],['k6 smoke і перевірка порогів','Успішно'],['Збереження artifact','Успішно']],[5.45,1.55])
+    heading(d,'Виправлення середовища GitHub Actions',2)
+    paragraph(d,'Спочатку Hurl у CI не запускався через відсутню бібліотеку libxml2.so.2. Вибрав Ubuntu 24.04 і додав встановлення libxml2. Після цього пройшли всі 56 запитів Hurl і три тести конкурентного доступу. Код API та схему БД не змінював.')
+    proof=load(R/'ci-functional-proof.json')
+    links.append((BASE+'/commit/'+proof['head_sha'],'Коміт із виправленням запуску Hurl у CI'))
+    table(d,['Перевірка на цьому коміті','Результат'],[[r['name']+' / '+r['event'],r['conclusion']] for r in proof['runs']],[5.45,1.55])
+    screenshot(d,'08-ci-hurl',12,'Успішні тести Hurl у GitHub Actions')
+    screenshot(d,'09-ci-concurrency',13,'Успішні тести конкурентного доступу')
+
     heading(d,'Експорт і графіки',2)
-    paragraph(d,'Для всіх локальних тестів налаштував вбудований k6 web dashboard як засіб візуалізації, аналогічний за призначенням окремому dashboard сервісу. K6_WEB_DASHBOARD_EXPORT створює автономні HTML звіти, а --out json зберігає часові ряди. Графіки у цьому звіті побудовані зі справжніх JSON samples; метрики агреговані у 5-секундних вікнах. Це виконання двох додаткових завдань: CI та експорт метрик із візуалізацією.')
+    paragraph(d,'Для кожного тесту зберіг HTML звіт k6 web dashboard і метрики у JSON. Для цього використав K6_WEB_DASHBOARD_EXPORT та --out json. За збереженими даними побудував графіки з кроком 5 секунд. Як додаткові завдання виконав запуск smoke тесту в CI та експорт метрик із графіками.')
     heading(d,'Повторний запуск',2)
     paragraph(d,'Створити окрему БД traveler_lab2, встановити DATABASE_URL, виконати npm ci --omit=dev, node scripts/init-db.js та запустити API. Далі послідовно виконати scripts/run-performance.ps1 з параметром -Test smoke, load, stress, spike або endurance. Сценарії одночасно не запускати. Команди й параметри збережені у tests/performance-tests/README.md та *-run.json.')
     heading(d,'Висновок',2)
-    paragraph(d,'Встановлено baseline для незміненої реалізації TravelerAPI з першої лабораторної. За критерієм p95 < 500 мс підтверджено 200 одночасних користувачів у заданому сценарії. Stress і spike показали ріст затримок та відновлення після зменшення навантаження. Отримані дані дозволяють порівнювати наступні реалізації за однакового набору даних, профілю користувачів і середовища.')
-    heading(d,'Джерела',2)
+    paragraph(d,'У роботі перевірив TravelerAPI з першої лабораторної за допомогою п’яти тестів k6. При 200 одночасних користувачах p95 залишався нижчим за 500 мс. Під час stress і spike затримки зросли, але після зменшення навантаження API відновив нормальну роботу. За 30 хвилин endurance при 25 VU помилок і поступового погіршення не виявлено. Ці результати можна порівняти з наступними реалізаціями за тих самих умов.')
+    paragraph(d,'Використані методичні вказівки: SumDU.CS.DDS.Lab2v_1.pdf. Посилання на репозиторій та два основні коміти наведені наприкінці звіту.')
     for label,url in [
-        ('Методичні вказівки SumDU.CS.DDS.Lab2v_1.pdf',None),
         ('Початкові k6 сценарії викладача','https://github.com/potapuff/SumDU.DDS.25F.lab2'),
-        ('Grafana k6 Web dashboard','https://grafana.com/docs/k6/latest/results-output/web-dashboard/'),
-        ('Grafana k6 Scenarios','https://grafana.com/docs/k6/latest/using-k6/scenarios/'),
+        ('Документація k6 web dashboard','https://grafana.com/docs/k6/latest/results-output/web-dashboard/'),
+        ('Документація сценаріїв k6','https://grafana.com/docs/k6/latest/using-k6/scenarios/'),
     ]:
-        p=paragraph(d)
-        if url:hyperlink(p,label,url)
-        else:p.add_run(label)
-        p.paragraph_format.space_after=Pt(3)
-    paragraph(d,'Підготовка коду та звіту виконувалася за допомогою ChatGPT Codex. Числові результати отримані під час локальних запусків k6.')
-
-    page(d,'Додаток А. Smoke і Load: знімки результатів')
-    paragraph(d,'Нижче наведені PNG знімки збережених журналів k6 і GitHub Actions, відкритих у Блокноті та захоплених ShareX. Знімки зроблені після завершення запусків; вміст журналів не змінювався. Підсумки k6 охоплюють увесь запуск, а таблиці розділів 3–6 — окремі сталі інтервали, тому їхні p95 можуть відрізнятися.')
-    screenshot(d,'01-smoke',5,'Smoke: 1 222 запити, 1 504 успішні перевірки, 94 очікувані конфлікти версій','smoke-summary.txt')
-    screenshot(d,'02-load',6,'Load: 139 410 запитів; усі пороги для повного запуску виконані','load-summary.txt')
-
-    page(d,'Додаток Б. Stress і Spike: перевантаження')
-    paragraph(d,'FAIL для загального p95 тут фіксує заплановану деградацію при перевантаженні. Перевірки відповідей, частки HTTP помилок і p95 фази відновлення успішні; це узгоджується з аналізом у розділах 4–5.')
-    screenshot(d,'03-stress',7,'Stress: перевищено поріг затримки; поріг відновлення виконано','stress-summary.txt')
-    screenshot(d,'04-spike',8,'Spike: 75 207 запитів без HTTP помилок; після сплеску SLO відновлено','spike-summary.txt')
-
-    page(d,'Додаток В. Endurance: підсумок і профіль')
-    screenshot(d,'05-endurance',9,'Endurance: 869 465 запитів; усі перевірки та пороги успішні','endurance-summary.txt')
-    screenshot(d,'06-endurance-start',10,'Початок журналу Endurance: 25 VU, три стадії, профіль 31 хвилина','endurance-console.txt')
-    paragraph(d,'Сталий інтервал навантаження становить 30 хвилин. Ще по 30 секунд передбачено для розгону і завершення; максимальна тривалість із graceful stop у конфігурації — 31 хв 30 с.')
-
-    page(d,'Додаток Г. Завершення Endurance і Hurl у CI')
-    screenshot(d,'07-endurance-finish',11,'Завершення за 31 хв 00,2 с: 84 408 повних ітерацій, перерваних немає','endurance-console.txt')
-    screenshot(d,'08-ci-hurl',12,'GitHub Actions: 4 файли Hurl, 56 HTTP запитів, 100 % успіху','ci-functional-test-step.txt')
-
-    page(d,'Додаток Д. Конкурентні тести та стан CI')
-    screenshot(d,'09-ci-concurrency',13,'GitHub Actions: три тести конкурентного доступу пройдено, помилок немає','ci-functional-test-step.txt')
-    heading(d,'Виправлення середовища GitHub Actions',2)
-    paragraph(d,'Попередній функціональний workflow завершувався ще до виконання тестів: Hurl не знаходив libxml2.so.2 у новому ubuntu-latest. У гілці другої лабораторної зафіксував runner ubuntu-24.04 і додав встановлення libxml2. Реалізацію API та схему БД не змінював.')
-    proof=load(R/'ci-functional-proof.json')
-    p=paragraph(d);hyperlink(p,'Коміт виправлення CI '+proof['head_sha'][:7],BASE+'/commit/'+proof['head_sha'])
-    table(d,['Перевірка на цьому коміті','Результат'],[[r['name']+' / '+r['event'],r['conclusion']] for r in proof['runs']],[5.45,1.55])
-    for r in proof['runs']:
-        p=paragraph(d);hyperlink(p,r['name']+' ('+r['event']+') — запуск '+str(r['id']),r['url'])
-        p.paragraph_format.space_after=Pt(3)
-    paragraph(d,'Старі червоні позначки залишаються в історії попередніх комітів. Вони не змінюють результат успішних запусків після виправлення. Оригінали PNG, журнали й метадані захоплення з SHA-256 збережені в архіві роботи.')
+        links.append((url,label))
+    heading(d,'Посилання',2)
+    links=[
+        (BASE+'/tree/lab2-performance','Код лабораторної та результати тестів'),
+        (BASE+'/commit/'+COMMITS['smoke'],'Початковий коміт зі smoke тестом'),
+        (BASE+'/commit/'+COMMITS['endurance'],'Коміт із 30-хвилинним тестом'),
+    ]
+    for url,label in links:
+        p=paragraph(d);hyperlink(p,url,url);p.add_run(' — '+label)
+        p.paragraph_format.keep_together=True
     # The bundled Word template adds a blue rule to Title. Keep academic titles plain.
     for root in (d.element,d.styles.element):
         for border in list(root.xpath('.//w:pBdr')):
             border.getparent().remove(border)
+    apply_times_14(d)
     output=Path(output);output.parent.mkdir(parents=True,exist_ok=True);d.save(output)
     print(output)
 
