@@ -1,0 +1,60 @@
+{
+  "report": "TravelerAPI_Lab3_Samonov.docx",
+  "reportSha256": "85c7bb40039bceb9d06785d002bc288f5cdfbe451df928c1f5491f3d9c568360",
+  "pages": 16,
+  "figures": 20,
+  "font": "Times New Roman",
+  "fontSizePt": 14,
+  "all16PagesVisuallyReviewed": true,
+  "allTextFontSizesValidatedInPDF": true,
+  "benchmarkRunsCompleted": 5,
+  "k6ExitCodes": {
+    "smoke": 0,
+    "load": 99,
+    "stress": 99,
+    "spike": 99,
+    "endurance": 0
+  },
+  "hurlRequestsPassed": 56,
+  "concurrencyTestsPassed": 3,
+  "postStressTemporaryPlans": 34,
+  "finalDataCheck": {
+    "checkedUtc": "2026-10-28T18:20:41.297Z",
+    "plans": 2000,
+    "locations": 6000,
+    "temporary_plans": 0,
+    "orphan_locations": 0
+  },
+  "persistence": "PASS",
+  "resultsCommit": "fd0165979705c7cc7df40050d20d158262d5edd4",
+  "dockerCiRun": 40744651898,
+  "functionalCiRun": 40744651889,
+  "ciConclusions": "success",
+  "rawMeasurements": [
+    {
+      "file": "tests/performance-tests/results-docker/endurance-raw.json.gz",
+      "bytes": 52564488,
+      "sha256": "c6393cdf24a6c9cac108f6fd2ae263803d492c51315d1e07969b9354dfd411f0"
+    },
+    {
+      "file": "tests/performance-tests/results-docker/load-raw.json.gz",
+      "bytes": 5936465,
+      "sha256": "ab6254ba295046eea69009eff3c349dd8287861a71e73e33a3079bd85dc5664a"
+    },
+    {
+      "file": "tests/performance-tests/results-docker/smoke-raw.json.gz",
+      "bytes": 125711,
+      "sha256": "c2bc84adfe316610e996401f16c01a9201051adc60903206c8e03a3409911988"
+    },
+    {
+      "file": "tests/performance-tests/results-docker/spike-raw.json.gz",
+      "bytes": 3460184,
+      "sha256": "8f003a5f032c9349dbc59ed128c7a7fad012494251fad40574ace144213c8566"
+    },
+    {
+      "file": "tests/performance-tests/results-docker/stress-raw.json.gz",
+      "bytes": 9262819,
+      "sha256": "e83f80621a5afcee20d4e597e77e9663a6899023a709319baf7f3cf7bab41d97"
+    }
+  ]
+}
