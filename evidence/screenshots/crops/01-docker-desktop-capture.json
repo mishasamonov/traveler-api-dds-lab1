@@ -1,0 +1,13 @@
+{
+  "captureFile": "01-docker-desktop-full.png",
+  "captureSha256": "f43658269e3ee04d157b7d2bd15e19787cd60047522b4ee2185d270ff648c24d",
+  "outputSha256": "b419c55933bd2621ea0f5ab6dd5f63c530a0e4da51a71ee22e16fd3723a46d2d",
+  "originalFormat": "PNG",
+  "method": "Native ShareX ActiveWindow capture; lossless table crop excluding pointer; no resampling",
+  "crop": [
+    500,
+    395,
+    1580,
+    600
+  ]
+}

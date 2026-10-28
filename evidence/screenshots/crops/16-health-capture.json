@@ -1,0 +1,15 @@
+{
+  "sourceFile": "evidence/health.txt",
+  "sourceSha256": "e37598d8934bd69807a0db0358bd093ac20ef7aedbbd46caeca49c9c3b894b67",
+  "captureFile": "16-health.jpg",
+  "captureSha256": "d2c793423a72b49d33924c5877d6bcda8b0c58f4b2d0280b028c09a711b2f499",
+  "outputSha256": "6fdaaa57edb1d8b7c8c80e8e973af3477f2e24d218747f829aadb2e0c4e6d16f",
+  "originalFormat": "JPEG",
+  "method": "Genuine browser screenshot of saved command output; whitespace crop saved as PNG, no resampling or text reconstruction",
+  "crop": [
+    25,
+    21,
+    465,
+    135
+  ]
+}

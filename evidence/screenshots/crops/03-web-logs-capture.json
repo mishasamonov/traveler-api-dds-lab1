@@ -1,0 +1,15 @@
+{
+  "sourceFile": "evidence/web-logs-follow.txt",
+  "sourceSha256": "836f3202c70a71a2adc3b718f3674945d0b9d3d624fc5c0d8b4b503d9d7d1a70",
+  "captureFile": "03-web-logs.jpg",
+  "captureSha256": "5e17690cec679c00f4ca9eb9d655b47c30c5e23442cfa1d09e8b33fdd367b1e5",
+  "outputSha256": "b511d418032bb916e670593f5434bafcf24196f79a21f5638d73c3b529633a4c",
+  "originalFormat": "JPEG",
+  "method": "Genuine browser screenshot of saved command output; whitespace crop saved as PNG, no resampling or text reconstruction",
+  "crop": [
+    24,
+    21,
+    804,
+    320
+  ]
+}

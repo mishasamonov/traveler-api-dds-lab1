@@ -1,0 +1,15 @@
+{
+  "sourceFile": "evidence/hurl-result.txt",
+  "sourceSha256": "a3c24cac9994c5e9a137f63f783c36e7a2f65730cf3b53b3b539234fb6357872",
+  "captureFile": "05-hurl.jpg",
+  "captureSha256": "ae1973d1b64654b9c29167f5276aa907edd8c5fe4298b5f063a020280a799473",
+  "outputSha256": "5a0e4a2d8f3ea9a2a2acc94c255b2ba68dd992d17961e020c9b2aee0042c3bc8",
+  "originalFormat": "JPEG",
+  "method": "Genuine browser screenshot of saved command output; whitespace crop saved as PNG, no resampling or text reconstruction",
+  "crop": [
+    25,
+    21,
+    926,
+    373
+  ]
+}

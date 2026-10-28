@@ -1,0 +1,15 @@
+{
+  "sourceFile": "evidence/persistence.txt",
+  "sourceSha256": "e3850c34ac940430dc097e3346f745d0d6e7105495aef55a0024394ffdee664c",
+  "captureFile": "15-persistence.jpg",
+  "captureSha256": "d75fe7e8871fbd3ee2e0218ce99eae1f26fc68aefc67eb9256415f0781e3819b",
+  "outputSha256": "c1e8a6e3fa5fb6acf99a1e0f465f55f19fe7eb0681df1a8e59303b32260cfda1",
+  "originalFormat": "JPEG",
+  "method": "Genuine browser screenshot of saved command output; whitespace crop saved as PNG, no resampling or text reconstruction",
+  "crop": [
+    25,
+    21,
+    762,
+    346
+  ]
+}

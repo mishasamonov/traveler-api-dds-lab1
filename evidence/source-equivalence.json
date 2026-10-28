@@ -1,0 +1,170 @@
+[
+  {
+    "path": "src/app.js",
+    "sha256": "1d127fc6f04a7f3e89a6832a25b52e082ba399331a5a377182550c666ae4269f",
+    "matches_lab2": true,
+    "normalized_sha256": "7ef17e94c43ba806a4875a7de38e2b773b405487789160fede6511e222123eed",
+    "matches_lab2_normalized_newlines": true
+  },
+  {
+    "path": "src/db.js",
+    "sha256": "29823bfe054a2f9115dd560ecd3ea78e2499d02e336724edbe3c9e4f85361fd9",
+    "matches_lab2": true,
+    "normalized_sha256": "6b07484f562428b5107e9f5916b189ad79a31ce4944154d31a3ce0a3958b143b",
+    "matches_lab2_normalized_newlines": true
+  },
+  {
+    "path": "src/server.js",
+    "sha256": "5f7271efb8ec0e9d27a362824bf53fbfefd42b45f3c3e327a06834661dd82526",
+    "matches_lab2": true,
+    "normalized_sha256": "a54cdbb0553eda8ce285c6195b3982de96d8b5def90a2a11f7caa0a757ac4781",
+    "matches_lab2_normalized_newlines": true
+  },
+  {
+    "path": "src/validation.js",
+    "sha256": "c205b0a14db77a211ab8a205911ece4086f235ec70d2dfca05025c45ae8ddda1",
+    "matches_lab2": true,
+    "normalized_sha256": "426a3402028d5b63b6bec96d435de09f537aba36449842648bc458ffecde6312",
+    "matches_lab2_normalized_newlines": true
+  },
+  {
+    "path": "db/002_location_version.sql",
+    "sha256": "3643d1a047694bce239ca2117d2b26311cbe32ec1ea402001aa381fff5655c79",
+    "matches_lab2": true,
+    "normalized_sha256": "150a4e47de488a405a172dc8e9ccd43fa0aabaf203a066a211d89383293b955b",
+    "matches_lab2_normalized_newlines": true
+  },
+  {
+    "path": "db/schema.sql",
+    "sha256": "2589d5abbcca0215e39a8f77c5987c48cf6c0917515563006f4533e8715a7197",
+    "matches_lab2": true,
+    "normalized_sha256": "6bd5ce58c5db00aaa78b86f13d09ebb91e623a26a12ca4cee15525427e3f8b40",
+    "matches_lab2_normalized_newlines": true
+  },
+  {
+    "path": "tests/crud.hurl",
+    "sha256": "7bc189c074618e30c2b88b78e96202fb04ce8c6ed75498e123289114eb96d6b7",
+    "matches_lab2": true,
+    "normalized_sha256": "a0ff6a234182bf5e2fddc33fa784751cb0dc172c9a4778592bce12c8db333561",
+    "matches_lab2_normalized_newlines": true
+  },
+  {
+    "path": "tests/management.hurl",
+    "sha256": "29aa926e72c71a20c27d00a81dd754fe31c956c76e9b48e8fa378e536ea34ae2",
+    "matches_lab2": true,
+    "normalized_sha256": "cded12971533534a8ca2f6ba59829957c77f1a144aa0d616604b65f351ce4854",
+    "matches_lab2_normalized_newlines": true
+  },
+  {
+    "path": "tests/race-conditions.hurl",
+    "sha256": "d01747954f7e63c695a681740a0682d765528cadf43476adebda754109be8a66",
+    "matches_lab2": true,
+    "normalized_sha256": "ffae7835258589d59098f4606eb1d8fd370c06c369a692b7b9fca436b0abd956",
+    "matches_lab2_normalized_newlines": true
+  },
+  {
+    "path": "tests/validation.hurl",
+    "sha256": "600b303f71d8e033ba72eb2a71fa0bf8bd88b0d9cff37d41b8768d69bcf74ddd",
+    "matches_lab2": true,
+    "normalized_sha256": "f4f7f05f8c554ef1e098d67b4f21085abef8011f1332f952d26f4c0776e80b39",
+    "matches_lab2_normalized_newlines": true
+  },
+  {
+    "path": "tests/performance-tests/endurance-test.js",
+    "sha256": "12b4880624184119a695b5fd375792aac5bb0392e4291e45d93906904e0ccc19",
+    "matches_lab2": false,
+    "normalized_sha256": "d5c4cc7de0f29f6f75bf17b79f04505647d6e81c44de18760ffdc24bf923108c",
+    "matches_lab2_normalized_newlines": true
+  },
+  {
+    "path": "tests/performance-tests/load-test.js",
+    "sha256": "abb1fd17f97435e69eb57c7cbfafa50f52a86db1f9da2b102df3f705819789af",
+    "matches_lab2": false,
+    "normalized_sha256": "1ffe67e306242b4e91355319c5ad9f5489c1376d9bcc95ec6c034c69f1d8fa3a",
+    "matches_lab2_normalized_newlines": true
+  },
+  {
+    "path": "tests/performance-tests/smoke-test.js",
+    "sha256": "54eae5ee6db6d998247541ebbebf7caae6868a0ae35423c0a24bafaab73cfdd8",
+    "matches_lab2": false,
+    "normalized_sha256": "7cbe2dbc4b445da18930d0d0c257306c6f61a23f0c1cb9b3794f2d779559f4d3",
+    "matches_lab2_normalized_newlines": true
+  },
+  {
+    "path": "tests/performance-tests/spike-test.js",
+    "sha256": "1e03eb29e395c42ab276838204b3ea2cf28e9898e1641d45595ac4e6d11173a5",
+    "matches_lab2": false,
+    "normalized_sha256": "d00140d98b579027bed21febeb369778c07a18342dd7b2c4e2b080c7ba21bf32",
+    "matches_lab2_normalized_newlines": true
+  },
+  {
+    "path": "tests/performance-tests/stress-test.js",
+    "sha256": "4c7653f9f2b9bb4f2e7bb6067efdaa48beca396b2adcc27c8681a889d9337356",
+    "matches_lab2": false,
+    "normalized_sha256": "8e940ed02f47f0bef0d59665a60db35be97719e3e46e14f1d3be6733b924b198",
+    "matches_lab2_normalized_newlines": true
+  },
+  {
+    "path": "tests/performance-tests/config/endpoints.js",
+    "sha256": "6456af79ad3bb1350f6d47eb4bf33b349200ef9fbcc926989032a38e53576cd0",
+    "matches_lab2": false,
+    "normalized_sha256": "1d389aa9a0a77d203e464450bb7b7ac44c9b8283e020ef3c9344632db7cc8541",
+    "matches_lab2_normalized_newlines": true
+  },
+  {
+    "path": "tests/performance-tests/instructor/api-client.original.js",
+    "sha256": "0dfeacd8f2722ac41b08f54a561531cfc58185e3c9d312d07edde7e1e56048f3",
+    "matches_lab2": true,
+    "normalized_sha256": "374da24ee1df0f0218bc97c82db3319eb83c4f143e26f082995ac8916f746b96",
+    "matches_lab2_normalized_newlines": true
+  },
+  {
+    "path": "tests/performance-tests/instructor/endpoints.original.js",
+    "sha256": "542079eb229bb611fd102aef8a716283d54823b184a4700aabf7ae3eb70e08c7",
+    "matches_lab2": true,
+    "normalized_sha256": "13b5603d28333ef67df62796e7c7a35b2dbd53a50905095b5d35153faebd0a74",
+    "matches_lab2_normalized_newlines": true
+  },
+  {
+    "path": "tests/performance-tests/instructor/smoke-test.original.js",
+    "sha256": "3409e0d406817912e28e0d322a1d9bf23059545d29fd9e318155bf1181a38827",
+    "matches_lab2": true,
+    "normalized_sha256": "4fc1e5b1cf2ae20776135d1099f07b6f298a9605e64a225b89fc9a530881119f",
+    "matches_lab2_normalized_newlines": true
+  },
+  {
+    "path": "tests/performance-tests/utils/api-client.js",
+    "sha256": "d0e1bd761f2baa9e0a1e087e3a36355b0fd8321126f4b6700253260c26b9802f",
+    "matches_lab2": false,
+    "normalized_sha256": "2a9bde2ced7781b89ef706093dfa515b019a4e45e46cce0fa135bfbbab7a282a",
+    "matches_lab2_normalized_newlines": true
+  },
+  {
+    "path": "tests/performance-tests/utils/data-generator.js",
+    "sha256": "2cfd0fb4a93279d2d98f886e21c078fbacbe4a07a5d553d2b0824644e0473847",
+    "matches_lab2": true,
+    "normalized_sha256": "da4a6e68dd5b9a902d4d51b81fb1fd1fdfb4136873002dc80963479efb82bee5",
+    "matches_lab2_normalized_newlines": true
+  },
+  {
+    "path": "tests/performance-tests/utils/summary.js",
+    "sha256": "66b280bbcea0202a11c1e5313a5d1d12c6c9089b7467d04ba4eaee28231251c3",
+    "matches_lab2": false,
+    "normalized_sha256": "e87a27b238aa0df53f954535d786a39a2bf57e62a99936c2a1cbf33931d992ba",
+    "matches_lab2_normalized_newlines": true
+  },
+  {
+    "path": "tests/performance-tests/utils/workload.js",
+    "sha256": "2e559eedf8eed2d2fc2059bfdab5911449b9635921ebb2e25f093b2f7c5c9771",
+    "matches_lab2": false,
+    "normalized_sha256": "34874c66b19d3cff01c42d0b7364e37101ad08eb3f962be2f6ec39980905dc31",
+    "matches_lab2_normalized_newlines": true
+  },
+  {
+    "path": "package-lock.json",
+    "sha256": "32df745affc0b9452fa1fc549756d38c298e59e5b8a74d0618a902bb3f8d0b82",
+    "matches_lab2": true,
+    "normalized_sha256": "a8fcfb17ab158cabde280cdb765206e615b4681d96cd7b7d5083bfb10806396e",
+    "matches_lab2_normalized_newlines": true
+  }
+]

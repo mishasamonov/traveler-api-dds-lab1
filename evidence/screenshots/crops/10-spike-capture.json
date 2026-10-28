@@ -1,0 +1,15 @@
+{
+  "sourceFile": "tests/performance-tests/results-docker/spike-summary.txt",
+  "sourceSha256": "2fbbee0267e66af162fcb3be7096ae6b1cdfd3fa8ab368e0050523661db3ce18",
+  "captureFile": "10-spike.jpg",
+  "captureSha256": "4a09b381fc7eca03130cb048ba45fd40b2a61775f7b2e5590ea1458f33ab5598",
+  "outputSha256": "5e44a7f2a946f504046f9bb3f3219f4624117f95860d9278c4df054e062304db",
+  "originalFormat": "JPEG",
+  "method": "Genuine browser screenshot of saved command output; whitespace crop saved as PNG, no resampling or text reconstruction",
+  "crop": [
+    24,
+    21,
+    1056,
+    531
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "sourceFile": "tests/performance-tests/results-docker/endurance-summary.txt",
+  "sourceSha256": "178006f3b93975fff9a6d03df7549f86f98104809e509d678d2c3d9bb2afbf2d",
+  "captureFile": "13-endurance.jpg",
+  "captureSha256": "b121af5127fa09b8535dc59a6231de886a34ce785e1ec1ba04e9b22ec36eb514",
+  "outputSha256": "9be06371027b7b1ce814908e7ac41166a44f94c87d63fb73815172ac2ecfe88b",
+  "originalFormat": "JPEG",
+  "method": "Genuine browser screenshot of saved command output; whitespace crop saved as PNG, no resampling or text reconstruction",
+  "crop": [
+    24,
+    21,
+    1045,
+    505
+  ]
+}

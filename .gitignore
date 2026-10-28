@@ -10,4 +10,6 @@ tests/performance-tests/results/*.json.gz
 __pycache__/
 *.pyc
 output/
+.captures/
+tests/performance-tests/results-docker/*.json.gz
 

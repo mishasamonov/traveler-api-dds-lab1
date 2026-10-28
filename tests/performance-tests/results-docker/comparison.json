@@ -1,0 +1,612 @@
+{
+  "whole_runs": [
+    {
+      "test": "smoke",
+      "baseline": {
+        "avg_ms": 2.9682879705400977,
+        "p95_ms": 6.5831500000000025,
+        "requests": 1222,
+        "rps": 60.606258689304546,
+        "failure_rate": 0,
+        "http_failures": 0,
+        "failed_checks": 0
+      },
+      "docker": {
+        "avg_ms": 4.468042086648984,
+        "p95_ms": 8.0171,
+        "requests": 1131,
+        "rps": 55.5051856492643,
+        "failure_rate": 0,
+        "http_failures": 0,
+        "failed_checks": 0
+      },
+      "p95_change_pct": 21.7821255781806
+    },
+    {
+      "test": "load",
+      "baseline": {
+        "avg_ms": 58.613258656480554,
+        "p95_ms": 190.94680499999993,
+        "requests": 139410,
+        "rps": 817.902234726684,
+        "failure_rate": 0,
+        "http_failures": 0,
+        "failed_checks": 0
+      },
+      "docker": {
+        "avg_ms": 143.94799237448046,
+        "p95_ms": 547.9404,
+        "requests": 79011,
+        "rps": 463.4952124518836,
+        "failure_rate": 0,
+        "http_failures": 0,
+        "failed_checks": 0
+      },
+      "p95_change_pct": 186.95971110907047
+    },
+    {
+      "test": "stress",
+      "baseline": {
+        "avg_ms": 894.8916224010594,
+        "p95_ms": 2817.1762799999997,
+        "requests": 234123,
+        "rps": 779.5560161330786,
+        "failure_rate": 0,
+        "http_failures": 0,
+        "failed_checks": 0
+      },
+      "docker": {
+        "avg_ms": 1919.4720667711986,
+        "p95_ms": 6382.772424999997,
+        "requests": 117708,
+        "rps": 392.19632653729576,
+        "failure_rate": 0.0817616474666123,
+        "http_failures": 9624,
+        "failed_checks": 9624
+      },
+      "p95_change_pct": 126.56631288262865
+    },
+    {
+      "test": "spike",
+      "baseline": {
+        "avg_ms": 464.82956918637746,
+        "p95_ms": 1293.21891,
+        "requests": 75207,
+        "rps": 567.5389319542592,
+        "failure_rate": 0,
+        "http_failures": 0,
+        "failed_checks": 0
+      },
+      "docker": {
+        "avg_ms": 906.4413662547709,
+        "p95_ms": 4843.3060000000005,
+        "requests": 42809,
+        "rps": 323.54253789026507,
+        "failure_rate": 0.10196454016678735,
+        "http_failures": 4365,
+        "failed_checks": 4365
+      },
+      "p95_change_pct": 274.5155566894703
+    },
+    {
+      "test": "endurance",
+      "baseline": {
+        "avg_ms": 3.716031336971713,
+        "p95_ms": 8.1495,
+        "requests": 869465,
+        "rps": 467.4042899470613,
+        "failure_rate": 0,
+        "http_failures": 0,
+        "failed_checks": 0
+      },
+      "docker": {
+        "avg_ms": 20.53322960131614,
+        "p95_ms": 69.73934499999994,
+        "requests": 656660,
+        "rps": 352.9825914057094,
+        "failure_rate": 0,
+        "http_failures": 0,
+        "failed_checks": 0
+      },
+      "p95_change_pct": 755.749984661635
+    }
+  ],
+  "plateaus": {
+    "load": {
+      "load25": {
+        "baseline": {
+          "target_vus": 25,
+          "from_s": 15,
+          "to_s": 35,
+          "requests": 9423,
+          "avg_ms": 4.147017287488061,
+          "p95_ms": 9.764879999999996,
+          "p99_ms": 12.239112000000024,
+          "max_ms": 54.2587,
+          "failures": 0,
+          "failure_rate": 0.0,
+          "rps": 471.15
+        },
+        "docker": {
+          "target_vus": 25,
+          "from_s": 15,
+          "to_s": 35,
+          "requests": 9026,
+          "avg_ms": 6.4811340904054955,
+          "p95_ms": 12.67025,
+          "p99_ms": 30.538549999999997,
+          "max_ms": 152.5025,
+          "failures": 0,
+          "failure_rate": 0.0,
+          "rps": 451.3
+        }
+      },
+      "load50": {
+        "baseline": {
+          "target_vus": 50,
+          "from_s": 55,
+          "to_s": 75,
+          "requests": 16073,
+          "avg_ms": 12.975569022584457,
+          "p95_ms": 35.4756,
+          "p99_ms": 49.50733600000004,
+          "max_ms": 90.6754,
+          "failures": 0,
+          "failure_rate": 0.0,
+          "rps": 803.65
+        },
+        "docker": {
+          "target_vus": 50,
+          "from_s": 55,
+          "to_s": 75,
+          "requests": 9976,
+          "avg_ms": 51.30400242582198,
+          "p95_ms": 105.681325,
+          "p99_ms": 162.929675,
+          "max_ms": 208.6326,
+          "failures": 0,
+          "failure_rate": 0.0,
+          "rps": 498.8
+        }
+      },
+      "load100": {
+        "baseline": {
+          "target_vus": 100,
+          "from_s": 95,
+          "to_s": 115,
+          "requests": 18759,
+          "avg_ms": 56.40490091156245,
+          "p95_ms": 114.64067999999997,
+          "p99_ms": 157.29422399999942,
+          "max_ms": 376.1175,
+          "failures": 0,
+          "failure_rate": 0.0,
+          "rps": 937.95
+        },
+        "docker": {
+          "target_vus": 100,
+          "from_s": 95,
+          "to_s": 115,
+          "requests": 9704,
+          "avg_ms": 158.8585601710635,
+          "p95_ms": 331.08637999999996,
+          "p99_ms": 379.104871,
+          "max_ms": 446.1127,
+          "failures": 0,
+          "failure_rate": 0.0,
+          "rps": 485.2
+        }
+      },
+      "load200": {
+        "baseline": {
+          "target_vus": 200,
+          "from_s": 135,
+          "to_s": 155,
+          "requests": 21475,
+          "avg_ms": 135.44417071478463,
+          "p95_ms": 235.52105,
+          "p99_ms": 259.00250199999994,
+          "max_ms": 297.0117,
+          "failures": 0,
+          "failure_rate": 0.0,
+          "rps": 1073.75
+        },
+        "docker": {
+          "target_vus": 200,
+          "from_s": 135,
+          "to_s": 155,
+          "requests": 9420,
+          "avg_ms": 373.28133333333335,
+          "p95_ms": 712.0489599999999,
+          "p99_ms": 770.1584159999996,
+          "max_ms": 853.3531,
+          "failures": 0,
+          "failure_rate": 0.0,
+          "rps": 471.0
+        }
+      }
+    },
+    "stress": {
+      "stress200": {
+        "baseline": {
+          "target_vus": 200,
+          "from_s": 15,
+          "to_s": 50,
+          "requests": 31706,
+          "avg_ms": 167.91413639689648,
+          "p95_ms": 262.85885,
+          "p99_ms": 320.39441000000005,
+          "max_ms": 405.4417,
+          "failures": 0,
+          "failure_rate": 0.0,
+          "rps": 905.8857142857142
+        },
+        "docker": {
+          "target_vus": 200,
+          "from_s": 15,
+          "to_s": 50,
+          "requests": 16264,
+          "avg_ms": 380.7675299495819,
+          "p95_ms": 715.9224,
+          "p99_ms": 781.262917,
+          "max_ms": 871.608,
+          "failures": 0,
+          "failure_rate": 0.0,
+          "rps": 464.6857142857143
+        }
+      },
+      "stress500": {
+        "baseline": {
+          "target_vus": 500,
+          "from_s": 70,
+          "to_s": 105,
+          "requests": 27406,
+          "avg_ms": 586.0694915201051,
+          "p95_ms": 952.5007750000001,
+          "p99_ms": 1088.2188050000002,
+          "max_ms": 1381.9021,
+          "failures": 0,
+          "failure_rate": 0.0,
+          "rps": 783.0285714285715
+        },
+        "docker": {
+          "target_vus": 500,
+          "from_s": 70,
+          "to_s": 105,
+          "requests": 11875,
+          "avg_ms": 1445.1997898442105,
+          "p95_ms": 2600.99739,
+          "p99_ms": 2898.9516000000012,
+          "max_ms": 3237.0275,
+          "failures": 0,
+          "failure_rate": 0.0,
+          "rps": 339.2857142857143
+        }
+      },
+      "stress1000": {
+        "baseline": {
+          "target_vus": 1000,
+          "from_s": 125,
+          "to_s": 160,
+          "requests": 37222,
+          "avg_ms": 884.337671573263,
+          "p95_ms": 1454.6853899999994,
+          "p99_ms": 1757.450865,
+          "max_ms": 2017.6691,
+          "failures": 0,
+          "failure_rate": 0.0,
+          "rps": 1063.4857142857143
+        },
+        "docker": {
+          "target_vus": 1000,
+          "from_s": 125,
+          "to_s": 160,
+          "requests": 13654,
+          "avg_ms": 2654.19465527318,
+          "p95_ms": 4729.924175,
+          "p99_ms": 5184.603192,
+          "max_ms": 5483.652,
+          "failures": 0,
+          "failure_rate": 0.0,
+          "rps": 390.1142857142857
+        }
+      },
+      "stress2000": {
+        "baseline": {
+          "target_vus": 2000,
+          "from_s": 180,
+          "to_s": 215,
+          "requests": 29269,
+          "avg_ms": 2354.7213692063274,
+          "p95_ms": 4002.40406,
+          "p99_ms": 4421.377463999999,
+          "max_ms": 4875.2116,
+          "failures": 0,
+          "failure_rate": 0.0,
+          "rps": 836.2571428571429
+        },
+        "docker": {
+          "target_vus": 2000,
+          "from_s": 180,
+          "to_s": 215,
+          "requests": 15518,
+          "avg_ms": 4359.635009492203,
+          "p95_ms": 7622.72545,
+          "p99_ms": 9158.252800999999,
+          "max_ms": 9770.3029,
+          "failures": 4748,
+          "failure_rate": 0.30596726382265754,
+          "rps": 443.37142857142857
+        }
+      },
+      "recovery": {
+        "baseline": {
+          "target_vus": 20,
+          "from_s": 265,
+          "to_s": 285,
+          "requests": 7642,
+          "avg_ms": 3.5550068830149177,
+          "p95_ms": 8.217369999999999,
+          "p99_ms": 14.126181000000024,
+          "max_ms": 33.0919,
+          "failures": 0,
+          "failure_rate": 0.0,
+          "rps": 382.1
+        },
+        "docker": {
+          "target_vus": 20,
+          "from_s": 265,
+          "to_s": 285,
+          "requests": 6824,
+          "avg_ms": 9.196410257913247,
+          "p95_ms": 20.275475,
+          "p99_ms": 42.77453500000006,
+          "max_ms": 146.2216,
+          "failures": 173,
+          "failure_rate": 0.025351699882766705,
+          "rps": 341.2
+        }
+      }
+    },
+    "spike": {
+      "before": {
+        "baseline": {
+          "target_vus": 20,
+          "from_s": 10,
+          "to_s": 30,
+          "requests": 7656,
+          "avg_ms": 3.29328697753396,
+          "p95_ms": 6.773075,
+          "p99_ms": 9.347809999999992,
+          "max_ms": 45.7677,
+          "failures": 0,
+          "failure_rate": 0.0,
+          "rps": 382.8
+        },
+        "docker": {
+          "target_vus": 20,
+          "from_s": 10,
+          "to_s": 30,
+          "requests": 6860,
+          "avg_ms": 9.210960204081632,
+          "p95_ms": 21.368135000000006,
+          "p99_ms": 46.10029399999999,
+          "max_ms": 90.2452,
+          "failures": 0,
+          "failure_rate": 0.0,
+          "rps": 343.0
+        }
+      },
+      "spike": {
+        "baseline": {
+          "target_vus": 1000,
+          "from_s": 41,
+          "to_s": 61,
+          "requests": 23296,
+          "avg_ms": 799.5952550180288,
+          "p95_ms": 1360.8994500000001,
+          "p99_ms": 1584.50955,
+          "max_ms": 1791.6197,
+          "failures": 0,
+          "failure_rate": 0.0,
+          "rps": 1164.8
+        },
+        "docker": {
+          "target_vus": 1000,
+          "from_s": 41,
+          "to_s": 61,
+          "requests": 5940,
+          "avg_ms": 3337.385572188552,
+          "p95_ms": 5318.96859,
+          "p99_ms": 5874.564737999997,
+          "max_ms": 6971.799,
+          "failures": 910,
+          "failure_rate": 0.1531986531986532,
+          "rps": 297.0
+        }
+      },
+      "recovery": {
+        "baseline": {
+          "target_vus": 20,
+          "from_s": 102,
+          "to_s": 122,
+          "requests": 7603,
+          "avg_ms": 3.672666105484677,
+          "p95_ms": 7.843859999999999,
+          "p99_ms": 10.253891999999995,
+          "max_ms": 110.245,
+          "failures": 0,
+          "failure_rate": 0.0,
+          "rps": 380.15
+        },
+        "docker": {
+          "target_vus": 20,
+          "from_s": 102,
+          "to_s": 122,
+          "requests": 6325,
+          "avg_ms": 12.542330877470354,
+          "p95_ms": 35.45620000000002,
+          "p99_ms": 69.32000800000003,
+          "max_ms": 142.7208,
+          "failures": 989,
+          "failure_rate": 0.15636363636363637,
+          "rps": 316.25
+        }
+      }
+    },
+    "endurance": {
+      "steady": {
+        "baseline": {
+          "target_vus": 25,
+          "from_s": 35,
+          "to_s": 1825,
+          "requests": 850252,
+          "avg_ms": 3.717722293155441,
+          "p95_ms": 8.1567,
+          "p99_ms": 11.264448999999999,
+          "max_ms": 642.2607,
+          "failures": 0,
+          "failure_rate": 0.0,
+          "rps": 475.0011173184358
+        },
+        "docker": {
+          "target_vus": 25,
+          "from_s": 35,
+          "to_s": 1825,
+          "requests": 643542,
+          "avg_ms": 20.39060020822262,
+          "p95_ms": 69.24319,
+          "p99_ms": 99.19152099999994,
+          "max_ms": 1683.1142,
+          "failures": 0,
+          "failure_rate": 0.0,
+          "rps": 359.52067039106146
+        }
+      }
+    }
+  },
+  "resources": {
+    "smoke": {
+      "web": {
+        "samples": 4,
+        "cpu_mean_pct": 8.985,
+        "cpu_peak_pct": 16.43,
+        "memory_peak_mib": 27.67,
+        "memory_median_mib": 24.735
+      },
+      "postgres": {
+        "samples": 4,
+        "cpu_mean_pct": 6.3425,
+        "cpu_peak_pct": 11.59,
+        "memory_peak_mib": 58.97,
+        "memory_median_mib": 44.415
+      }
+    },
+    "load": {
+      "web": {
+        "samples": 26,
+        "cpu_mean_pct": 51.74538461538461,
+        "cpu_peak_pct": 63.58,
+        "memory_peak_mib": 33.89,
+        "memory_median_mib": 30.71
+      },
+      "postgres": {
+        "samples": 26,
+        "cpu_mean_pct": 167.2842307692308,
+        "cpu_peak_pct": 204.69,
+        "memory_peak_mib": 101.1,
+        "memory_median_mib": 87.86
+      }
+    },
+    "stress": {
+      "web": {
+        "samples": 46,
+        "cpu_mean_pct": 66.87065217391304,
+        "cpu_peak_pct": 137.26,
+        "memory_peak_mib": 82.01,
+        "memory_median_mib": 49.010000000000005
+      },
+      "postgres": {
+        "samples": 46,
+        "cpu_mean_pct": 174.71434782608694,
+        "cpu_peak_pct": 214.56,
+        "memory_peak_mib": 106.8,
+        "memory_median_mib": 93.09
+      }
+    },
+    "spike": {
+      "web": {
+        "samples": 20,
+        "cpu_mean_pct": 56.3005,
+        "cpu_peak_pct": 112.15,
+        "memory_peak_mib": 62.58,
+        "memory_median_mib": 49.92
+      },
+      "postgres": {
+        "samples": 20,
+        "cpu_mean_pct": 156.259,
+        "cpu_peak_pct": 216.13,
+        "memory_peak_mib": 102.8,
+        "memory_median_mib": 78.25999999999999
+      }
+    },
+    "endurance": {
+      "web": {
+        "samples": 279,
+        "cpu_mean_pct": 64.86086021505376,
+        "cpu_peak_pct": 109.47,
+        "memory_peak_mib": 48.44,
+        "memory_median_mib": 36.42
+      },
+      "postgres": {
+        "samples": 279,
+        "cpu_mean_pct": 184.6335483870968,
+        "cpu_peak_pct": 222.75,
+        "memory_peak_mib": 98.87,
+        "memory_median_mib": 88.38
+      }
+    }
+  },
+  "data_checks": {
+    "smoke": {
+      "checkedUtc": "2026-10-28T17:37:28.382Z",
+      "plans": 2000,
+      "locations": 6000,
+      "temporary_plans": 0,
+      "orphan_locations": 0
+    },
+    "load": {
+      "checkedUtc": "2026-10-28T17:40:25.214Z",
+      "plans": 2000,
+      "locations": 6000,
+      "temporary_plans": 0,
+      "orphan_locations": 0
+    },
+    "stress": {
+      "checkedUtc": "2026-10-28T17:46:14.284Z",
+      "plans": 2034,
+      "locations": 6034,
+      "temporary_plans": 34,
+      "orphan_locations": 0
+    },
+    "spike": {
+      "checkedUtc": "2026-10-28T17:48:34.588Z",
+      "plans": 2000,
+      "locations": 6000,
+      "temporary_plans": 0,
+      "orphan_locations": 0
+    },
+    "endurance": {
+      "checkedUtc": "2026-10-28T18:19:41.316Z",
+      "plans": 2000,
+      "locations": 6000,
+      "temporary_plans": 0,
+      "orphan_locations": 0
+    }
+  },
+  "limitations": [
+    "Historical native Windows and Docker Desktop Linux runs; one run per scenario.",
+    "OS, virtualization, network/storage and resource limits differ; not an isolated Docker overhead.",
+    "Docker memory usage is not Windows private bytes; these are not directly comparable."
+  ]
+}

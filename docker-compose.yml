@@ -1,0 +1,72 @@
+name: traveler_lab3
+services:
+  # Persistent PostgreSQL database; not published on the host.
+  postgres:
+    image: postgres:16.15-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${DB_NAME:?Set DB_NAME in .env}
+      POSTGRES_USER: ${DB_USER:?Set DB_USER in .env}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:?Set DB_PASSWORD in .env}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks: [backend]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+      start_period: 15s
+    deploy:
+      resources:
+        limits:
+          cpus: ${DB_CPUS:-2.0}
+          memory: ${DB_MEMORY:-1G}
+    logging:
+      driver: json-file
+      options: {max-size: "10m", max-file: "3"}
+    security_opt: ["no-new-privileges:true"]
+
+  # TravelerAPI; initializes the schema only after PostgreSQL is healthy.
+  web:
+    image: traveler-api:lab3
+    build:
+      context: .
+      target: runtime
+    init: true
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: ${DATABASE_URL:?Set DATABASE_URL in .env}
+      PORT: ${CONTAINER_PORT:-4567}
+      PG_POOL_MAX: ${PG_POOL_MAX:-20}
+      HEALTHCHECK_URL: ${HEALTHCHECK_URL:?Set HEALTHCHECK_URL in .env}
+      LAB3_ALLOW_RESET: ${LAB3_ALLOW_RESET:-false}
+    ports:
+      - "127.0.0.1:${APP_PORT:-4567}:${CONTAINER_PORT:-4567}"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks: [backend]
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch(process.env.HEALTHCHECK_URL).then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+    deploy:
+      resources:
+        limits:
+          cpus: ${WEB_CPUS:-2.0}
+          memory: ${WEB_MEMORY:-512M}
+    logging:
+      driver: json-file
+      options: {max-size: "10m", max-file: "3"}
+    security_opt: ["no-new-privileges:true"]
+    read_only: true
+    tmpfs: [/tmp]
+
+volumes:
+  postgres_data:
+networks:
+  backend:
+    driver: bridge

@@ -1,0 +1,2 @@
+time="2026-10-28T18:40:26+01:00" level=info msg="K6_SCENARIO_START=2026-10-28T17:40:26.755Z" source=console
+time="2026-10-28T18:45:27+01:00" level=error msg="thresholds on metrics 'checks, http_req_duration, http_req_failed' have been crossed"

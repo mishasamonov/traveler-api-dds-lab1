@@ -1,0 +1,15 @@
+k6 STRESS TEST
+API: http://127.0.0.1:4567
+
+http_reqs: {"count":117708,"rate":392.19632653729576}
+iterations: {"rate":36.58806420724203,"count":10981}
+checks: {"rate":0.9182383525333877,"passes":108084,"fails":9624}
+http_req_failed: {"fails":108084,"rate":0.0817616474666123,"passes":9624}
+http_req_duration: {"max":9832.882,"p(90)":5049.984350000001,"p(95)":6382.772424999997,"p(99)":8895.05238,"avg":1919.4720667711986,"min":0.5055,"med":935.90665}
+api_errors: {"rate":0.0817616474666123,"passes":9624,"fails":108084}
+
+THRESHOLDS
+FAIL checks: rate>0.99
+FAIL http_req_duration: p(95)<500
+PASS http_req_duration{phase:recovery}: p(95)<500
+FAIL http_req_failed: rate<0.01

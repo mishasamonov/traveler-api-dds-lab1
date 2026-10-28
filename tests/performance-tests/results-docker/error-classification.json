@@ -1,0 +1,138 @@
+{
+  "stress": {
+    "statuses": {
+      "200": 100911,
+      "201": 4797,
+      "204": 2376,
+      "500": 3635,
+      "400": 5989
+    },
+    "failures": [
+      {
+        "phase": "ramp2000",
+        "status": "500",
+        "undefined_id": false,
+        "count": 1946
+      },
+      {
+        "phase": "stress1000",
+        "status": "500",
+        "undefined_id": false,
+        "count": 466
+      },
+      {
+        "phase": "stress1000",
+        "status": "400",
+        "undefined_id": true,
+        "count": 10
+      },
+      {
+        "phase": "ramp2000",
+        "status": "400",
+        "undefined_id": true,
+        "count": 1432
+      },
+      {
+        "phase": "stress2000",
+        "status": "400",
+        "undefined_id": true,
+        "count": 3682
+      },
+      {
+        "phase": "stress2000",
+        "status": "500",
+        "undefined_id": false,
+        "count": 1167
+      },
+      {
+        "phase": "down",
+        "status": "500",
+        "undefined_id": false,
+        "count": 56
+      },
+      {
+        "phase": "down",
+        "status": "400",
+        "undefined_id": true,
+        "count": 435
+      },
+      {
+        "phase": "recovery",
+        "status": "400",
+        "undefined_id": true,
+        "count": 390
+      },
+      {
+        "phase": "cooldown",
+        "status": "400",
+        "undefined_id": true,
+        "count": 40
+      }
+    ]
+  },
+  "spike": {
+    "statuses": {
+      "200": 34681,
+      "201": 2504,
+      "204": 1259,
+      "500": 1084,
+      "400": 3281
+    },
+    "failures": [
+      {
+        "phase": "rise",
+        "status": "500",
+        "undefined_id": false,
+        "count": 1049
+      },
+      {
+        "phase": "spike",
+        "status": "500",
+        "undefined_id": false,
+        "count": 32
+      },
+      {
+        "phase": "before",
+        "status": "500",
+        "undefined_id": false,
+        "count": 3
+      },
+      {
+        "phase": "rise",
+        "status": "400",
+        "undefined_id": true,
+        "count": 202
+      },
+      {
+        "phase": "before",
+        "status": "400",
+        "undefined_id": true,
+        "count": 3
+      },
+      {
+        "phase": "spike",
+        "status": "400",
+        "undefined_id": true,
+        "count": 311
+      },
+      {
+        "phase": "fall",
+        "status": "400",
+        "undefined_id": true,
+        "count": 145
+      },
+      {
+        "phase": "recovery",
+        "status": "400",
+        "undefined_id": true,
+        "count": 2500
+      },
+      {
+        "phase": "cooldown",
+        "status": "400",
+        "undefined_id": true,
+        "count": 120
+      }
+    ]
+  }
+}

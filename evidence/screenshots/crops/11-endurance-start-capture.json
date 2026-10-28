@@ -1,0 +1,15 @@
+{
+  "sourceFile": "evidence/endurance-start.txt",
+  "sourceSha256": "0ce0343aa8ad153a1a8c699f46bba2d1bb5a46255da178c9cd8cc2459cc60e29",
+  "captureFile": "11-endurance-start.jpg",
+  "captureSha256": "cb7e3621337f06a0e7e8ace3cf3ca096455af575627d609a2434f96ec80efedd",
+  "outputSha256": "684b886af31d57653c2bb3c1a77d4800447dbf7c756d1e2b79a80a079f0ebf9a",
+  "originalFormat": "JPEG",
+  "method": "Genuine browser screenshot of saved command output; whitespace crop saved as PNG, no resampling or text reconstruction",
+  "crop": [
+    25,
+    21,
+    1154,
+    570
+  ]
+}

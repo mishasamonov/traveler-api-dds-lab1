@@ -1,0 +1,2 @@
+web-1  | PostgreSQL schema applied
+web-1  | Traveler API listening on 4567

@@ -1,0 +1,11 @@
+Docker laboratory 3: SUCCESS
+https://github.com/mishasamonov/traveler-api-dds-lab1/actions/runs/40739221001
+
+SUCCESS  Build and start both services
+SUCCESS  Check health and non-root user
+SUCCESS  Original Hurl scenarios
+SUCCESS  Original concurrency scenarios
+SUCCESS  k6 smoke against containers
+SUCCESS  Save diagnostics
+SUCCESS  Run actions/upload-artifact@v4
+SUCCESS  Stop services

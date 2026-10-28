@@ -1,0 +1,22 @@
+
+         /\      Grafana   /‾‾/  
+    /\  /  \     |\  __   /  /   
+   /  \/    \    | |/ /  /   ‾‾\ 
+  /          \   |   (  |  (‾)  |
+ / __________ \  |_|\_\  \_____/ 
+
+
+     execution: local
+        script: tests/performance-tests/endurance-test.js
+ web dashboard:
+        output: json (tests/performance-tests/results-docker/endurance-raw.json.gz)
+
+     scenarios: (100.00%) 1 scenario, 25 max VUs, 31m30s max duration (incl. graceful stop):
+              * default: Up to 25 looping VUs for 31m0s over 3 stages (gracefulRampDown: 30s, gracefulStop: 30s)
+
+
+running (00m01.0s), 00/25 VUs, 0 complete and 0 interrupted iterations
+default   [   0% ] 00/25 VUs  00m01.0s/31m00.0s
+
+running (00m02.0s), 01/25 VUs, 1 complete and 0 interrupted iterations
+default   [   0% ] 01/25 VUs  00m02.0s/31m00.0s

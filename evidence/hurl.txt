@@ -1,0 +1,58 @@
+Unable to find image 'ghcr.io/orange-opensource/hurl:8.0.0' locally
+8.0.0: Pulling from orange-opensource/hurl
+42143833bf4a: Pulling fs layer
+73529f058ccb: Pulling fs layer
+84f5eff04246: Pulling fs layer
+b6a9e22d79e3: Pulling fs layer
+3228eb4d5396: Pulling fs layer
+50b41e8e8a9a: Pulling fs layer
+1b63968cdf62: Pulling fs layer
+49973f834158: Pulling fs layer
+58cd45e8d171: Pulling fs layer
+0fb98feabb39: Pulling fs layer
+40a3741d867c: Pulling fs layer
+0024facbb353: Pulling fs layer
+33e8c3d00058: Pulling fs layer
+f8fb0787cba1: Pulling fs layer
+da42b4543a3e: Download complete
+f8fb0787cba1: Download complete
+0024facbb353: Download complete
+0fb98feabb39: Download complete
+58cd45e8d171: Download complete
+73529f058ccb: Download complete
+b6a9e22d79e3: Download complete
+42143833bf4a: Download complete
+40a3741d867c: Download complete
+49973f834158: Download complete
+33e8c3d00058: Download complete
+1b63968cdf62: Download complete
+84f5eff04246: Download complete
+3228eb4d5396: Download complete
+50b41e8e8a9a: Download complete
+84f5eff04246: Pull complete
+50b41e8e8a9a: Pull complete
+42143833bf4a: Pull complete
+33e8c3d00058: Pull complete
+0fb98feabb39: Pull complete
+b6a9e22d79e3: Pull complete
+1b63968cdf62: Pull complete
+73529f058ccb: Pull complete
+49973f834158: Pull complete
+3228eb4d5396: Pull complete
+0024facbb353: Pull complete
+58cd45e8d171: Pull complete
+40a3741d867c: Pull complete
+f8fb0787cba1: Pull complete
+Digest: sha256:a6730873ddf0ae72e6aa12bf38f1d61cd5ab59e4274662e385167f85e4e52bf2
+Status: Downloaded newer image for ghcr.io/orange-opensource/hurl:8.0.0
+Success /tests/crud.hurl (6 request(s) in 49 ms)
+Success /tests/validation.hurl (31 request(s) in 71 ms)
+Success /tests/management.hurl (10 request(s) in 45 ms)
+Success /tests/race-conditions.hurl (9 request(s) in 58 ms)
+--------------------------------------------------------------------------------
+Executed files:    4
+Executed requests: 56 (210.5/s)
+Succeeded files:   4 (100.0%)
+Failed files:      0 (0.0%)
+Duration:          266 ms (0h:0m:0s:266ms)
+

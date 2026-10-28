@@ -1,0 +1,8 @@
+web-1  | PostgreSQL schema applied
+web-1  | Traveler API listening on 4567
+web-1  | Error: timeout exceeded when trying to connect
+web-1  |     at /app/node_modules/pg-pool/index.js:45:11
+web-1  |     at runNextTicks (node:internal/process/task_queues:65:5)
+web-1  |     at listOnTimeout (node:internal/timers:549:9)
+web-1  |     at process.processTimers (node:internal/timers:523:7)
+web-1  |     at async /app/src/app.js:28:20

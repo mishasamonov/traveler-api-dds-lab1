@@ -1,0 +1,15 @@
+{
+  "sourceFile": "tests/performance-tests/results-docker/smoke-summary.txt",
+  "sourceSha256": "f3343ba5d822b06b3bc393d4db141a55349c2a50843e940a6818a64e62a79f3d",
+  "captureFile": "07-smoke.jpg",
+  "captureSha256": "32d54bc2224eb4c25335bda1ff6a46a889bad847cc0080c9e2244052f9d31f73",
+  "outputSha256": "d288698b0608e99cfacd75558c6e37b701385d3fc0df9e48bd2e1f800b8980a9",
+  "originalFormat": "JPEG",
+  "method": "Genuine browser screenshot of saved command output; whitespace crop saved as PNG, no resampling or text reconstruction",
+  "crop": [
+    24,
+    21,
+    1078,
+    558
+  ]
+}

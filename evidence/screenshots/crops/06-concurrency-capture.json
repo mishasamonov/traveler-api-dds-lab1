@@ -1,0 +1,15 @@
+{
+  "sourceFile": "evidence/concurrency.txt",
+  "sourceSha256": "7682bd1661856459616f82a25c402f49ad31972d7ac78fb03c5883f9de607ed5",
+  "captureFile": "06-concurrency.jpg",
+  "captureSha256": "56536a042024e3bd3e047c07f873ce8c5e267410642a9adb9656d47d86fcdfd7",
+  "outputSha256": "fea5ec0349c77450bd7e52abf13cce301573da07ad99506764fca175242bb4d0",
+  "originalFormat": "JPEG",
+  "method": "Genuine browser screenshot of saved command output; whitespace crop saved as PNG, no resampling or text reconstruction",
+  "crop": [
+    24,
+    21,
+    868,
+    373
+  ]
+}

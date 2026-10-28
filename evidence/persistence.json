@@ -1,0 +1,9 @@
+{
+  "checkedUtc": "2026-10-28T18:20:40.790605+00:00",
+  "planId": "a182bef1-ddcc-4def-80cc-b6a28759e31d",
+  "beforeContainer": "0a66b5df7e06f5335d0dcf416546f1de24d911fe6da79482b4844d2eaf107248",
+  "afterContainer": "ca68b541a52d3b77fb1713e08c15761bf9252f99187dd1372b03593b6cca1d45",
+  "readAfterRecreationStatus": 200,
+  "cleanupStatus": 204,
+  "namedVolume": "traveler_lab3_postgres_data"
+}

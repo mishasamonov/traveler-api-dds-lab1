@@ -1,0 +1,8 @@
+{
+  "node": "v22.18.0",
+  "pgPoolMax": 20,
+  "version": "PostgreSQL 16.15 on x86_64-pc-linux-musl, compiled by gcc (Alpine 15.2.0) 15.2.0, 64-bit",
+  "shared_buffers": "128MB",
+  "max_connections": "100",
+  "isolation": "read committed"
+}
