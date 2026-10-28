@@ -1,0 +1,16 @@
+.git
+.env
+.env.*
+!.env.example
+node_modules
+tests
+instructor
+docs
+output
+evidence
+*.log
+*.zip
+*.docx
+*.pdf
+__pycache__
+.pgdata

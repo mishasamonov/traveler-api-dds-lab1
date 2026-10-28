@@ -1,0 +1,17 @@
+# Development override: docker compose -f docker-compose.yml -f docker-compose.dev.yml up --build
+services:
+  # Reload API source on edits while retaining dependencies from the image.
+  web:
+    environment:
+      NODE_ENV: development
+    volumes:
+      - ./src:/app/src:ro
+      - ./scripts/init-db.js:/app/scripts/init-db.js:ro
+      - ./db:/app/db:ro
+    command: ["sh", "-c", "node scripts/init-db.js && exec node --watch src/server.js"]
+  # Separate development database volume, preserving the measured production data.
+  postgres:
+    volumes:
+      - postgres_dev_data:/var/lib/postgresql/data
+volumes:
+  postgres_dev_data:
