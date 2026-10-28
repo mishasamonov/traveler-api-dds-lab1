@@ -1,0 +1,1 @@
+time="2026-10-28T18:48:39+01:00" level=info msg="K6_SCENARIO_START=2026-10-28T17:48:35.866Z" source=console

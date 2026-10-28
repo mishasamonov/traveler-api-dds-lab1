@@ -1,0 +1,15 @@
+{
+  "sourceFile": "evidence/docker-stats-load.txt",
+  "sourceSha256": "70b93432d4f62d6d432a1c43b70e3264533a78f3efb57cb174b3a0a2764b32b1",
+  "captureFile": "04-docker-stats.jpg",
+  "captureSha256": "9336e3ca57d495f778b6057104e706d9b128971e29ae7280b89bed10ab791eb9",
+  "outputSha256": "9db6a2d731e73e427cd3674ba257ad00f0dd344b27ea4f4ab896818d090592ae",
+  "originalFormat": "JPEG",
+  "method": "Genuine browser screenshot of saved command output; whitespace crop saved as PNG, no resampling or text reconstruction",
+  "crop": [
+    24,
+    21,
+    718,
+    188
+  ]
+}

@@ -1,0 +1,9 @@
+POST /api/travel-plans -> 201
+Control plan: a182bef1-ddcc-4def-80cc-b6a28759e31d
+docker compose down (without -v)
+docker compose up -d --wait
+GET /api/travel-plans/a182bef1-ddcc-4def-80cc-b6a28759e31d -> 200
+Same id and title: PASS
+Database container was recreated: PASS
+Named volume: traveler_lab3_postgres_data
+DELETE control plan -> 204

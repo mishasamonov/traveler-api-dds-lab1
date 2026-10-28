@@ -1,0 +1,2 @@
+/traveler_lab3-web-1 restart=0 oom=false cpus=2000000000 memory=536870912 readonly=true
+/traveler_lab3-postgres-1 restart=0 oom=false cpus=2000000000 memory=1073741824 readonly=false

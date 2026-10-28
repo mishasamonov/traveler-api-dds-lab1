@@ -1,0 +1,15 @@
+{
+  "sourceFile": "evidence/ci-result.txt",
+  "sourceSha256": "9ecdcc332ee8c391e73750e4ac571043d9ce2ff0bb0a936de6922d6f8f5ffd6f",
+  "captureFile": "14-ci.jpg",
+  "captureSha256": "cbf139e971174532f293758acc4de33bb035976a11f04dc99b629c6d2f3ed92f",
+  "outputSha256": "7f08a562e71c5ba10485169a37ed920d23ae6c2cbfdde378c7c52e2c260dbc57",
+  "originalFormat": "JPEG",
+  "method": "Genuine browser screenshot of saved command output; whitespace crop saved as PNG, no resampling or text reconstruction",
+  "crop": [
+    25,
+    21,
+    905,
+    399
+  ]
+}

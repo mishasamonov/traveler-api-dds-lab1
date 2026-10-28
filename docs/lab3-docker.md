@@ -80,9 +80,18 @@ process private bytes; report those measurements separately.
 
 ## Evidence
 
-`evidence/` contains genuine command outputs and lossless ShareX screenshots.
-`evidence/screenshots/*-capture.json` ties each capture to its source file and
-hash. The report embeds the original PNG crops without image recompression.
+`evidence/` contains genuine command outputs, a native ShareX PNG and browser
+screenshots of a read-only localhost viewer of saved outputs. The browser
+captures are original JPEGs; whitespace crops are saved as PNG without
+resampling or reconstructing any text. `evidence/screenshots/crops/*-capture.json`
+ties captures to source files and hashes. The report embeds these crops and
+disables automatic picture compression.
+
+The unchanged workload has a failure-path limitation: after a server error it
+can accept an error JSON object as its current plan and issue requests with
+`id=undefined`. The original profiles are retained to meet the identical-test
+comparison. `error-classification.json` distinguishes HTTP 500 from subsequent
+HTTP 400 responses. A fast recovery latency alone is not full SLO recovery.
 
 References: https://docs.docker.com/compose/how-tos/startup-order/
 and https://hurl.dev/docs/installation.html.

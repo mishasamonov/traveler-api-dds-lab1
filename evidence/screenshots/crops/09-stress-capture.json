@@ -1,0 +1,15 @@
+{
+  "sourceFile": "tests/performance-tests/results-docker/stress-summary.txt",
+  "sourceSha256": "c176bd72efc9c6bed5445fcc62be107523a7973cb73ab4d6e616d1af7237db65",
+  "captureFile": "09-stress.jpg",
+  "captureSha256": "5343af7d86fb49979a1e12e6a6d6ca23f8e870e097030d955cf1316f3535d367",
+  "outputSha256": "925c27613d7afe676769aed5121c5d107f8d7fe276388c90e80bedc790ed539f",
+  "originalFormat": "JPEG",
+  "method": "Genuine browser screenshot of saved command output; whitespace crop saved as PNG, no resampling or text reconstruction",
+  "crop": [
+    24,
+    21,
+    1023,
+    531
+  ]
+}

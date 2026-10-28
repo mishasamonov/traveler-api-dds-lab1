@@ -1,0 +1,3 @@
+CONTAINER ID   NAME                       CPU %     MEM USAGE / LIMIT   MEM %     NET I/O           BLOCK I/O     PIDS
+18e0b8b9d7db   traveler_lab3-web-1        0.00%     18.3MiB / 512MiB    3.57%     54.6kB / 53.1kB   0B / 0B       12
+0a66b5df7e06   traveler_lab3-postgres-1   0.04%     35.81MiB / 1GiB     3.50%     27.4kB / 34.9kB   0B / 53.7MB   7

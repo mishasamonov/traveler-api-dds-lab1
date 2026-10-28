@@ -1,0 +1,15 @@
+{
+  "sourceFile": "evidence/compose-ps.txt",
+  "sourceSha256": "7751bec0673022a1552b39251daa863e96b7e134ce38b8b7dd62f8360586fc28",
+  "captureFile": "02-compose-ps.jpg",
+  "captureSha256": "c46f0d4a85bff73d23601ee5f9c0e6ec24287345940a14ef2bb1e43fc81c8497",
+  "outputSha256": "751f6f1a6f74582c44d7988a5ab68c9c4ce3877438cfbe277fc4893d0226c49c",
+  "originalFormat": "JPEG",
+  "method": "Genuine browser screenshot of saved command output; whitespace crop saved as PNG, no resampling or text reconstruction",
+  "crop": [
+    24,
+    21,
+    716,
+    188
+  ]
+}

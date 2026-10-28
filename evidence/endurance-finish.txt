@@ -1,0 +1,8 @@
+
+THRESHOLDS
+PASS checks: rate>0.99
+PASS http_req_failed: rate<0.01
+PASS http_req_duration: p(95)<500
+
+running (31m00.3s), 00/25 VUs, 63747 complete and 0 interrupted iterations
+default ✓ [ 100% ] 00/25 VUs  31m0s

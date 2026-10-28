@@ -1,0 +1,15 @@
+{
+  "sourceFile": "evidence/endurance-finish.txt",
+  "sourceSha256": "f6bb2fd78d35451304971b5ad67b0594e9fe8329cc4c066cc10bc5354ffb7fbd",
+  "captureFile": "12-endurance-finish.jpg",
+  "captureSha256": "2528551ceb7beca31e3494fc32084b7ec54e5554af3ec5ee769dfacc19a2ffb3",
+  "outputSha256": "cd8760a1b8f6926a43a608ead20ce2912acc8338db4ea66a33395a49d2151c9b",
+  "originalFormat": "JPEG",
+  "method": "Genuine browser screenshot of saved command output; whitespace crop saved as PNG, no resampling or text reconstruction",
+  "crop": [
+    24,
+    21,
+    779,
+    263
+  ]
+}

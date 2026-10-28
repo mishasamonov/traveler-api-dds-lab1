@@ -1,0 +1,15 @@
+{
+  "sourceFile": "tests/performance-tests/results-docker/load-summary.txt",
+  "sourceSha256": "5dc5543a7ed7a7ee4637db368daece3f6ae74a3be8e926c0d9aebb7ec2c9d995",
+  "captureFile": "08-load.jpg",
+  "captureSha256": "dda10f6a0cd8e251343b63996fc573656bf75bb8360a77ce30d5f72067c51862",
+  "outputSha256": "c30ce953d71c02af5bf23071accac39733a663147f2d11c582e04cbba0bc9a3f",
+  "originalFormat": "JPEG",
+  "method": "Genuine browser screenshot of saved command output; whitespace crop saved as PNG, no resampling or text reconstruction",
+  "crop": [
+    24,
+    21,
+    1034,
+    505
+  ]
+}
