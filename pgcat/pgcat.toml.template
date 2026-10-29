@@ -1,0 +1,23 @@
+[general]
+host = "0.0.0.0"
+port = 6432
+worker_threads = 2
+connect_timeout = 5000
+idle_timeout = 30000
+enable_prometheus_exporter = false
+admin_username = "pgcat_admin"
+admin_password = "${PGCAT_ADMIN_PASSWORD}"
+[pools.traveler_lab2]
+pool_mode = "transaction"
+load_balancing_mode = "random"
+default_role = "primary"
+query_parser_enabled = true
+query_parser_read_write_splitting = true
+primary_reads_enabled = false
+[pools.traveler_lab2.users.0]
+username = "${APP_USER}"
+password = "${APP_PASSWORD}"
+pool_size = 20
+[pools.traveler_lab2.shards.0]
+database = "traveler_lab2"
+servers = [["postgres", 5432, "primary"], ["replica1", 5432, "replica"], ["replica2", 5432, "replica"]]

@@ -14,4 +14,4 @@ COPY --chown=node:node db ./db
 COPY --chown=node:node scripts/init-db.js scripts/seed-container.cjs scripts/check-container-data.cjs ./scripts/
 USER node
 EXPOSE 4567
-CMD ["sh", "-c", "node scripts/init-db.js && exec node src/server.js"]
+CMD ["node", "src/server.js"]

@@ -1,72 +1,149 @@
-name: traveler_lab3
+name: traveler_lab4
+x-db: &db
+  image: postgres:16.15-alpine
+  restart: unless-stopped
+  environment: &db-env
+    POSTGRES_DB: ${DB_NAME:?Run bootstrap-env.py}
+    POSTGRES_USER: ${DB_ADMIN}
+    POSTGRES_PASSWORD: ${DB_ADMIN_PASSWORD}
+    POSTGRES_INITDB_ARGS: --encoding=UTF8 --auth-host=scram-sha-256
+    APP_USER: ${APP_USER}
+    APP_PASSWORD: ${APP_PASSWORD}
+    REPL_USER: ${REPL_USER}
+    REPL_PASSWORD: ${REPL_PASSWORD}
+    DOCKER_SUBNET: ${DOCKER_SUBNET}
+  networks: [backend]
+  healthcheck:
+    test: [CMD-SHELL, 'pg_isready -U "$${POSTGRES_USER}" -d "$${POSTGRES_DB}"']
+    interval: 3s
+    timeout: 3s
+    retries: 30
+    start_period: 10s
+  deploy:
+    resources:
+      limits: {cpus: '2.0', memory: 1G}
+  logging:
+    driver: json-file
+    options: {max-size: 10m, max-file: '3'}
+  security_opt: [no-new-privileges:true]
+x-logical: &logical
+  <<: *db
+  profiles: [logical]
+  depends_on:
+    postgres: {condition: service_healthy}
+x-physical: &physical
+  <<: *db
+  profiles: [physical]
+  user: postgres
+  entrypoint: [/bin/bash, /standby/start-standby.sh]
+  depends_on:
+    postgres: {condition: service_healthy}
 services:
-  # Persistent PostgreSQL database; not published on the host.
   postgres:
-    image: postgres:16.15-alpine
-    restart: unless-stopped
-    environment:
-      POSTGRES_DB: ${DB_NAME:?Set DB_NAME in .env}
-      POSTGRES_USER: ${DB_USER:?Set DB_USER in .env}
-      POSTGRES_PASSWORD: ${DB_PASSWORD:?Set DB_PASSWORD in .env}
+    <<: *db
+    command: [postgres, -c, 'listen_addresses=*', -c, 'wal_level=logical',
+      -c, 'max_replication_slots=10', -c, 'max_wal_senders=10',
+      -c, 'max_logical_replication_workers=4', -c, 'max_worker_processes=10',
+      -c, 'password_encryption=scram-sha-256', -c, 'max_slot_wal_keep_size=1GB']
     volumes:
       - postgres_data:/var/lib/postgresql/data
+      - ./db/migrations:/docker-entrypoint-migrations:ro
+      - ./db/replications/common:/docker-entrypoint-initdb.d:ro
+      - ./db/replications/publisher:/docker-entrypoint-replications:ro
+  postgres_sub:
+    <<: *logical
+    environment:
+      <<: *db-env
+      SUB_NAME: tp_sub1
+    volumes:
+      - logical1_data:/var/lib/postgresql/data
+      - ./db/migrations:/docker-entrypoint-migrations:ro
+      - ./db/replications/common:/docker-entrypoint-initdb.d:ro
+      - ./db/replications/subscriber:/docker-entrypoint-replications:ro
+  postgres_sub2:
+    <<: *logical
+    profiles: [logical2]
+    environment:
+      <<: *db-env
+      SUB_NAME: tp_sub2
+    volumes:
+      - logical2_data:/var/lib/postgresql/data
+      - ./db/migrations:/docker-entrypoint-migrations:ro
+      - ./db/replications/common:/docker-entrypoint-initdb.d:ro
+      - ./db/replications/subscriber:/docker-entrypoint-replications:ro
+  replica1:
+    <<: *physical
+    environment:
+      <<: *db-env
+      STANDBY_NAME: replica1
+    volumes:
+      - physical1_data:/var/lib/postgresql/data
+      - ./db/replications/physical:/standby:ro
+  replica2:
+    <<: *physical
+    profiles: [physical2]
+    environment:
+      <<: *db-env
+      STANDBY_NAME: replica2
+    volumes:
+      - physical2_data:/var/lib/postgresql/data
+      - ./db/replications/physical:/standby:ro
+  pgcat:
+    image: ghcr.io/postgresml/pgcat@sha256:627761f6dcbc8c0d17809445d7441518e2452c6d4fbdcc2a9986871d9e3e1176
+    profiles: [pooler]
+    command: [pgcat, /etc/pgcat/pgcat.toml]
+    restart: unless-stopped
+    volumes:
+      - ./.runtime/pgcat.toml:/etc/pgcat/pgcat.toml:ro
+    depends_on:
+      replica1: {condition: service_healthy}
+      replica2: {condition: service_healthy}
     networks: [backend]
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
-      interval: 5s
-      timeout: 3s
-      retries: 10
-      start_period: 15s
     deploy:
       resources:
-        limits:
-          cpus: ${DB_CPUS:-2.0}
-          memory: ${DB_MEMORY:-1G}
-    logging:
-      driver: json-file
-      options: {max-size: "10m", max-file: "3"}
-    security_opt: ["no-new-privileges:true"]
-
-  # TravelerAPI; initializes the schema only after PostgreSQL is healthy.
+        limits: {cpus: '1.0', memory: 256M}
+    security_opt: [no-new-privileges:true]
+    read_only: true
+    tmpfs: [/tmp]
   web:
-    image: traveler-api:lab3
-    build:
-      context: .
-      target: runtime
+    image: traveler-api:lab4
+    build: {context: ., target: runtime}
     init: true
     restart: unless-stopped
     environment:
-      DATABASE_URL: ${DATABASE_URL:?Set DATABASE_URL in .env}
-      PORT: ${CONTAINER_PORT:-4567}
-      PG_POOL_MAX: ${PG_POOL_MAX:-20}
-      HEALTHCHECK_URL: ${HEALTHCHECK_URL:?Set HEALTHCHECK_URL in .env}
-      LAB3_ALLOW_RESET: ${LAB3_ALLOW_RESET:-false}
-    ports:
-      - "127.0.0.1:${APP_PORT:-4567}:${CONTAINER_PORT:-4567}"
+      DATABASE_URL: postgres://${APP_USER}:${APP_PASSWORD}@${PG_HOST:-postgres}:${PG_PORT:-5432}/${DB_NAME}
+      PORT: '4567'
+      PG_POOL_MAX: '20'
+      HEALTHCHECK_URL: http://127.0.0.1:4567/health
+    ports: ['127.0.0.1:${APP_PORT:-4567}:4567']
     depends_on:
-      postgres:
-        condition: service_healthy
-    networks: [backend]
+      postgres: {condition: service_healthy}
+    networks: [backend, frontend]
     healthcheck:
-      test: ["CMD", "node", "-e", "fetch(process.env.HEALTHCHECK_URL).then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))"]
-      interval: 10s
+      test: [CMD, node, -e, 'fetch(process.env.HEALTHCHECK_URL).then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))']
+      interval: 5s
       timeout: 5s
-      retries: 5
-      start_period: 20s
+      retries: 20
     deploy:
       resources:
-        limits:
-          cpus: ${WEB_CPUS:-2.0}
-          memory: ${WEB_MEMORY:-512M}
-    logging:
-      driver: json-file
-      options: {max-size: "10m", max-file: "3"}
-    security_opt: ["no-new-privileges:true"]
+        limits: {cpus: '2.0', memory: 512M}
+    security_opt: [no-new-privileges:true]
     read_only: true
     tmpfs: [/tmp]
-
+    logging:
+      driver: json-file
+      options: {max-size: 10m, max-file: '3'}
 volumes:
   postgres_data:
+  logical1_data:
+  logical2_data:
+  physical1_data:
+  physical2_data:
 networks:
+  frontend:
+    driver: bridge
   backend:
     driver: bridge
+    internal: true
+    ipam:
+      config: [{subnet: '${DOCKER_SUBNET}'}]

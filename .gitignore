@@ -13,3 +13,6 @@ output/
 .captures/
 tests/performance-tests/results-docker/*.json.gz
 
+
+.runtime/
+evidence/lab4/*-raw.json.gz
