@@ -1,47 +1,15 @@
-# TravelerAPI
+# TravelerAPI laboratory 4
 
-## Лабораторна 3 Docker
+PostgreSQL replication experiments built on the existing laboratory 3 API.
 
-Гілка `lab3-docker` продовжує лабораторні 1 та 2. API і PostgreSQL запускаються
-командою `docker compose up --build` після створення `.env` за `.env.example`.
-Перевірка: <http://localhost:4567/health>.
+See [README-LAB4.md](README-LAB4.md) for setup, all seven topologies, tests,
+security decisions, consistency guarantees, and sources.
 
-Інструкції, функціональні команди та повторення всіх п’яти k6 тестів:
-[docs/lab3-docker.md](docs/lab3-docker.md).
-Порівняння з baseline та нові вимірювання: `tests/performance-tests/results-docker/`.
-Справжні журнали й знімки результатів: `evidence/`.
-Повні сирі gzip JSON входять до локального архіву роботи; Git зберігає підсумки,
-порівняльні таблиці, графіки та HTML dashboard.
+```powershell
+python scripts/lab4/bootstrap-env.py
+python scripts/lab4/lab.py up logical
+python scripts/lab4/lab.py functional logical
+```
 
-Нижче залишено опис API з лабораторної 1.
-
-Лабораторна робота 1 з дисципліни «Розподілені сховища даних». REST API для спільного планування подорожей на Node.js, Express і PostgreSQL. Інтерфейс користувача та авторизація завданням не передбачені.
-
-## Запуск з PostgreSQL 16
-
-1. Створити базу `traveler` і користувача `traveler` з доступом до неї.
-2. `npm ci`
-3. Скопіювати `.env.example` у `.env` або задати `DATABASE_URL` і `PORT` змінними середовища. Файл `.env` автоматично не читається: його можна передати командою `node --env-file=.env src/server.js`.
-4. `npm run db:init`
-5. `npm start` (за замовчуванням `http://127.0.0.1:4567`).
-
-Наприклад, для PostgreSQL: `DATABASE_URL=postgres://traveler:traveler@localhost:5432/traveler npm start`. SQL-файл `db/schema.sql` створює таблиці, обмеження та індекси. Команда ініціалізації розрахована на чисту базу.
-
-## Тести
-
-- `npm run test:hurl` виконує HTTP-сценарії з методички; адреса сервера міститься в `tests/variables.properties`.
-- `npm test` перевіряє паралельні запити й інваріанти після них; потрібен запущений API.
-- `bash scripts/run-local-tests.sh` запускає обидва набори без окремого встановлення PostgreSQL через PGlite (PostgreSQL, скомпільований у WebAssembly). Цей локальний запуск використовує один DB connection; поведінку справжніх паралельних транзакцій потрібно додатково перевіряти на серверному PostgreSQL.
-- `.github/workflows/tests.yml` запускає ці самі набори в GitHub Actions із серверним PostgreSQL 16.
-
-## Структура
-
-- `src/` — маршрути, перевірка вхідних даних, пул підключень і сервер.
-- `db/` — SQL-схема й міграція, яка додає `locations.version` до бази з першого коміту.
-- `docs/` — OpenAPI контракт, адаптований із шаблону викладача.
-- `tests/` — Hurl-сценарії викладача та додатковий тест паралельних HTTP-запитів.
-- `scripts/` — ініціалізація бази, локальний і CI тестові запуски.
-
-Підхід до захисту даних: `travel_plans.version` перевіряється у тому самому `UPDATE`, який змінює план; додавання й перенумерація локацій блокують рядок батьківського плану в короткій транзакції, а `UNIQUE (travel_plan_id, visit_order)` страхує порядок. Локації мають власну версію: `PUT /api/locations/{id}` вимагає `version`, а застаріла версія повертає HTTP 409. При зміні порядку зміщені сусіди також отримують нову версію.
-
-Під час підготовки використано допомогу ChatGPT Codex; код і тести можна змінювати звичайними засобами Node.js та PostgreSQL.
+Measured results and screenshots are in `evidence/lab4/`.
+Secrets are excluded from Git and archives.

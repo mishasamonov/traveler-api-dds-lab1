@@ -44,4 +44,4 @@ def run(modes,k6):
             for i in range(1,4):lab.benchmark(mode,'read',k6,tag=f'{mode}-read-{i}')
         print('COMPLETE MODE',mode,flush=True)
 if __name__=='__main__':
-    p=argparse.ArgumentParser();p.add_argument('--k6',type=Path,required=True);p.add_argument('--modes',nargs='+',default=['logical','physical','sync','logical2','two','pgcat']);a=p.parse_args();run(a.modes,a.k6.resolve())
+    p=argparse.ArgumentParser();p.add_argument('--k6',type=Path,required=True);p.add_argument('--modes',nargs='+',default=['baseline','logical','physical','sync','logical2','two','pgcat']);a=p.parse_args();run(a.modes,a.k6.resolve())

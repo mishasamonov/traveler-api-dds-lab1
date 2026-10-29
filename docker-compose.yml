@@ -44,7 +44,8 @@ services:
     command: [postgres, -c, 'listen_addresses=*', -c, 'wal_level=logical',
       -c, 'max_replication_slots=10', -c, 'max_wal_senders=10',
       -c, 'max_logical_replication_workers=4', -c, 'max_worker_processes=10',
-      -c, 'password_encryption=scram-sha-256', -c, 'max_slot_wal_keep_size=1GB']
+      -c, 'password_encryption=scram-sha-256', -c, 'max_slot_wal_keep_size=1GB',
+      -c, 'wal_keep_size=256MB']
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./db/migrations:/docker-entrypoint-migrations:ro

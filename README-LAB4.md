@@ -66,7 +66,9 @@ exit code 99 indicates a threshold breach and is reported as such.
 
 Physical standby bootstrap uses `pg_basebackup -R -X stream` and separate physical
 slots. DDL is replayed with WAL; logical DDL is applied separately and the
-publication refreshed. `sync` pauses the replica briefly and observes the
+publication refreshed. `wal_keep_size=256MB` protects concurrent standby bootstrap;
+an existing named physical slot is reused after an interrupted base backup. The
+`sync` experiment pauses the replica briefly and observes the
 primary's `SyncRep` wait before resuming it. No availability claim is made:
 requiring both replicas with `ANY 2` blocks writes if either is unavailable.
 
