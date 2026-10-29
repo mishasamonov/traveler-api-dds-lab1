@@ -30,9 +30,11 @@ def build(output):
   return par
  def table(headers,rows,widths):return helper.table(d,headers,rows,widths)
  def link(label,url):
-  par=text();el=OxmlElement('w:hyperlink');el.set(qn('r:id'),par.part.relate_to(url,RT.HYPERLINK,is_external=True))
+  par=text();par.paragraph_format.keep_together=True
+  el=OxmlElement('w:hyperlink');el.set(qn('r:id'),par.part.relate_to(url,RT.HYPERLINK,is_external=True))
   run=OxmlElement('w:r');pr=OxmlElement('w:rPr');c=OxmlElement('w:color');c.set(qn('w:val'),'0563C1');pr.append(c)
-  u=OxmlElement('w:u');u.set(qn('w:val'),'single');pr.append(u);run.append(pr);t=OxmlElement('w:t');t.text=label;run.append(t);el.append(run);par._p.append(el)
+  u=OxmlElement('w:u');u.set(qn('w:val'),'single');pr.append(u);run.append(pr);t=OxmlElement('w:t');t.text=url;run.append(t);el.append(run);par._p.append(el)
+  par.add_run(' — '+label)
  def image(path,caption):
   nonlocal figure
   path=Path(path);assert path.exists(),path;figure+=1
@@ -48,8 +50,7 @@ def build(output):
  text('Реплікація PostgreSQL у TravelerAPI','Subtitle')
  text('Самонов Михайло ІН.м-62/2')
  text('Мета роботи - налаштувати реплікацію PostgreSQL у контейнеризованому TravelerAPI, перевірити однаковість даних та порівняти швидкодію додатка до і після введення реплік.')
- text('Налаштував логічну й фізичну реплікацію, синхронне підтвердження записів, дві репліки та PgCat. Виконав базову частину і всі додаткові завдання. Нижче наведені конфігурація, фактичні перевірки та вимірювання.')
- link('Приклад викладача з коміту cd66c0f','https://github.com/potapuff/SumDU.DDS.25F.example/commit/cd66c0f22e08f61602834d4edad4fd82ed672f1a')
+ text('Налаштував логічну й фізичну реплікацію, синхронне підтвердження записів, дві репліки та PgCat. Перевірив роботу додатка тестами Hurl і порівняв швидкодію за сценаріями k6.')
 
  heading('1 Початковий проєкт і середовище')
  text('Продовжив TravelerAPI з гілки lab3-docker. Реалізацію REST API, початкові сценарії Hurl, smoke і змішаний Load із лабораторної №2 залишив без змін. Перевірка байтів і SHA-256 для 11 ключових файлів підтвердила їхню однаковість із лабораторною №3. Новий read-test.js використовується лише для окремого досліду читання через PgCat.')
@@ -60,9 +61,9 @@ def build(output):
   ['Ресурси','API 2 CPU і 512 MiB; кожна БД 2 CPU і 1 GiB; PgCat 1 CPU і 256 MiB'],
   ['Інструменти','Docker Desktop, Hurl 8.0.0, k6 2.3.0 на Windows'],
  ],[1.5,5.5])
- text('Створив окремі Compose-проєкти traveler_lab4_baseline, logical, physical, sync, logical2, two та pgcat. Старі томи лабораторних не видаляв. Нові томи змушують PostgreSQL виконати ініціалізацію з нуля, як передбачено методичкою. Сценарії запускав послідовно; одночасного навантаження різних топологій немає.')
+ text('Створив окремі Compose-проєкти traveler_lab4_baseline, logical, physical, sync, logical2, two та pgcat. Старі томи лабораторних не видаляв. На нових томах PostgreSQL виконує ініціалізацію з нуля. Сценарії запускав послідовно; одночасного навантаження різних топологій немає.')
 
- heading('2 Логічна реплікація за прикладом викладача')
+ heading('2 Налаштування логічної реплікації')
  text('Зберіг структуру db/migrations і db/replications/common, publisher, subscriber. Сценарій 500_orchestrate.sh застосовує SQL-схему та сценарії відповідного вузла. На publisher створюються роль реплікації і PUBLICATION tp_pub FOR ALL TABLES. На subscriber створюється така сама схема та SUBSCRIPTION tp_sub1 із copy_data=true й окремим слотом.')
  text('На primary задано listen_addresses=*, wal_level=logical, max_replication_slots=10, max_wal_senders=10, max_logical_replication_workers=4 і max_worker_processes=10. Subscriber очікує готовність primary. Для другого логічного subscriber передбачені інше ім’я підписки, інший слот та окремий том.')
  text('Команди початкового запуску:')
@@ -107,7 +108,7 @@ def build(output):
  shot('12-sync-block','Commit очікує SyncRep до відновлення репліки')
  text(f'У Load синхронний варіант має p95 {ms(m["sync"]["p95_ms"])} проти {ms(m["physical"]["p95_ms"])} в асинхронному та потік {number(m["sync"]["rps"],1)} запитів за секунду. Очікування remote_apply додає залежність часу commit від мережі й застосування WAL; вплив на змішаний HTTP-сценарій оцінюю за збереженими цифрами, без припущення про універсальне прискорення чи уповільнення.')
  shot('13-sync-load','Load із синхронною фізичною реплікацією')
- text('Якщо обов’язкова синхронна репліка недоступна, записи чекають. Ця конфігурація підвищує вимоги до узгодженості ціною доступності запису. У методичці логічна реплікація названа виключно асинхронною; у цьому досліді вона саме така. Офіційна документація PostgreSQL також допускає логічних subscriber як синхронні standby, тому це формулювання методички не є загальним обмеженням PostgreSQL.')
+ text('Якщо обов’язкова синхронна репліка недоступна, записи чекають. Ця конфігурація підвищує вимоги до узгодженості ціною доступності запису.')
 
  heading('7 Облікові дані та мережеві обмеження')
  text('У SQL і shell-сценаріях немає явно записаного пароля для реплікації. REPL_USER і REPL_PASSWORD читаються із середовища та передаються до psql через змінні. Форматування SQL-ідентифікаторів і значень виконується format із %I та %L. Паролі .env генеруються локально; .env і .runtime виключені з Git, контексту Docker та архіву проєкту.')
@@ -153,23 +154,19 @@ def build(output):
  text('Логічна реплікація відтворює зміни вибраних таблиць, але схему потрібно підтримувати окремо. Фізична реплікація відтворює кластер і DDL через WAL. Синхронний remote_apply забезпечує видимість підтверджених записів на потрібних копіях та додає очікування й залежність доступності від реплік.')
  text('Без перенаправлення читань додавання репліки саме по собі не зменшує SQL-навантаження primary. PgCat дозволив використати обидві репліки для читань без змін API; функціональні тести та smoke пройшли. Висновки про швидкодію обмежені цим ноутбуком, набором даних, лімітами та виміряними сценаріями.')
 
- heading('Коміти та джерела')
- text('Гілка лабораторної: lab4-replication. Основний коміт реалізації: '+pub['implementation']+'. Виправлення прав каталогу фізичної репліки: '+pub['standby_fix']+'.')
- text('Завершена конфігурація та сценарії вимірювання і звіту: '+pub['final_code']+'.')
+ heading('Посилання')
  if pub.get('published'):
   link('Код лабораторної №4',BASE+'/tree/lab4-replication')
-  link('Коміт логічної та фізичної реплікації безпеки і PgCat',BASE+'/commit/'+pub['implementation'])
-  link('Коміт налаштування каталогу standby',BASE+'/commit/'+pub['standby_fix'])
-  link('Завершена конфігурація реплікації та сценарії перевірок',BASE+'/commit/'+pub['final_code'])
-  if pub.get('results'):link('Коміт із вимірюваннями скріншотами та доказами перевірок',BASE+'/commit/'+pub['results'])
+  link('Реплікація, безпека та PgCat',BASE+'/commit/'+pub['implementation'])
+  link('Конфігурація і сценарії перевірок',BASE+'/commit/'+pub['final_code'])
+  if pub.get('results'):link('Вимірювання та скріншоти',BASE+'/commit/'+pub['results'])
  else:
   text('Коміти збережені локально в Git та включені до пакета проєкту.')
- text('Методичні вказівки: SumDU.CS.DDS.Lab04.pdf, версія від 26.10.2025. Скріншоти відтворюють збережений фактичний вивід команд у локальному переглядачі; оригінали захоплень і контрольні суми збережені. Зображення обрізані без масштабування та без зміни тексту.')
- link('Приклад реплікації викладача','https://github.com/potapuff/SumDU.DDS.25F.example/commit/cd66c0f22e08f61602834d4edad4fd82ed672f1a')
+ text('На скріншотах показані збережені результати команд; оригінальні файли наведені в evidence/lab4.')
+ link('Початкова конфігурація реплікації','https://github.com/potapuff/SumDU.DDS.25F.example/commit/cd66c0f22e08f61602834d4edad4fd82ed672f1a')
  link('Обмеження логічної реплікації PostgreSQL','https://www.postgresql.org/docs/16/logical-replication-restrictions.html')
- link('Синхронна реплікація PostgreSQL','https://www.postgresql.org/docs/16/warm-standby.html#SYNCHRONOUS-REPLICATION')
  link('Режими synchronous_commit та remote_apply','https://www.postgresql.org/docs/16/runtime-config-wal.html')
- link('Офіційні параметри PgCat','https://github.com/postgresml/pgcat/blob/main/pgcat.toml')
+ link('Параметри PgCat','https://github.com/postgresml/pgcat/blob/main/pgcat.toml')
  # Apply the explicit user typography while preserving original style/package parts.
  for run in d.element.xpath('.//w:r'):
   props=run.find(qn('w:rPr'))
