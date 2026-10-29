@@ -26,8 +26,11 @@ target=OUT/'TravelerAPI_Lab4_Samonov.zip'
 with zipfile.ZipFile(target,'w',zipfile.ZIP_DEFLATED,compresslevel=6) as z:
     for p in sorted(set(files)):z.write(p,'TravelerAPI_Lab4/'+p.relative_to(R).as_posix())
     z.write(bundle,'TravelerAPI_Lab4/lab4-history.bundle')
+    report=OUT/'TravelerAPI_Lab4_Samonov.docx'
+    assert report.exists()
+    z.write(report,'TravelerAPI_Lab4/TravelerAPI_Lab4_Samonov.docx')
 with zipfile.ZipFile(target) as z:
     assert z.testzip() is None
     assert not any(n.endswith('/.env') or '/.runtime/' in n or '/node_modules/' in n or '/.git/' in n for n in z.namelist())
-verification={'archive':target.name,'files':len(files)+1,'bytes':target.stat().st_size,'sha256':hashlib.sha256(target.read_bytes()).hexdigest(),'credentialsExcluded':True,'gitBundleVerified':True}
+verification={'archive':target.name,'files':len(files)+2,'bytes':target.stat().st_size,'sha256':hashlib.sha256(target.read_bytes()).hexdigest(),'credentialsExcluded':True,'gitBundleVerified':True}
 (OUT/'package-verification.json').write_text(json.dumps(verification,indent=2));print(json.dumps(verification,indent=2))
