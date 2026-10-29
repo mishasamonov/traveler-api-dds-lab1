@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail
+chmod 700 "$PGDATA"
 export PGPASSWORD="$REPL_PASSWORD"
 if [ ! -s "$PGDATA/PG_VERSION" ]; then
   until pg_isready -h postgres -U "$REPL_USER" -d "$POSTGRES_DB" >/dev/null; do sleep 1; done
