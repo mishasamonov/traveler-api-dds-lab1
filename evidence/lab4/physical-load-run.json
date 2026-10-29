@@ -1,0 +1,21 @@
+{
+  "mode": "physical",
+  "scenario": "load",
+  "startedUtc": "2026-10-29T07:49:28.171252+00:00",
+  "command": [
+    "k6.exe",
+    "run",
+    "--out",
+    "json=evidence/lab4/physical-load-raw.json.gz",
+    "D:\\Documents\\ChatGPT\\Розподілені сховища даних\\traveler-api-lab4\\tests\\performance-tests\\load-test.js"
+  ],
+  "seedPlans": 2000,
+  "seedLocations": 6000,
+  "apiSourceSHA256": "1d127fc6f04a7f3e89a6832a25b52e082ba399331a5a377182550c666ae4269f",
+  "scenarioSHA256": "abb1fd17f97435e69eb57c7cbfafa50f52a86db1f9da2b102df3f705819789af",
+  "replicas": [
+    "replica1"
+  ],
+  "exitCode": 99,
+  "elapsedSeconds": 176.65600000042468
+}

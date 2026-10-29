@@ -1,0 +1,32 @@
+rolname  | rolsuper | rolreplication | rolcreatedb | rolcreaterole 
+-----------+----------+----------------+-------------+---------------
+ traveler  | f        | f              | f           | f
+ lab4_repl | f        | t              | f           | f
+(2 rows)
+
+ password_encryption 
+---------------------
+ scram-sha-256
+(1 row)
+
+ listen_addresses 
+------------------
+ *
+(1 row)
+
+ type  |    database     |  user_name  |   address   |  auth_method  | error 
+-------+-----------------+-------------+-------------+---------------+-------
+ local | {all}           | {all}       |             | trust         | 
+ host  | {traveler_lab2} | {traveler}  | 172.29.46.0 | scram-sha-256 | 
+ host  | {traveler_lab2} | {lab4_repl} | 172.29.46.0 | scram-sha-256 | 
+ host  | {replication}   | {lab4_repl} | 172.29.46.0 | scram-sha-256 | 
+ host  | {all}           | {all}       | 0.0.0.0     | reject        | 
+ host  | {all}           | {all}       | ::          | reject        | 
+(6 rows)
+
+NAME                             IMAGE                                                                                              COMMAND                  SERVICE    CREATED          STATUS                    PORTS
+traveler_lab4_pgcat-pgcat-1      ghcr.io/postgresml/pgcat@sha256:627761f6dcbc8c0d17809445d7441518e2452c6d4fbdcc2a9986871d9e3e1176   "pgcat /etc/pgcat/pg…"   pgcat      25 seconds ago   Up 24 seconds             
+traveler_lab4_pgcat-postgres-1   postgres:16.15-alpine                                                                              "docker-entrypoint.s…"   postgres   43 seconds ago   Up 42 seconds (healthy)   5432/tcp
+traveler_lab4_pgcat-replica1-1   postgres:16.15-alpine                                                                              "/bin/bash /standby/…"   replica1   43 seconds ago   Up 36 seconds (healthy)   5432/tcp
+traveler_lab4_pgcat-replica2-1   postgres:16.15-alpine                                                                              "/bin/bash /standby/…"   replica2   43 seconds ago   Up 36 seconds (healthy)   5432/tcp
+traveler_lab4_pgcat-web-1        traveler-api:lab4                                                                                  "docker-entrypoint.s…"   web        21 seconds ago   Up 20 seconds (healthy)   127.0.0.1:4567->4567/tcp

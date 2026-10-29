@@ -1,0 +1,94 @@
+
+         /\      Grafana   /‾‾/  
+    /\  /  \     |\  __   /  /   
+   /  \/    \    | |/ /  /   ‾‾\ 
+  /          \   |   (  |  (‾)  |
+ / __________ \  |_|\_\  \_____/ 
+
+
+     execution: local
+        script: D:\Documents\ChatGPT\Розподілені сховища даних\traveler-api-lab4\tests\performance-tests\smoke-test.js
+        output: json (evidence/lab4/baseline-smoke-raw.json.gz)
+
+     scenarios: (100.00%) 1 scenario, 5 max VUs, 50s max duration (incl. graceful stop):
+              * default: Up to 5 looping VUs for 20s over 3 stages (gracefulRampDown: 30s, gracefulStop: 30s)
+
+
+running (01.0s), 0/5 VUs, 0 complete and 0 interrupted iterations
+default   [   5% ] 0/5 VUs  01.0s/20.0s
+
+running (02.0s), 0/5 VUs, 0 complete and 0 interrupted iterations
+default   [  10% ] 0/5 VUs  02.0s/20.0s
+
+running (03.0s), 1/5 VUs, 0 complete and 0 interrupted iterations
+default   [  15% ] 1/5 VUs  03.0s/20.0s
+
+running (04.0s), 1/5 VUs, 2 complete and 0 interrupted iterations
+default   [  20% ] 1/5 VUs  04.0s/20.0s
+
+running (05.0s), 1/5 VUs, 4 complete and 0 interrupted iterations
+default   [  25% ] 1/5 VUs  05.0s/20.0s
+
+running (06.0s), 2/5 VUs, 7 complete and 0 interrupted iterations
+default   [  30% ] 2/5 VUs  06.0s/20.0s
+
+running (07.0s), 2/5 VUs, 10 complete and 0 interrupted iterations
+default   [  35% ] 2/5 VUs  07.0s/20.0s
+
+running (08.0s), 2/5 VUs, 14 complete and 0 interrupted iterations
+default   [  40% ] 2/5 VUs  08.0s/20.0s
+
+running (09.0s), 3/5 VUs, 19 complete and 0 interrupted iterations
+default   [  45% ] 3/5 VUs  09.0s/20.0s
+
+running (10.0s), 3/5 VUs, 23 complete and 0 interrupted iterations
+default   [  50% ] 3/5 VUs  10.0s/20.0s
+
+running (11.0s), 3/5 VUs, 29 complete and 0 interrupted iterations
+default   [  55% ] 3/5 VUs  11.0s/20.0s
+
+running (12.0s), 4/5 VUs, 34 complete and 0 interrupted iterations
+default   [  60% ] 4/5 VUs  12.0s/20.0s
+
+running (13.0s), 4/5 VUs, 42 complete and 0 interrupted iterations
+default   [  65% ] 4/5 VUs  13.0s/20.0s
+
+running (14.0s), 4/5 VUs, 49 complete and 0 interrupted iterations
+default   [  70% ] 4/5 VUs  14.0s/20.0s
+
+running (15.0s), 4/5 VUs, 55 complete and 0 interrupted iterations
+default   [  75% ] 4/5 VUs  15.0s/20.0s
+
+running (16.0s), 5/5 VUs, 63 complete and 0 interrupted iterations
+default   [  80% ] 5/5 VUs  16.0s/20.0s
+
+running (17.0s), 4/5 VUs, 72 complete and 0 interrupted iterations
+default   [  85% ] 4/5 VUs  17.0s/20.0s
+
+running (18.0s), 3/5 VUs, 79 complete and 0 interrupted iterations
+default   [  90% ] 3/5 VUs  18.0s/20.0s
+
+running (19.0s), 2/5 VUs, 83 complete and 0 interrupted iterations
+default   [  95% ] 2/5 VUs  19.0s/20.0s
+
+running (20.0s), 1/5 VUs, 86 complete and 0 interrupted iterations
+default   [ 100% ] 1/5 VUs  20.0s/20.0s
+k6 SMOKE TEST
+API: http://127.0.0.1:4567
+
+http_reqs: {"count":1131,"rate":55.18238218870004}
+iterations: {"count":87,"rate":4.244798629900004}
+checks: {"passes":1392,"fails":0,"rate":1}
+http_req_failed: {"rate":0,"passes":0,"fails":1131}
+http_req_duration: {"p(99)":10.796760000000006,"avg":4.560302652519894,"min":0.8273,"med":4.2863,"max":20.3127,"p(90)":7.0872,"p(95)":8.1543}
+api_errors: {"rate":0,"passes":0,"fails":1131}
+expected_version_conflicts: {"count":87,"rate":4.244798629900004}
+
+THRESHOLDS
+PASS http_req_failed: rate==0
+PASS api_errors: rate==0
+PASS http_req_duration: p(95)<500
+PASS checks: rate==1
+
+running (20.5s), 0/5 VUs, 87 complete and 0 interrupted iterations
+default ✓ [ 100% ] 0/5 VUs  20s

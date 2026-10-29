@@ -1,0 +1,41 @@
+wal_level 
+-----------
+ logical
+(1 row)
+
+ synchronous_commit 
+--------------------
+ on
+(1 row)
+
+ synchronous_standby_names 
+---------------------------
+ 
+(1 row)
+
+application_name |   state   | sync_state | write_lsn | flush_lsn | replay_lsn 
+------------------+-----------+------------+-----------+-----------+------------
+ tp_sub1          | streaming | async      | 0/1CCE738 | 0/1CCE738 | 0/1CCE738
+ tp_sub2          | streaming | async      | 0/1CCE738 | 0/1CCE738 | 0/1CCE738
+(2 rows)
+
+{
+  "postgres": {
+    "plans": 2000,
+    "locations": 6000,
+    "plans_md5": "ec2b49bb8935b62b02d64ab73328a447",
+    "locations_md5": "170ba24798a3bfc3d8f74a0489fe5cb9"
+  },
+  "postgres_sub": {
+    "plans": 2000,
+    "locations": 6000,
+    "plans_md5": "ec2b49bb8935b62b02d64ab73328a447",
+    "locations_md5": "170ba24798a3bfc3d8f74a0489fe5cb9"
+  },
+  "postgres_sub2": {
+    "plans": 2000,
+    "locations": 6000,
+    "plans_md5": "ec2b49bb8935b62b02d64ab73328a447",
+    "locations_md5": "170ba24798a3bfc3d8f74a0489fe5cb9"
+  }
+}

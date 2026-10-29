@@ -124,7 +124,7 @@ def build(output):
  text('Для PgCat створив дві фізичні репліки replica1 і replica2 з окремими томами й фізичними слотами. Режими two та pgcat використовують synchronous_standby_names=ANY 2 (replica1, replica2) і remote_apply. Обидві копії мають застосувати підтверджений запис; недоступність однієї з них блокує нові commit. Автоматичне перемикання ролі primary не налаштовувалося.')
 
  heading('9 PgCat і розділення читань та записів')
- text('Додав офіційний образ PgCat із зафіксованим digest. Шаблон конфігурації містить transaction pooling, query_parser_enabled=true, query_parser_read_write_splitting=true, default_role=primary та primary_reads_enabled=false. Сервери пулу: postgres як primary, replica1 і replica2 як replica. DATABASE_URL додатка тепер вказує на pgcat:6432, реалізація API не змінена.')
+ text('Додав офіційний образ PgCat 1.2.0 із зафіксованим digest. Шаблон конфігурації містить transaction pooling, query_parser_enabled=true, query_parser_read_write_splitting=true, default_role=primary та primary_reads_enabled=false. Сервери пулу: postgres як primary, replica1 і replica2 як replica. DATABASE_URL додатка тепер вказує на pgcat:6432, реалізація API не змінена.')
  text('Default role primary спрямовує початок явних транзакцій на primary. Звичайні SELECT балансуються між фізичними копіями. Щоб наступний GET після підтвердженого запису бачив актуальні дані незалежно від обраної репліки, обидві копії працюють із remote_apply та ANY 2. Одне асинхронне розділення читань і записів такої гарантії не забезпечує.')
  shot('17-pgcat-routing','Фактичні SELECT потрапляють на дві репліки а UPDATE на primary')
  text('У перевірці маршрутизації виконав 200 SELECT через той самий DATABASE_URL, що використовує API, та UPDATE RETURNING. Усі читання повернули pg_is_in_recovery=true і дві різні адреси; запис повернув false. Це доводить використання обох replica, а не лише факт підключення до PgCat.')
@@ -132,6 +132,7 @@ def build(output):
  sm=load(E/'pgcat-smoke/smoke-summary.json')['metrics']
  text(f'Smoke через PgCat виконав {number(sm["http_reqs"]["values"]["count"],0)} запитів і {number(sm["checks"]["values"]["passes"],0)} успішних перевірок. p95 становить {ms(sm["http_req_duration"]["values"]["p(95)"])}, неочікуваних HTTP помилок {pct(sm["http_req_failed"]["values"]["rate"])}. Усі пороги smoke пройдені.')
  shot('19-pgcat-smoke','Успішний оригінальний smoke k6 через PgCat')
+ text('Додатково через PgCat пройшли всі три наявні тести конкурентного доступу: конфлікт версій плану, унікальний порядок паралельно доданих локацій та повторне оновлення після 409. Невдалих тестів немає.')
 
  heading('10 Порівняння сталого навантаження та читання')
  table(['Топологія','25 VU p95','50 VU p95','100 VU p95','200 VU p95'],[[names[k]]+[number(p[k][str(v)]['p95_ms']) for v in [25,50,100,200]] for k in names],[2.0,1.25,1.25,1.25,1.25])

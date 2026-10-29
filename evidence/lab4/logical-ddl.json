@@ -1,0 +1,8 @@
+{
+  "immediatelyAfterPrimaryDDL": {
+    "postgres_sub": "ABSENT"
+  },
+  "afterDDLAndRowReplication": {
+    "postgres_sub": "4|DDL and row verification"
+  }
+}

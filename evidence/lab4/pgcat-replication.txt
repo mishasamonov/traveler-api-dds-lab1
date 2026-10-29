@@ -1,0 +1,41 @@
+wal_level 
+-----------
+ logical
+(1 row)
+
+ synchronous_commit 
+--------------------
+ remote_apply
+(1 row)
+
+ synchronous_standby_names  
+----------------------------
+ ANY 2 (replica1, replica2)
+(1 row)
+
+application_name |   state   | sync_state | write_lsn  | flush_lsn  | replay_lsn 
+------------------+-----------+------------+------------+------------+------------
+ replica1         | streaming | quorum     | 0/1038AFD8 | 0/1038AFD8 | 0/1038AFD8
+ replica2         | streaming | quorum     | 0/1038AFD8 | 0/1038AFD8 | 0/1038AFD8
+(2 rows)
+
+{
+  "postgres": {
+    "plans": 2000,
+    "locations": 6000,
+    "plans_md5": "3e6ad3407d0be96a1cacb220692e9328",
+    "locations_md5": "510d78244291634b029c50da84bed891"
+  },
+  "replica1": {
+    "plans": 2000,
+    "locations": 6000,
+    "plans_md5": "3e6ad3407d0be96a1cacb220692e9328",
+    "locations_md5": "510d78244291634b029c50da84bed891"
+  },
+  "replica2": {
+    "plans": 2000,
+    "locations": 6000,
+    "plans_md5": "3e6ad3407d0be96a1cacb220692e9328",
+    "locations_md5": "510d78244291634b029c50da84bed891"
+  }
+}

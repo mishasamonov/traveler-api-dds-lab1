@@ -1,0 +1,422 @@
+[
+  {
+    "source": "01-baseline-hurl.jpg",
+    "evidence": "baseline-hurl.txt",
+    "evidenceSHA256": "88bfafa01d9e7b73df700f3a5a2f128717ea8c5c7728288138517f3a830abe65",
+    "capturedFileMtimeUtc": "2026-10-29T07:43:20.111652+00:00",
+    "originalFormat": "JPEG",
+    "dimensions": [
+      1536,
+      695
+    ],
+    "crop": [
+      23,
+      21,
+      1059,
+      414
+    ],
+    "sourceSHA256": "e6b34400fc7ae6e5885fd9a0584eac392a4d236876b976e0a743a21ebe9005a3",
+    "output": "01-baseline-hurl.png",
+    "outputSHA256": "ee5d8281c396730b4ac34cc06f424132bd14c877a46c830ed6a14db76f4d3cec",
+    "method": "Browser capture of verified localhost evidence viewer; crop only; original JPEG preserved; PNG avoids a second lossy encoding"
+  },
+  {
+    "source": "02-logical-equality.jpg",
+    "evidence": "logical-data-equality.json",
+    "evidenceSHA256": "2ce30d947b78c8dfeed90a02fb4c74773bbeccca37a393de074efadee27536ee",
+    "capturedFileMtimeUtc": "2026-10-29T07:59:12.758555+00:00",
+    "originalFormat": "JPEG",
+    "dimensions": [
+      1536,
+      695
+    ],
+    "crop": [
+      23,
+      21,
+      654,
+      444
+    ],
+    "sourceSHA256": "8fe76d7745e40d21eb62cfd525ca6c38f9cea69894a296cf74f556b09187c124",
+    "output": "02-logical-equality.png",
+    "outputSHA256": "5c13e1a18acb278b35242a6512f721fddbea07b4ec0b7c332e008b5d5ebc226e",
+    "method": "Browser capture of verified localhost evidence viewer; crop only; original JPEG preserved; PNG avoids a second lossy encoding"
+  },
+  {
+    "source": "03-logical-subscriptions.jpg",
+    "evidence": "logical-subscriptions.txt",
+    "evidenceSHA256": "b3b097f3b71b71d194f116c2c7a56b8a1a1197e06a2a47f58b12b23adbd38af3",
+    "capturedFileMtimeUtc": "2026-10-29T07:46:28.264933+00:00",
+    "originalFormat": "JPEG",
+    "dimensions": [
+      1536,
+      695
+    ],
+    "crop": [
+      23,
+      21,
+      664,
+      444
+    ],
+    "sourceSHA256": "a39e79b9d483d98e027ea7fcbfef78884f0dea81d6129eb61e49e5e3fd459284",
+    "output": "03-logical-subscriptions.png",
+    "outputSHA256": "7b1c76903f616e482e0becad16a1d10e929a158d3da9a78fd4d13f88098a8de2",
+    "method": "Browser capture of verified localhost evidence viewer; crop only; original JPEG preserved; PNG avoids a second lossy encoding"
+  },
+  {
+    "source": "04-logical-smoke.jpg",
+    "evidence": "logical-smoke/smoke-summary.txt",
+    "evidenceSHA256": "04eec3b7aba0f998bcf1ce79d3176578b3eb8fcd8797e6529daeda7fadc2f947",
+    "capturedFileMtimeUtc": "2026-10-29T07:46:30.203465+00:00",
+    "originalFormat": "JPEG",
+    "dimensions": [
+      1536,
+      695
+    ],
+    "crop": [
+      22,
+      21,
+      1504,
+      649
+    ],
+    "sourceSHA256": "f17d01148b3cf1b5967dc3d022b06ed3368167cd4e0fe7ebda34836aedf622ce",
+    "output": "04-logical-smoke.png",
+    "outputSHA256": "58adea5c169f91bb8ea50de8265c7599e7f4b020c679f04c5a4b11c8c81776b9",
+    "method": "Browser capture of verified localhost evidence viewer; crop only; original JPEG preserved; PNG avoids a second lossy encoding"
+  },
+  {
+    "source": "05-logical-ddl.jpg",
+    "evidence": "logical-ddl.json",
+    "evidenceSHA256": "58edb6ba0c15d55820ed335b18decfedacd91acf14fb38802e0c323faeb51c3a",
+    "capturedFileMtimeUtc": "2026-10-29T07:46:31.436611+00:00",
+    "originalFormat": "JPEG",
+    "dimensions": [
+      1536,
+      695
+    ],
+    "crop": [
+      23,
+      21,
+      654,
+      355
+    ],
+    "sourceSHA256": "13f3b4c8fbea95fdd18cad77ab5c3b2e00bc95c44fe47a4a521127b3fde8663e",
+    "output": "05-logical-ddl.png",
+    "outputSHA256": "2ddf89e2574242cd3f61475596ddfc118d5e9af5eb99ace05667e1b6033f4ec6",
+    "method": "Browser capture of verified localhost evidence viewer; crop only; original JPEG preserved; PNG avoids a second lossy encoding"
+  },
+  {
+    "source": "06-baseline-load.jpg",
+    "evidence": "baseline-load/load-summary.txt",
+    "evidenceSHA256": "f0088946d186661f25378a6746290050220773204c965de3f1f72f22b3098e37",
+    "capturedFileMtimeUtc": "2026-10-29T07:52:53.666723+00:00",
+    "originalFormat": "JPEG",
+    "dimensions": [
+      1536,
+      695
+    ],
+    "crop": [
+      22,
+      21,
+      1504,
+      589
+    ],
+    "sourceSHA256": "156b655a37d9d124511b7e55030fc51fe73a24713335886c9104a97777405816",
+    "output": "06-baseline-load.png",
+    "outputSHA256": "69a067467196c049629cc0f4ab3c5059343a0a1ed5bbd19268d1f3107cccd21a",
+    "method": "Browser capture of verified localhost evidence viewer; crop only; original JPEG preserved; PNG avoids a second lossy encoding"
+  },
+  {
+    "source": "07-logical-load.jpg",
+    "evidence": "logical-load/load-summary.txt",
+    "evidenceSHA256": "7b0794f58ba3cec43ccf6b07b9b71e58ecffb592228d6f45bb5accb5ea3652d5",
+    "capturedFileMtimeUtc": "2026-10-29T07:52:55.037748+00:00",
+    "originalFormat": "JPEG",
+    "dimensions": [
+      1536,
+      695
+    ],
+    "crop": [
+      22,
+      21,
+      1503,
+      594
+    ],
+    "sourceSHA256": "6ae7ed2f9fea4cb81f50af0e6a48fa5fc0e84fc19cf20de83acbb1d2e021727a",
+    "output": "07-logical-load.png",
+    "outputSHA256": "4842ee2c930e0a2509c71dd4d53a189c669955b93082bff9e2e7e0be7c45f711",
+    "method": "Browser capture of verified localhost evidence viewer; crop only; original JPEG preserved; PNG avoids a second lossy encoding"
+  },
+  {
+    "source": "08-physical-equality.jpg",
+    "evidence": "physical-data-equality.json",
+    "evidenceSHA256": "afeb003ea97a051e384b053e8cf5faa2116861ac8343c015aa5c2bbc8d775897",
+    "capturedFileMtimeUtc": "2026-10-29T07:59:14.762918+00:00",
+    "originalFormat": "JPEG",
+    "dimensions": [
+      1536,
+      695
+    ],
+    "crop": [
+      23,
+      21,
+      677,
+      444
+    ],
+    "sourceSHA256": "4887fd01ef7156bb0023464dd7f5fa859220314d75daec617509cd2a5b7e1f9b",
+    "output": "08-physical-equality.png",
+    "outputSHA256": "6f9f95a19ae4559496a1caadd6e92437268ff044614f5f7ecc80e1a27167d3e3",
+    "method": "Browser capture of verified localhost evidence viewer; crop only; original JPEG preserved; PNG avoids a second lossy encoding"
+  },
+  {
+    "source": "09-physical-ddl.jpg",
+    "evidence": "physical-ddl.json",
+    "evidenceSHA256": "a7fd2e4f23ae56b3865db3e4c70dc910aa5e53e622aedf2afe06ba9b7e6988e8",
+    "capturedFileMtimeUtc": "2026-10-29T07:52:58.174061+00:00",
+    "originalFormat": "JPEG",
+    "dimensions": [
+      1536,
+      695
+    ],
+    "crop": [
+      23,
+      21,
+      604,
+      355
+    ],
+    "sourceSHA256": "6420c3dd1f13628397b2a45c79a3a8c5cfed1784436db011fd2dab678af7ad3a",
+    "output": "09-physical-ddl.png",
+    "outputSHA256": "1279ef4d1a87700be0746323a6906ac2ac6b3687d436d403b792e73b8b5fb7f9",
+    "method": "Browser capture of verified localhost evidence viewer; crop only; original JPEG preserved; PNG avoids a second lossy encoding"
+  },
+  {
+    "source": "10-security-config.jpg",
+    "evidence": "configuration.txt",
+    "evidenceSHA256": "a5a58a05c4de2e57a76148dac73c122b387931e2bb454055adc54aceb20cc137",
+    "capturedFileMtimeUtc": "2026-10-29T07:59:16.862576+00:00",
+    "originalFormat": "JPEG",
+    "dimensions": [
+      1536,
+      695
+    ],
+    "crop": [
+      23,
+      21,
+      1312,
+      533
+    ],
+    "sourceSHA256": "0594e03ac721d11788970314ae138be6bde572c8159ff6c3f89bb6d6b432b79e",
+    "output": "10-security-config.png",
+    "outputSHA256": "79a8e80d5a86077a8022388b1db68af7292c82285c21b8017c26d479fffc7262",
+    "method": "Browser capture of verified localhost evidence viewer; crop only; original JPEG preserved; PNG avoids a second lossy encoding"
+  },
+  {
+    "source": "11-physical-load.jpg",
+    "evidence": "physical-load/load-summary.txt",
+    "evidenceSHA256": "9debd55db3400f8f69da9e997db30e931cf6773fb46554f8bee7d6559eada71b",
+    "capturedFileMtimeUtc": "2026-10-29T07:59:18.964251+00:00",
+    "originalFormat": "JPEG",
+    "dimensions": [
+      1536,
+      695
+    ],
+    "crop": [
+      22,
+      21,
+      1504,
+      589
+    ],
+    "sourceSHA256": "8a550e9514e4e58ee1d5491a075c9e667a7739ad0a456569cbe598be7a4a0fc2",
+    "output": "11-physical-load.png",
+    "outputSHA256": "9b11c569b8c2a827a6b47a26e7a58eca65e045c1b55cfad3a53661eb4950395b",
+    "method": "Browser capture of verified localhost evidence viewer; crop only; original JPEG preserved; PNG avoids a second lossy encoding"
+  },
+  {
+    "source": "12-sync-block.jpg",
+    "evidence": "sync-sync-block.txt",
+    "evidenceSHA256": "e8958ef1852da6eedfceab0048d1f422b673c1b52bd79c88ab958eb7f24239ab",
+    "capturedFileMtimeUtc": "2026-10-29T07:59:20.953915+00:00",
+    "originalFormat": "JPEG",
+    "dimensions": [
+      1536,
+      695
+    ],
+    "crop": [
+      22,
+      21,
+      667,
+      384
+    ],
+    "sourceSHA256": "3b7e778bd284d03877fd1940530ea117ce6ff2535db1b45a7c0f7fe4d546c300",
+    "output": "12-sync-block.png",
+    "outputSHA256": "c11755db1e8dd99a7fb8c6306f0bf9a13202d6ea229355bf4836310903ea934b",
+    "method": "Browser capture of verified localhost evidence viewer; crop only; original JPEG preserved; PNG avoids a second lossy encoding"
+  },
+  {
+    "source": "13-sync-load.jpg",
+    "evidence": "sync-load/load-summary.txt",
+    "evidenceSHA256": "41c2330126f0acc26e486bf6a174f8c5c19dd8529c3ac26232f7c0e39c848d8e",
+    "capturedFileMtimeUtc": "2026-10-29T07:59:23.075931+00:00",
+    "originalFormat": "JPEG",
+    "dimensions": [
+      1536,
+      695
+    ],
+    "crop": [
+      22,
+      21,
+      1500,
+      589
+    ],
+    "sourceSHA256": "c199b1c325cb3fa6262056be6d6521de34a6f1d746f8e0ec0afc95f664a7b581",
+    "output": "13-sync-load.png",
+    "outputSHA256": "a3350cfbc8ab7d5b703d33fc5e2ae2ec56dfa54338952bf28cd7e527d49286c5",
+    "method": "Browser capture of verified localhost evidence viewer; crop only; original JPEG preserved; PNG avoids a second lossy encoding"
+  },
+  {
+    "source": "14-security-hba.jpg",
+    "evidence": "pgcat-security.txt",
+    "evidenceSHA256": "1002d35f0e2c426583e7a8d232fb1feedd866a0f4df25ee52016edcbbf38a32f",
+    "capturedFileMtimeUtc": "2026-10-29T08:13:10.583386+00:00",
+    "originalFormat": "JPEG",
+    "dimensions": [
+      1536,
+      695
+    ],
+    "crop": [
+      23,
+      21,
+      1021,
+      654
+    ],
+    "sourceSHA256": "c4315a7f5cf398e73d9c1c79098e601fa23889bd5a768561e13622adea712b98",
+    "output": "14-security-hba.png",
+    "outputSHA256": "8694263765cdc8d735f0aa14f0c5b3ab0233d68ce4ae49a376cba41fa9d1055c",
+    "method": "Browser capture of verified localhost evidence viewer; crop only; original JPEG preserved; PNG avoids a second lossy encoding"
+  },
+  {
+    "source": "15-pgcat-ports.jpg",
+    "evidence": "pgcat-compose-ps.txt",
+    "evidenceSHA256": "e5d215a660852a634028f4ae7ee82831e2ade32ab546620eaa06265831614b38",
+    "capturedFileMtimeUtc": "2026-10-29T08:13:11.224774+00:00",
+    "originalFormat": "JPEG",
+    "dimensions": [
+      1536,
+      695
+    ],
+    "crop": [
+      23,
+      21,
+      633,
+      355
+    ],
+    "sourceSHA256": "4b98748c71f0cb351c6f673c3ea3e8c60e011c6f9700aa26cdb5e5f69931c790",
+    "output": "15-pgcat-ports.png",
+    "outputSHA256": "0ad8297251ffc9ae506eb0da5af95324ff497eac911d0f435d3c9ba5a7f394e1",
+    "method": "Browser capture of verified localhost evidence viewer; crop only; original JPEG preserved; PNG avoids a second lossy encoding"
+  },
+  {
+    "source": "16-logical2-equality.jpg",
+    "evidence": "logical2-data-equality.json",
+    "evidenceSHA256": "827f8e3b0edc4be985177b097739e8a0ced7b17a9b9954e061549f1d79459d73",
+    "capturedFileMtimeUtc": "2026-10-29T07:59:25.071428+00:00",
+    "originalFormat": "JPEG",
+    "dimensions": [
+      1536,
+      695
+    ],
+    "crop": [
+      23,
+      21,
+      669,
+      623
+    ],
+    "sourceSHA256": "8f38d6e59365a65e6c6c0816d44f8f17542c5029942207efd1590e6dbc0d32a9",
+    "output": "16-logical2-equality.png",
+    "outputSHA256": "19e15a7d9b87f879fc8fe7088f623630e0c7cadf1101935ce7f586ca9f572a17",
+    "method": "Browser capture of verified localhost evidence viewer; crop only; original JPEG preserved; PNG avoids a second lossy encoding"
+  },
+  {
+    "source": "17-pgcat-routing.jpg",
+    "evidence": "pgcat-routing.txt",
+    "evidenceSHA256": "71f80b1f3c31055abdbeea414dd56e2ef5e851114dd6572aeccd47ede39199c2",
+    "capturedFileMtimeUtc": "2026-10-29T08:13:12.867699+00:00",
+    "originalFormat": "JPEG",
+    "dimensions": [
+      1536,
+      695
+    ],
+    "crop": [
+      23,
+      21,
+      779,
+      474
+    ],
+    "sourceSHA256": "3f391de3b7240fb0921ffabe5311605a51729ad4eabdbd237171bacaf53b9903",
+    "output": "17-pgcat-routing.png",
+    "outputSHA256": "a04a040cc247761afe52b9b9d20ce8a73403efdc825b36ac6ee64c777fe357b1",
+    "method": "Browser capture of verified localhost evidence viewer; crop only; original JPEG preserved; PNG avoids a second lossy encoding"
+  },
+  {
+    "source": "18-pgcat-hurl.jpg",
+    "evidence": "pgcat-hurl.txt",
+    "evidenceSHA256": "6de72edbed86fc444bc2b5c41217bf81e3782deb49df557011639fbce10be3fd",
+    "capturedFileMtimeUtc": "2026-10-29T08:13:14.897530+00:00",
+    "originalFormat": "JPEG",
+    "dimensions": [
+      1536,
+      695
+    ],
+    "crop": [
+      23,
+      21,
+      1059,
+      414
+    ],
+    "sourceSHA256": "95e91efe8f2430f848f17e5032e53dd1df77df551bfc21b5481b1494259748ff",
+    "output": "18-pgcat-hurl.png",
+    "outputSHA256": "e7dd1e0373e42cfbc295cb722f6d512472ab2819d7e1c60eaf0f833cfe95d348",
+    "method": "Browser capture of verified localhost evidence viewer; crop only; original JPEG preserved; PNG avoids a second lossy encoding"
+  },
+  {
+    "source": "19-pgcat-smoke.jpg",
+    "evidence": "pgcat-smoke/smoke-summary.txt",
+    "evidenceSHA256": "7b802a0f077759517ec7856e557481884788b562f8b247603839581b40f5982f",
+    "capturedFileMtimeUtc": "2026-10-29T08:13:16.838895+00:00",
+    "originalFormat": "JPEG",
+    "dimensions": [
+      1536,
+      695
+    ],
+    "crop": [
+      22,
+      21,
+      1503,
+      654
+    ],
+    "sourceSHA256": "68e41a984e0f89d8139d484b3a5f90b586ca3ea1404161ffe650dc98ac0c5cd1",
+    "output": "19-pgcat-smoke.png",
+    "outputSHA256": "4e4c8b060ba76553ecb8999dc2e5212597cc2548b5c2ed9cf50f3aced830dd97",
+    "method": "Browser capture of verified localhost evidence viewer; crop only; original JPEG preserved; PNG avoids a second lossy encoding"
+  },
+  {
+    "source": "20-comparison.jpg",
+    "evidence": "comparison.txt",
+    "evidenceSHA256": "e5fea88721084e12ba13a20260932a9503a78699980a743c715e324d4237c5b8",
+    "capturedFileMtimeUtc": "2026-10-29T08:13:18.085375+00:00",
+    "originalFormat": "JPEG",
+    "dimensions": [
+      1536,
+      695
+    ],
+    "crop": [
+      23,
+      21,
+      807,
+      474
+    ],
+    "sourceSHA256": "0f648aeaa47538c1946af57f98757bae9a177ca3e96d23a62ffaf94a07145980",
+    "output": "20-comparison.png",
+    "outputSHA256": "68763e60fc9c4c23d2fe775680a7fec9a8e3d17d88f0a96bac8d2eab1b4bbe17",
+    "method": "Browser capture of verified localhost evidence viewer; crop only; original JPEG preserved; PNG avoids a second lossy encoding"
+  }
+]

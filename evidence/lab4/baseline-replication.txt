@@ -1,0 +1,27 @@
+wal_level 
+-----------
+ logical
+(1 row)
+
+ synchronous_commit 
+--------------------
+ on
+(1 row)
+
+ synchronous_standby_names 
+---------------------------
+ 
+(1 row)
+
+application_name | state | sync_state | write_lsn | flush_lsn | replay_lsn 
+------------------+-------+------------+-----------+-----------+------------
+(0 rows)
+
+{
+  "postgres": {
+    "plans": 2000,
+    "locations": 6000,
+    "plans_md5": "9086533c656fa882d846a2243e620581",
+    "locations_md5": "003ee12fd5714479cc2f6e347c911568"
+  }
+}

@@ -1,0 +1,4 @@
+NAME                                IMAGE                   COMMAND                  SERVICE    CREATED              STATUS                        PORTS
+traveler_lab4_physical-postgres-1   postgres:16.15-alpine   "docker-entrypoint.s…"   postgres   About a minute ago   Up About a minute (healthy)   5432/tcp
+traveler_lab4_physical-replica1-1   postgres:16.15-alpine   "/bin/bash /standby/…"   replica1   19 seconds ago       Up 18 seconds (healthy)       5432/tcp
+traveler_lab4_physical-web-1        traveler-api:lab4       "docker-entrypoint.s…"   web        7 seconds ago        Up 6 seconds (healthy)        127.0.0.1:4567->4567/tcp

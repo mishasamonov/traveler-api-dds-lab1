@@ -1,0 +1,137 @@
+{
+  "verifiedRuns": [
+    {
+      "run": "baseline-load",
+      "exitCode": 99,
+      "requests": 71008,
+      "HTTPerrors": 0,
+      "checksRate": 1,
+      "copiesEqual": true
+    },
+    {
+      "run": "baseline-smoke",
+      "exitCode": 0,
+      "requests": 1131,
+      "HTTPerrors": 0,
+      "checksRate": 1,
+      "copiesEqual": true
+    },
+    {
+      "run": "logical-load",
+      "exitCode": 99,
+      "requests": 67659,
+      "HTTPerrors": 0,
+      "checksRate": 1,
+      "copiesEqual": true
+    },
+    {
+      "run": "logical-smoke",
+      "exitCode": 0,
+      "requests": 1131,
+      "HTTPerrors": 0,
+      "checksRate": 1,
+      "copiesEqual": true
+    },
+    {
+      "run": "pgcat-load",
+      "exitCode": 99,
+      "requests": 70410,
+      "HTTPerrors": 0,
+      "checksRate": 1,
+      "copiesEqual": true
+    },
+    {
+      "run": "pgcat-read-1",
+      "exitCode": 0,
+      "requests": 20696,
+      "HTTPerrors": 0,
+      "checksRate": 1,
+      "copiesEqual": true
+    },
+    {
+      "run": "pgcat-read-2",
+      "exitCode": 0,
+      "requests": 22180,
+      "HTTPerrors": 0,
+      "checksRate": 1,
+      "copiesEqual": true
+    },
+    {
+      "run": "pgcat-read-3",
+      "exitCode": 0,
+      "requests": 21536,
+      "HTTPerrors": 0,
+      "checksRate": 1,
+      "copiesEqual": true
+    },
+    {
+      "run": "pgcat-smoke",
+      "exitCode": 0,
+      "requests": 1040,
+      "HTTPerrors": 0,
+      "checksRate": 1,
+      "copiesEqual": true
+    },
+    {
+      "run": "physical-load",
+      "exitCode": 99,
+      "requests": 68244,
+      "HTTPerrors": 0,
+      "checksRate": 1,
+      "copiesEqual": true
+    },
+    {
+      "run": "physical-smoke",
+      "exitCode": 0,
+      "requests": 1105,
+      "HTTPerrors": 0,
+      "checksRate": 1,
+      "copiesEqual": true
+    },
+    {
+      "run": "sync-load",
+      "exitCode": 99,
+      "requests": 67086,
+      "HTTPerrors": 0,
+      "checksRate": 1,
+      "copiesEqual": true
+    },
+    {
+      "run": "sync-smoke",
+      "exitCode": 0,
+      "requests": 1092,
+      "HTTPerrors": 0,
+      "checksRate": 1,
+      "copiesEqual": true
+    },
+    {
+      "run": "two-read-1",
+      "exitCode": 0,
+      "requests": 16738,
+      "HTTPerrors": 0,
+      "checksRate": 1,
+      "copiesEqual": true
+    },
+    {
+      "run": "two-read-2",
+      "exitCode": 0,
+      "requests": 15936,
+      "HTTPerrors": 0,
+      "checksRate": 1,
+      "copiesEqual": true
+    },
+    {
+      "run": "two-read-3",
+      "exitCode": 0,
+      "requests": 16662,
+      "HTTPerrors": 0,
+      "checksRate": 1,
+      "copiesEqual": true
+    }
+  ],
+  "hurlTopologies": 7,
+  "sourceFilesUnchanged": 11,
+  "synchronousWaitProved": true,
+  "logicalAndPhysicalDDLProved": true,
+  "PgCatReadWriteRoutingProved": true
+}

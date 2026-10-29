@@ -1,0 +1,11 @@
+postgres_sub
+subname | subenabled 
+---------+------------
+ tp_sub1 | t
+(1 row)
+
+   srrelid    | srsubstate 
+--------------+------------
+ travel_plans | r
+ locations    | r
+(2 rows)

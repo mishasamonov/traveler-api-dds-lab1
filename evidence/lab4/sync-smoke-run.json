@@ -1,0 +1,21 @@
+{
+  "mode": "sync",
+  "scenario": "smoke",
+  "startedUtc": "2026-10-29T07:53:08.948002+00:00",
+  "command": [
+    "k6.exe",
+    "run",
+    "--out",
+    "json=evidence/lab4/sync-smoke-raw.json.gz",
+    "D:\\Documents\\ChatGPT\\Розподілені сховища даних\\traveler-api-lab4\\tests\\performance-tests\\smoke-test.js"
+  ],
+  "seedPlans": 2000,
+  "seedLocations": 6000,
+  "apiSourceSHA256": "1d127fc6f04a7f3e89a6832a25b52e082ba399331a5a377182550c666ae4269f",
+  "scenarioSHA256": "54eae5ee6db6d998247541ebbebf7caae6868a0ae35423c0a24bafaab73cfdd8",
+  "replicas": [
+    "replica1"
+  ],
+  "exitCode": 0,
+  "elapsedSeconds": 25.75
+}

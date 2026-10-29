@@ -1,0 +1,3 @@
+NAME                                IMAGE                   COMMAND                  SERVICE    CREATED         STATUS                   PORTS
+traveler_lab4_baseline-postgres-1   postgres:16.15-alpine   "docker-entrypoint.s…"   postgres   2 minutes ago   Up 2 minutes (healthy)   5432/tcp
+traveler_lab4_baseline-web-1        traveler-api:lab4       "docker-entrypoint.s…"   web        7 seconds ago   Up 6 seconds (healthy)   127.0.0.1:4567->4567/tcp

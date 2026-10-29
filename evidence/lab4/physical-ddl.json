@@ -1,0 +1,8 @@
+{
+  "immediatelyAfterPrimaryDDL": {
+    "replica1": "lab4_ddl_probe"
+  },
+  "afterDDLAndRowReplication": {
+    "replica1": "4|DDL and row verification"
+  }
+}

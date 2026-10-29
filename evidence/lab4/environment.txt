@@ -1,0 +1,22 @@
+Client 29.5.3; Server 29.5.3
+v22.18.0
+version                                          
+------------------------------------------------------------------------------------------
+ PostgreSQL 16.15 on x86_64-pc-linux-musl, compiled by gcc (Alpine 15.2.0) 15.2.0, 64-bit
+(1 row)
+
+ wal_keep_size 
+---------------
+ 256MB
+(1 row)
+
+ max_connections 
+-----------------
+ 100
+(1 row)
+
+ shared_buffers 
+----------------
+ 128MB
+(1 row)
+pgcat 1.2.0

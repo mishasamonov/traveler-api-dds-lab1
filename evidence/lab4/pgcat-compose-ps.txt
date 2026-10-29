@@ -1,0 +1,8 @@
+docker inspect: HostConfig.PortBindings
+Only published HOST ports are listed below
+
+pgcat      NONE
+postgres   NONE
+replica1   NONE
+replica2   NONE
+web        127.0.0.1:4567 -> 4567/tcp

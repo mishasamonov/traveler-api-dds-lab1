@@ -1,0 +1,12 @@
+
+Success /tests/crud.hurl (6 request(s) in 62 ms)
+Success /tests/race-conditions.hurl (9 request(s) in 106 ms)
+Success /tests/management.hurl (10 request(s) in 126 ms)
+Success /tests/validation.hurl (31 request(s) in 123 ms)
+--------------------------------------------------------------------------------
+Executed files:    4
+Executed requests: 56 (368.4/s)
+Succeeded files:   4 (100.0%)
+Failed files:      0 (0.0%)
+Duration:          152 ms (0h:0m:0s:152ms)
+

@@ -1,0 +1,16 @@
+k6 SMOKE TEST
+API: http://127.0.0.1:4567
+
+http_reqs: {"count":1131,"rate":55.18238218870004}
+iterations: {"count":87,"rate":4.244798629900004}
+checks: {"passes":1392,"fails":0,"rate":1}
+http_req_failed: {"rate":0,"passes":0,"fails":1131}
+http_req_duration: {"p(99)":10.796760000000006,"avg":4.560302652519894,"min":0.8273,"med":4.2863,"max":20.3127,"p(90)":7.0872,"p(95)":8.1543}
+api_errors: {"rate":0,"passes":0,"fails":1131}
+expected_version_conflicts: {"count":87,"rate":4.244798629900004}
+
+THRESHOLDS
+PASS http_req_failed: rate==0
+PASS api_errors: rate==0
+PASS http_req_duration: p(95)<500
+PASS checks: rate==1

@@ -1,0 +1,31 @@
+rolname  | rolsuper | rolreplication | rolcreatedb | rolcreaterole 
+-----------+----------+----------------+-------------+---------------
+ traveler  | f        | f              | f           | f
+ lab4_repl | f        | t              | f           | f
+(2 rows)
+
+ password_encryption 
+---------------------
+ scram-sha-256
+(1 row)
+
+ listen_addresses 
+------------------
+ *
+(1 row)
+
+ type  |    database     |  user_name  |   address   |  auth_method  | error 
+-------+-----------------+-------------+-------------+---------------+-------
+ local | {all}           | {all}       |             | trust         | 
+ host  | {traveler_lab2} | {traveler}  | 172.29.45.0 | scram-sha-256 | 
+ host  | {traveler_lab2} | {lab4_repl} | 172.29.45.0 | scram-sha-256 | 
+ host  | {replication}   | {lab4_repl} | 172.29.45.0 | scram-sha-256 | 
+ host  | {all}           | {all}       | 0.0.0.0     | reject        | 
+ host  | {all}           | {all}       | ::          | reject        | 
+(6 rows)
+
+NAME                           IMAGE                   COMMAND                  SERVICE    CREATED          STATUS                    PORTS
+traveler_lab4_two-postgres-1   postgres:16.15-alpine   "docker-entrypoint.s…"   postgres   35 seconds ago   Up 35 seconds (healthy)   5432/tcp
+traveler_lab4_two-replica1-1   postgres:16.15-alpine   "/bin/bash /standby/…"   replica1   35 seconds ago   Up 29 seconds (healthy)   5432/tcp
+traveler_lab4_two-replica2-1   postgres:16.15-alpine   "/bin/bash /standby/…"   replica2   35 seconds ago   Up 29 seconds (healthy)   5432/tcp
+traveler_lab4_two-web-1        traveler-api:lab4       "docker-entrypoint.s…"   web        20 seconds ago   Up 19 seconds (healthy)   127.0.0.1:4567->4567/tcp

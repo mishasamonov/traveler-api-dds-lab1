@@ -1,0 +1,18 @@
+rolname  | rolsuper | rolreplication | rolcreatedb | rolcreaterole 
+-----------+----------+----------------+-------------+---------------
+ traveler  | f        | f              | f           | f
+ lab4_repl | f        | t              | f           | f
+ password_encryption 
+---------------------
+ scram-sha-256
+ listen_addresses 
+------------------
+ *
+ type  |    database     |  user_name  |   address   |  auth_method  | error 
+-------+-----------------+-------------+-------------+---------------+-------
+ local | {all}           | {all}       |             | trust         | 
+ host  | {traveler_lab2} | {traveler}  | 172.29.46.0 | scram-sha-256 | 
+ host  | {traveler_lab2} | {lab4_repl} | 172.29.46.0 | scram-sha-256 | 
+ host  | {replication}   | {lab4_repl} | 172.29.46.0 | scram-sha-256 | 
+ host  | {all}           | {all}       | 0.0.0.0     | reject        | 
+ host  | {all}           | {all}       | ::          | reject        | 

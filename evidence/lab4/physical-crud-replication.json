@@ -1,0 +1,53 @@
+[
+  {
+    "operation": "INSERT",
+    "equal": {
+      "postgres": {
+        "plans": 2001,
+        "locations": 6000,
+        "plans_md5": "7474c2fc35d9495cadfba5a00a540253",
+        "locations_md5": "223afac89ced6449109903865f18ad53"
+      },
+      "replica1": {
+        "plans": 2001,
+        "locations": 6000,
+        "plans_md5": "7474c2fc35d9495cadfba5a00a540253",
+        "locations_md5": "223afac89ced6449109903865f18ad53"
+      }
+    }
+  },
+  {
+    "operation": "UPDATE",
+    "equal": {
+      "postgres": {
+        "plans": 2001,
+        "locations": 6000,
+        "plans_md5": "68b3dae3dcf223aac735ee32fd0655e8",
+        "locations_md5": "223afac89ced6449109903865f18ad53"
+      },
+      "replica1": {
+        "plans": 2001,
+        "locations": 6000,
+        "plans_md5": "68b3dae3dcf223aac735ee32fd0655e8",
+        "locations_md5": "223afac89ced6449109903865f18ad53"
+      }
+    }
+  },
+  {
+    "operation": "DELETE",
+    "equal": {
+      "postgres": {
+        "plans": 2000,
+        "locations": 6000,
+        "plans_md5": "4e759cb122d0a209e31223fe48512135",
+        "locations_md5": "223afac89ced6449109903865f18ad53"
+      },
+      "replica1": {
+        "plans": 2000,
+        "locations": 6000,
+        "plans_md5": "4e759cb122d0a209e31223fe48512135",
+        "locations_md5": "223afac89ced6449109903865f18ad53"
+      }
+    }
+  }
+]

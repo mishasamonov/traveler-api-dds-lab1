@@ -1,0 +1,12 @@
+ORIGINAL LAB 2 MIXED LOAD - WHOLE RUN
+mode       requests   avg_ms   p95_ms   req/s    HTTP errors
+baseline      71008   166.13   634.21   416.69     0.00%
+logical       67659   176.82   649.67   397.07     0.00%
+physical      68244   174.86   653.08   400.10     0.00%
+sync          67086   178.65   660.43   393.63     0.00%
+pgcat         70410   167.68   516.65   412.93     0.00%
+
+READ-ONLY 200 VU - THREE 45 SECOND RUNS
+two        median 365.35 req/s; median p95 882.09 ms
+pgcat      median 474.77 req/s; median p95 644.96 ms
+PgCat throughput change: +29.95%

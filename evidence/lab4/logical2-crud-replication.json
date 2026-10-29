@@ -1,0 +1,71 @@
+[
+  {
+    "operation": "INSERT",
+    "equal": {
+      "postgres": {
+        "plans": 2001,
+        "locations": 6000,
+        "plans_md5": "3a5e5db89b05a20b303cbbb07b00d2c6",
+        "locations_md5": "170ba24798a3bfc3d8f74a0489fe5cb9"
+      },
+      "postgres_sub": {
+        "plans": 2001,
+        "locations": 6000,
+        "plans_md5": "3a5e5db89b05a20b303cbbb07b00d2c6",
+        "locations_md5": "170ba24798a3bfc3d8f74a0489fe5cb9"
+      },
+      "postgres_sub2": {
+        "plans": 2001,
+        "locations": 6000,
+        "plans_md5": "3a5e5db89b05a20b303cbbb07b00d2c6",
+        "locations_md5": "170ba24798a3bfc3d8f74a0489fe5cb9"
+      }
+    }
+  },
+  {
+    "operation": "UPDATE",
+    "equal": {
+      "postgres": {
+        "plans": 2001,
+        "locations": 6000,
+        "plans_md5": "868253d1f5a984b8b89df0809a5bbf20",
+        "locations_md5": "170ba24798a3bfc3d8f74a0489fe5cb9"
+      },
+      "postgres_sub": {
+        "plans": 2001,
+        "locations": 6000,
+        "plans_md5": "868253d1f5a984b8b89df0809a5bbf20",
+        "locations_md5": "170ba24798a3bfc3d8f74a0489fe5cb9"
+      },
+      "postgres_sub2": {
+        "plans": 2001,
+        "locations": 6000,
+        "plans_md5": "868253d1f5a984b8b89df0809a5bbf20",
+        "locations_md5": "170ba24798a3bfc3d8f74a0489fe5cb9"
+      }
+    }
+  },
+  {
+    "operation": "DELETE",
+    "equal": {
+      "postgres": {
+        "plans": 2000,
+        "locations": 6000,
+        "plans_md5": "ec2b49bb8935b62b02d64ab73328a447",
+        "locations_md5": "170ba24798a3bfc3d8f74a0489fe5cb9"
+      },
+      "postgres_sub": {
+        "plans": 2000,
+        "locations": 6000,
+        "plans_md5": "ec2b49bb8935b62b02d64ab73328a447",
+        "locations_md5": "170ba24798a3bfc3d8f74a0489fe5cb9"
+      },
+      "postgres_sub2": {
+        "plans": 2000,
+        "locations": 6000,
+        "plans_md5": "ec2b49bb8935b62b02d64ab73328a447",
+        "locations_md5": "170ba24798a3bfc3d8f74a0489fe5cb9"
+      }
+    }
+  }
+]

@@ -1,0 +1,22 @@
+{
+  "mode": "pgcat",
+  "scenario": "read",
+  "startedUtc": "2026-10-29T08:10:12.204980+00:00",
+  "command": [
+    "k6.exe",
+    "run",
+    "--out",
+    "json=evidence/lab4/pgcat-read-3-raw.json.gz",
+    "D:\\Documents\\ChatGPT\\Розподілені сховища даних\\traveler-api-lab4\\tests\\performance-tests\\read-test.js"
+  ],
+  "seedPlans": 2000,
+  "seedLocations": 6000,
+  "apiSourceSHA256": "1d127fc6f04a7f3e89a6832a25b52e082ba399331a5a377182550c666ae4269f",
+  "scenarioSHA256": "d03ba14007e06dc20ff59b42cf98f9340e0815a84ebe93b1271ab666fb63a748",
+  "replicas": [
+    "replica1",
+    "replica2"
+  ],
+  "exitCode": 0,
+  "elapsedSeconds": 52.45299999974668
+}

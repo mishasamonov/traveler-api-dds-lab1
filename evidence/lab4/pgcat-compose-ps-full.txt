@@ -1,0 +1,6 @@
+NAME                             IMAGE                                                                                              COMMAND                  SERVICE    CREATED         STATUS                   PORTS
+traveler_lab4_pgcat-pgcat-1      ghcr.io/postgresml/pgcat@sha256:627761f6dcbc8c0d17809445d7441518e2452c6d4fbdcc2a9986871d9e3e1176   "pgcat /etc/pgcat/pg…"   pgcat      7 minutes ago   Up 7 minutes             
+traveler_lab4_pgcat-postgres-1   postgres:16.15-alpine                                                                              "docker-entrypoint.s…"   postgres   7 minutes ago   Up 7 minutes (healthy)   5432/tcp
+traveler_lab4_pgcat-replica1-1   postgres:16.15-alpine                                                                              "/bin/bash /standby/…"   replica1   7 minutes ago   Up 7 minutes (healthy)   5432/tcp
+traveler_lab4_pgcat-replica2-1   postgres:16.15-alpine                                                                              "/bin/bash /standby/…"   replica2   7 minutes ago   Up 7 minutes (healthy)   5432/tcp
+traveler_lab4_pgcat-web-1        traveler-api:lab4                                                                                  "docker-entrypoint.s…"   web        7 minutes ago   Up 7 minutes (healthy)   127.0.0.1:4567->4567/tcp

@@ -1,0 +1,14 @@
+{
+  "postgres": {
+    "plans": 2000,
+    "locations": 6000,
+    "plans_md5": "d5a1f943c251c91db807f1b1ea248df2",
+    "locations_md5": "dc8985091649a7e280f4237a766c84ef"
+  },
+  "replica1": {
+    "plans": 2000,
+    "locations": 6000,
+    "plans_md5": "d5a1f943c251c91db807f1b1ea248df2",
+    "locations_md5": "dc8985091649a7e280f4237a766c84ef"
+  }
+}

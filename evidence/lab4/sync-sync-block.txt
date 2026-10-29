@@ -1,0 +1,9 @@
+Paused replica1. Primary backend observed:
+application_name | wait_event_type | wait_event 
+------------------+-----------------+------------
+ psql             | IPC             | SyncRep
+(1 row)
+
+Commit still pending before unpause: True
+After unpause: UPDATE 1
+Elapsed seconds: 3.797

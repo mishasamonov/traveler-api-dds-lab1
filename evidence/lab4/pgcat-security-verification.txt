@@ -1,0 +1,44 @@
+Published host ports (from docker inspect)
+[
+  {
+    "container": "/traveler_lab4_pgcat-pgcat-1",
+    "publishedPorts": {}
+  },
+  {
+    "container": "/traveler_lab4_pgcat-postgres-1",
+    "publishedPorts": {}
+  },
+  {
+    "container": "/traveler_lab4_pgcat-replica1-1",
+    "publishedPorts": {}
+  },
+  {
+    "container": "/traveler_lab4_pgcat-replica2-1",
+    "publishedPorts": {}
+  },
+  {
+    "container": "/traveler_lab4_pgcat-web-1",
+    "publishedPorts": {
+      "4567/tcp": [
+        {
+          "HostIp": "127.0.0.1",
+          "HostPort": "4567"
+        }
+      ]
+    }
+  }
+]
+
+rolname  | rolsuper | rolreplication | rolcreatedb | rolcreaterole 
+-----------+----------+----------------+-------------+---------------
+ traveler  | f        | f              | f           | f
+ lab4_repl | f        | t              | f           | f
+(2 rows)
+
+ app_can_truncate 
+------------------
+ f
+(1 row)
+
+Admin TCP login rejected by pg_hba.conf
+psql: error: connection to server at "postgres" (172.29.46.2), port 5432 failed: FATAL:  pg_hba.conf rejects connection for host "172.29.46.2", user "lab4_admin", database "traveler_lab2", no encryption

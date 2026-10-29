@@ -1,0 +1,8 @@
+{
+  "postgres": {
+    "plans": 2000,
+    "locations": 6000,
+    "plans_md5": "9086533c656fa882d846a2243e620581",
+    "locations_md5": "003ee12fd5714479cc2f6e347c911568"
+  }
+}
