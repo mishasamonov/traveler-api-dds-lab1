@@ -108,6 +108,12 @@ for part in ('report_a.py', 'report_perf_text.py', 'report_c.py', 'report_d.py',
         exec((HERE / 'report_b2.py').read_text(encoding='utf-8'))
     else:
         exec((HERE / part).read_text(encoding='utf-8'))
+# Drop relationships left over from the template body (old links and images).
+import re as _re
+used = set(_re.findall(r'r:(?:id|embed|link)="(rId\d+)"', d.element.xml))
+for rid, rel in list(d.part.rels.items()):
+    if rid not in used and (rel.reltype.endswith('/hyperlink') or rel.reltype.endswith('/image')):
+        del d.part.rels[rid]
 OUTPUT.parent.mkdir(parents=True, exist_ok=True)
 d.core_properties.author = 'Самонов Михайло'
 d.core_properties.title = 'Лабораторна робота 6. Секціонування'
