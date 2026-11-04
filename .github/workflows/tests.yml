@@ -24,6 +24,10 @@ jobs:
           --health-retries 15
     env:
       DATABASE_URL: postgres://traveler:traveler@localhost:5432/traveler
+      # Laboratory 6: the API routes to 16 shard databases listed in this mapping.
+      MAPPING_FILE: .runtime/ci-mapping.json
+      PG_USER: traveler
+      PG_PASSWORD: traveler
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -33,6 +37,6 @@ jobs:
       - name: Install Hurl runtime dependency
         run: sudo apt-get update && sudo apt-get install -y libxml2
       - run: npm ci
-      - run: npm run db:init
+      - run: node scripts/lab6/ci-init.js
       - run: bash scripts/run-ci-tests.sh
 
