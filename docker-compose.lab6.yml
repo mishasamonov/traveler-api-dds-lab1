@@ -1,0 +1,237 @@
+name: traveler_lab6
+# Laboratory 6: 4 PostgreSQL services x 4 databases = 16 virtual nodes.
+# python scripts/lab6/lab6.py up sharded   |   python scripts/lab6/lab6.py up baseline
+x-shard: &shard
+  image: postgres:16.15-alpine
+  restart: unless-stopped
+  profiles: [sharded]
+  command: [postgres, -c, 'listen_addresses=*', -c, 'wal_level=logical',
+    -c, 'max_connections=300', -c, 'max_prepared_transactions=64',
+    -c, 'max_replication_slots=20', -c, 'max_wal_senders=20',
+    -c, 'max_logical_replication_workers=8', -c, 'max_worker_processes=16',
+    -c, 'password_encryption=scram-sha-256', -c, 'max_slot_wal_keep_size=1GB']
+  environment: &shard-env
+    POSTGRES_DB: postgres
+    POSTGRES_USER: ${DB_ADMIN:?Run scripts/lab6/bootstrap-env.py}
+    POSTGRES_PASSWORD: ${DB_ADMIN_PASSWORD}
+    POSTGRES_INITDB_ARGS: --encoding=UTF8 --auth-host=scram-sha-256
+    APP_USER: ${APP_USER}
+    APP_PASSWORD: ${APP_PASSWORD}
+    REPL_USER: ${REPL_USER}
+    REPL_PASSWORD: ${REPL_PASSWORD}
+    DOCKER_SUBNET: ${DOCKER_SUBNET}
+    REGISTRY_HOST: postgres_00
+  networks: [backend]
+  healthcheck:
+    # TCP check: the init-time server listens only on the Unix socket.
+    test: [CMD-SHELL, 'pg_isready -h 127.0.0.1 -U "$${POSTGRES_USER}" -d postgres']
+    interval: 3s
+    timeout: 3s
+    retries: 60
+    start_period: 20s
+  deploy:
+    resources:
+      limits: {cpus: '${SHARD_CPUS:-0.5}', memory: '${SHARD_MEMORY:-256M}'}
+  logging: &logging
+    driver: json-file
+    options: {max-size: 10m, max-file: '3'}
+  security_opt: [no-new-privileges:true]
+x-api: &api
+  image: traveler-api:lab6
+  build: {context: ., target: runtime}
+  init: true
+  restart: unless-stopped
+  profiles: [sharded]
+  environment: &api-env
+    PORT: '4567'
+    PG_USER: ${APP_USER}
+    PG_PASSWORD: ${APP_PASSWORD}
+    PG_POOL_PER_SHARD: ${PG_POOL_PER_SHARD:-5}
+    MAPPING_SOURCE: ${MAPPING_SOURCE:-file}
+    MAPPING_FILE: /mapping/mapping.json
+    REGISTRY_URLS: >-
+      postgres://${APP_USER}:${APP_PASSWORD}@postgres_00:5432/shard_registry,postgres://${APP_USER}:${APP_PASSWORD}@postgres_01:5432/shard_registry,postgres://${APP_USER}:${APP_PASSWORD}@postgres_02:5432/shard_registry,postgres://${APP_USER}:${APP_PASSWORD}@postgres_03:5432/shard_registry
+    HEALTHCHECK_URL: http://127.0.0.1:4567/health
+  volumes:
+    - ./.runtime/lab6:/mapping:ro
+  depends_on:
+    postgres_00: {condition: service_healthy}
+    postgres_01: {condition: service_healthy}
+    postgres_02: {condition: service_healthy}
+    postgres_03: {condition: service_healthy}
+  networks: [backend, frontend]
+  healthcheck:
+    test: [CMD, node, -e, 'fetch(process.env.HEALTHCHECK_URL).then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))']
+    interval: 5s
+    timeout: 5s
+    retries: 20
+  deploy:
+    resources:
+      limits: {cpus: '2.0', memory: 512M}
+  security_opt: [no-new-privileges:true]
+  read_only: true
+  tmpfs: [/tmp]
+  logging: *logging
+services:
+  postgres_00:
+    <<: *shard
+    hostname: postgres_00
+    environment: {<<: *shard-env, NODE_NAME: postgres_00, SHARD_DATABASES: db_0 db_1 db_2 db_3, REGISTRY_ROLE: publisher}
+    volumes:
+      - pg00_data:/var/lib/postgresql/data
+      - ./db/migrations:/docker-entrypoint-migrations:ro
+      - ./db/shard/500_init_node.sh:/docker-entrypoint-initdb.d/500_init_node.sh:ro
+      - ./db/shard/registry.sql:/docker-entrypoint-registry/registry.sql:ro
+  postgres_01:
+    <<: *shard
+    hostname: postgres_01
+    environment: {<<: *shard-env, NODE_NAME: postgres_01, SHARD_DATABASES: db_4 db_5 db_6 db_7, REGISTRY_ROLE: subscriber}
+    volumes:
+      - pg01_data:/var/lib/postgresql/data
+      - ./db/migrations:/docker-entrypoint-migrations:ro
+      - ./db/shard/500_init_node.sh:/docker-entrypoint-initdb.d/500_init_node.sh:ro
+      - ./db/shard/registry.sql:/docker-entrypoint-registry/registry.sql:ro
+    depends_on: {postgres_00: {condition: service_healthy}}
+  postgres_02:
+    <<: *shard
+    hostname: postgres_02
+    environment: {<<: *shard-env, NODE_NAME: postgres_02, SHARD_DATABASES: db_8 db_9 db_a db_b, REGISTRY_ROLE: subscriber}
+    volumes:
+      - pg02_data:/var/lib/postgresql/data
+      - ./db/migrations:/docker-entrypoint-migrations:ro
+      - ./db/shard/500_init_node.sh:/docker-entrypoint-initdb.d/500_init_node.sh:ro
+      - ./db/shard/registry.sql:/docker-entrypoint-registry/registry.sql:ro
+    depends_on: {postgres_00: {condition: service_healthy}}
+  postgres_03:
+    <<: *shard
+    hostname: postgres_03
+    environment: {<<: *shard-env, NODE_NAME: postgres_03, SHARD_DATABASES: db_c db_d db_e db_f, REGISTRY_ROLE: subscriber}
+    volumes:
+      - pg03_data:/var/lib/postgresql/data
+      - ./db/migrations:/docker-entrypoint-migrations:ro
+      - ./db/shard/500_init_node.sh:/docker-entrypoint-initdb.d/500_init_node.sh:ro
+      - ./db/shard/registry.sql:/docker-entrypoint-registry/registry.sql:ro
+    depends_on: {postgres_00: {condition: service_healthy}}
+  web:
+    <<: *api
+    ports: ['127.0.0.1:${APP_PORT:-4567}:4567']
+  web2:
+    <<: *api
+    ports: ['127.0.0.1:${APP2_PORT:-4568}:4567']
+  # CLI tools (shard-exec, rebalance, seed) run inside the backend network.
+  tools:
+    image: traveler-api:lab6
+    profiles: [tools]
+    entrypoint: [node]
+    environment:
+      DB_ADMIN: ${DB_ADMIN}
+      DB_ADMIN_PASSWORD: ${DB_ADMIN_PASSWORD}
+      APP_USER: ${APP_USER}
+      REPL_USER: ${REPL_USER}
+      REPL_PASSWORD: ${REPL_PASSWORD}
+      MAPPING_FILE: /mapping/mapping.json
+      REGISTRY_URL: postgres://${DB_ADMIN}:${DB_ADMIN_PASSWORD}@postgres_00:5432/shard_registry
+      REGISTRY_REPLICAS: postgres_01,postgres_02,postgres_03
+    volumes:
+      - ./.runtime/lab6:/mapping
+      - ./sql:/sql:ro
+      - ./tools:/app/tools:ro
+      - ./db:/app/db:ro
+    networks: [backend]
+    security_opt: [no-new-privileges:true]
+  # Laboratory 4 baseline: the unchanged API image and one database.
+  postgres:
+    image: postgres:16.15-alpine
+    profiles: [baseline]
+    restart: unless-stopped
+    command: [postgres, -c, 'listen_addresses=*', -c, 'wal_level=logical',
+      -c, 'max_replication_slots=10', -c, 'max_wal_senders=10',
+      -c, 'max_logical_replication_workers=4', -c, 'max_worker_processes=10',
+      -c, 'password_encryption=scram-sha-256', -c, 'max_slot_wal_keep_size=1GB',
+      -c, 'wal_keep_size=256MB']
+    environment:
+      <<: *shard-env
+      POSTGRES_DB: ${DB_NAME}
+    volumes:
+      - baseline_data:/var/lib/postgresql/data
+      - ./db/migrations:/docker-entrypoint-migrations:ro
+      - ./db/replications/common:/docker-entrypoint-initdb.d:ro
+      - ./db/replications/publisher:/docker-entrypoint-replications:ro
+    networks: [backend]
+    healthcheck:
+      test: [CMD-SHELL, 'pg_isready -h 127.0.0.1 -U "$${POSTGRES_USER}" -d "$${POSTGRES_DB}"']
+      interval: 3s
+      timeout: 3s
+      retries: 30
+      start_period: 10s
+    deploy:
+      resources:
+        limits: {cpus: '2.0', memory: 1G}
+    logging: *logging
+    security_opt: [no-new-privileges:true]
+  web_baseline: &web-baseline
+    image: traveler-api:lab4
+    profiles: [baseline]
+    init: true
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: postgres://${APP_USER}:${APP_PASSWORD}@postgres:5432/${DB_NAME}
+      PORT: '4567'
+      PG_POOL_MAX: '20'
+      HEALTHCHECK_URL: http://127.0.0.1:4567/health
+    ports: ['127.0.0.1:${APP_PORT:-4567}:4567']
+    depends_on: {postgres: {condition: service_healthy}}
+    networks: [backend, frontend]
+    healthcheck:
+      test: [CMD, node, -e, 'fetch(process.env.HEALTHCHECK_URL).then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))']
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    deploy:
+      resources:
+        limits: {cpus: '2.0', memory: 512M}
+    security_opt: [no-new-privileges:true]
+    read_only: true
+    tmpfs: [/tmp]
+    logging: *logging
+  web_baseline2:
+    <<: *web-baseline
+    profiles: [baseline-lb]
+    ports: ['127.0.0.1:4569:4567']
+  # API scale-out experiment: nginx round-robin over two API instances.
+  lb: &lb
+    image: nginx:1.27-alpine
+    profiles: [lb]
+    restart: unless-stopped
+    environment: {API1: web, API2: web2}
+    volumes:
+      - ./config/nginx-api.conf.template:/etc/nginx/templates/default.conf.template:ro
+    ports: ['127.0.0.1:4570:80']
+    depends_on:
+      web: {condition: service_healthy}
+      web2: {condition: service_healthy}
+    networks: [frontend]
+    deploy:
+      resources:
+        limits: {cpus: '1.0', memory: 128M}
+  lb_baseline:
+    <<: *lb
+    profiles: [baseline-lb]
+    environment: {API1: web_baseline, API2: web_baseline2}
+    depends_on:
+      web_baseline: {condition: service_healthy}
+      web_baseline2: {condition: service_healthy}
+volumes:
+  pg00_data:
+  pg01_data:
+  pg02_data:
+  pg03_data:
+  baseline_data:
+networks:
+  frontend:
+    driver: bridge
+  backend:
+    driver: bridge
+    internal: true
+    ipam:
+      config: [{subnet: '${DOCKER_SUBNET}'}]

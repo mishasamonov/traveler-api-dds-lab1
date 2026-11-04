@@ -1,5 +1,6 @@
 const express = require('express');
-const { pool, transaction } = require('./db');
+const shards = require('./shards');
+const { shardOf, newId, query, transaction } = shards;
 const { ApiError, validate, checkCombinedDates, uuid } = require('./validation');
 
 const app = express();
@@ -13,11 +14,17 @@ const changes = (fields, initialIndex = 1) => Object.keys(fields).map((key, i) =
 
 app.get('/health', async (req, res) => {
   try {
-    await pool.query('SELECT 1');
-    res.json({ status: 'ok', database: 'connected' });
+    await shards.all('SELECT 1');
+    res.json({ status: 'ok', database: 'connected', shards: 16, mapping: shards.info() });
   } catch {
     res.status(503).json({ status: 'unhealthy', database: 'disconnected' });
   }
+});
+
+// Current mapping of the 16 virtual nodes, used by tests and the report.
+app.get('/api/shards', async (req, res) => {
+  const map = await shards.current();
+  res.json({ version: map.version, source: map.source, shards: map.shards });
 });
 
 app.get('/api/travel-plans', async (req, res) => {
@@ -25,27 +32,50 @@ app.get('/api/travel-plans', async (req, res) => {
   const limit = Number(req.query.limit || 20);
   if (!Number.isSafeInteger(page) || page < 1 || !Number.isSafeInteger(limit) || limit < 1 || limit > 100 || (page - 1) * limit > 2147483647)
     throw new ApiError(400, 'Validation error: invalid pagination');
-  const { rows } = await pool.query(`
-    SELECT p.*, COUNT(l.id)::integer AS location_count
-    FROM travel_plans p LEFT JOIN locations l ON l.travel_plan_id = p.id
-    GROUP BY p.id ORDER BY p.created_at DESC, p.id LIMIT $1 OFFSET $2`, [limit, (page - 1) * limit]);
-  res.json(rows);
+  // Two-phase scatter-gather. Phase 1: every shard returns only the sort keys
+  // of its first offset+limit plans; the API merges them in the global order
+  // (created_at DESC, id) and cuts the page. Phase 2: full rows and location
+  // counts are read only for the ids of that page, from their own shards.
+  const offset = (page - 1) * limit;
+  const keys = await shards.all(`
+    SELECT id, (extract(epoch FROM created_at) * 1000000)::bigint AS sort_key
+    FROM travel_plans ORDER BY created_at DESC, id LIMIT $1`, [offset + limit]);
+  const pageIds = keys.flatMap(part => part.rows).sort((a, b) => {
+    const ka = BigInt(a.sort_key), kb = BigInt(b.sort_key);
+    if (ka !== kb) return ka > kb ? -1 : 1;
+    return a.id < b.id ? -1 : a.id > b.id ? 1 : 0;
+  }).slice(offset, offset + limit).map(row => row.id);
+  const byShard = new Map();
+  for (const id of pageIds) byShard.set(shardOf(id), [...(byShard.get(shardOf(id)) || []), id]);
+  const found = new Map();
+  await Promise.all([...byShard].map(async ([shard, ids]) => {
+    const { rows } = await query(shard, `
+      SELECT p.*, COUNT(l.id)::integer AS location_count
+      FROM travel_plans p LEFT JOIN locations l ON l.travel_plan_id = p.id
+      WHERE p.id = ANY($1::uuid[]) GROUP BY p.id`, [ids]);
+    for (const row of rows) found.set(row.id, row);
+  }));
+  // A plan deleted between the two phases is simply absent from the page.
+  res.json(pageIds.map(id => found.get(id)).filter(Boolean));
 });
 
 app.post('/api/travel-plans', async (req, res) => {
   const fields = validate(req.body, 'plan');
-  const keys = Object.keys(fields);
-  const { rows } = await pool.query(
+  // The id is generated before INSERT: it decides which database receives the row.
+  const data = { id: newId(), ...fields };
+  const keys = Object.keys(data);
+  const { rows } = await query(shardOf(data.id),
     `INSERT INTO travel_plans (${keys.join(', ')}) VALUES (${keys.map((_, i) => `$${i + 1}`).join(', ')}) RETURNING *`,
-    Object.values(fields));
+    Object.values(data));
   res.status(201).json(rows[0]);
 });
 
 app.get('/api/travel-plans/:id', async (req, res) => {
   checkId(req.params.id);
-  const { rows } = await pool.query('SELECT * FROM travel_plans WHERE id = $1', [req.params.id]);
+  const shard = shardOf(req.params.id);
+  const { rows } = await query(shard, 'SELECT * FROM travel_plans WHERE id = $1', [req.params.id]);
   if (!rows.length) throw notFound('Travel plan');
-  const locations = await pool.query('SELECT * FROM locations WHERE travel_plan_id = $1 ORDER BY visit_order', [req.params.id]);
+  const locations = await query(shard, 'SELECT * FROM locations WHERE travel_plan_id = $1 ORDER BY visit_order', [req.params.id]);
   res.json({ ...rows[0], locations: locations.rows });
 });
 
@@ -53,15 +83,16 @@ app.put('/api/travel-plans/:id', async (req, res) => {
   checkId(req.params.id);
   const version = req.body && req.body.version;
   const fields = validate(req.body, 'plan', true);
-  const previous = await pool.query('SELECT * FROM travel_plans WHERE id = $1', [req.params.id]);
+  const shard = shardOf(req.params.id);
+  const previous = await query(shard, 'SELECT * FROM travel_plans WHERE id = $1', [req.params.id]);
   if (!previous.rows.length) throw notFound('Travel plan');
   checkCombinedDates(fields, previous.rows[0], 'plan');
   const values = Object.values(fields);
   const assignments = changes(fields);
-  const { rows } = await pool.query(`UPDATE travel_plans SET ${assignments ? assignments + ', ' : ''}version = version + 1
+  const { rows } = await query(shard, `UPDATE travel_plans SET ${assignments ? assignments + ', ' : ''}version = version + 1
     WHERE id = $${values.length + 1} AND version = $${values.length + 2} RETURNING *`, [...values, req.params.id, version]);
   if (!rows.length) {
-    const current = await pool.query('SELECT version FROM travel_plans WHERE id = $1', [req.params.id]);
+    const current = await query(shard, 'SELECT version FROM travel_plans WHERE id = $1', [req.params.id]);
     if (!current.rows.length) throw notFound('Travel plan');
     throw new ApiError(409, 'Conflict: plan was modified; read it again', { current_version: current.rows[0].version });
   }
@@ -70,7 +101,7 @@ app.put('/api/travel-plans/:id', async (req, res) => {
 
 app.delete('/api/travel-plans/:id', async (req, res) => {
   checkId(req.params.id);
-  const result = await pool.query('DELETE FROM travel_plans WHERE id = $1', [req.params.id]);
+  const result = await query(shardOf(req.params.id), 'DELETE FROM travel_plans WHERE id = $1', [req.params.id]);
   if (!result.rowCount) throw notFound('Travel plan');
   res.status(204).end();
 });
@@ -78,12 +109,13 @@ app.delete('/api/travel-plans/:id', async (req, res) => {
 app.post('/api/travel-plans/:id/locations', async (req, res) => {
   checkId(req.params.id);
   const fields = validate(req.body, 'location');
-  const location = await transaction(async client => {
+  const location = await transaction(shardOf(req.params.id), async client => {
     // All inserts/reorders for this plan take the same lock before reading MAX.
     const plan = await client.query('SELECT id FROM travel_plans WHERE id = $1 FOR UPDATE', [req.params.id]);
     if (!plan.rows.length) throw notFound('Travel plan');
     const order = await client.query('SELECT COALESCE(MAX(visit_order), 0) + 1 AS next FROM locations WHERE travel_plan_id = $1', [req.params.id]);
-    const data = { ...fields, travel_plan_id: req.params.id, visit_order: order.rows[0].next };
+    // Co-location: the location id ends with the same hex digit as its plan.
+    const data = { id: newId(shardOf(req.params.id)), ...fields, travel_plan_id: req.params.id, visit_order: order.rows[0].next };
     const keys = Object.keys(data);
     const { rows } = await client.query(`INSERT INTO locations (${keys.join(', ')})
       VALUES (${keys.map((_, i) => `$${i + 1}`).join(', ')}) RETURNING *`, Object.values(data));
@@ -96,7 +128,7 @@ app.put('/api/locations/:id', async (req, res) => {
   checkId(req.params.id);
   const version = req.body && req.body.version;
   const fields = validate(req.body, 'location', true);
-  const location = await transaction(async client => {
+  const location = await transaction(shardOf(req.params.id), async client => {
     // Lock the parent first, just like create, so position shifts cannot interleave.
     const parent = await client.query('SELECT travel_plan_id FROM locations WHERE id = $1', [req.params.id]);
     if (!parent.rows.length) throw notFound('Location');
@@ -129,7 +161,7 @@ app.put('/api/locations/:id', async (req, res) => {
 
 app.delete('/api/locations/:id', async (req, res) => {
   checkId(req.params.id);
-  const result = await pool.query('DELETE FROM locations WHERE id = $1', [req.params.id]);
+  const result = await query(shardOf(req.params.id), 'DELETE FROM locations WHERE id = $1', [req.params.id]);
   if (!result.rowCount) throw notFound('Location');
   res.status(204).end();
 });

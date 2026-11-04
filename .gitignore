@@ -16,3 +16,6 @@ tests/performance-tests/results-docker/*.json.gz
 
 .runtime/
 evidence/lab4/*-raw.json.gz
+
+evidence/lab6/*-raw.json.gz
+evidence/lab6/screenshots/test-*

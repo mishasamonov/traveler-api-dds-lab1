@@ -1,0 +1,14 @@
+# Round-robin HTTP balancer in front of two API instances (laboratory 6, API scale-out).
+upstream api {
+  server ${API1}:4567;
+  server ${API2}:4567;
+  keepalive 64;
+}
+server {
+  listen 80;
+  location / {
+    proxy_pass http://api;
+    proxy_http_version 1.1;
+    proxy_set_header Connection "";
+  }
+}

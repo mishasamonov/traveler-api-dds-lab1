@@ -11,6 +11,8 @@ COPY --from=dependencies --chown=node:node /app/node_modules ./node_modules
 COPY --chown=node:node package.json ./
 COPY --chown=node:node src ./src
 COPY --chown=node:node db ./db
+COPY --chown=node:node config ./config
+COPY --chown=node:node tools ./tools
 COPY --chown=node:node scripts/init-db.js scripts/seed-container.cjs scripts/check-container-data.cjs ./scripts/
 USER node
 EXPOSE 4567
