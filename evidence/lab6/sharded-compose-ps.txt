@@ -1,0 +1,8 @@
+NAME                          IMAGE                   STATUS                    PORTS
+traveler_lab6-lb-1            nginx:1.27-alpine       Up 1 second               127.0.0.1:4570->80/tcp
+traveler_lab6-postgres_00-1   postgres:16.15-alpine   Up 23 seconds (healthy)   5432/tcp
+traveler_lab6-postgres_01-1   postgres:16.15-alpine   Up 18 seconds (healthy)   5432/tcp
+traveler_lab6-postgres_02-1   postgres:16.15-alpine   Up 18 seconds (healthy)   5432/tcp
+traveler_lab6-postgres_03-1   postgres:16.15-alpine   Up 18 seconds (healthy)   5432/tcp
+traveler_lab6-web-1           traveler-api:lab6       Up 7 seconds (healthy)    127.0.0.1:4567->4567/tcp
+traveler_lab6-web2-1          traveler-api:lab6       Up 7 seconds (healthy)    127.0.0.1:4568->4567/tcp

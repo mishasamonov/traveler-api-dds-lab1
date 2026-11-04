@@ -36,8 +36,8 @@ def p95(values):
 
 
 def plateaus(tag):
-    start = re.search(r'K6_SCENARIO_START=(\S+)', (E / f'{tag}-console.txt').read_text(encoding='utf-8'))
-    t0 = datetime.fromisoformat(start.group(1).replace('Z', '+00:00')).timestamp()
+    start = re.search(r'K6_SCENARIO_START=([0-9T:.-]+)Z', (E / f'{tag}-console.txt').read_text(encoding='utf-8'))
+    t0 = datetime.fromisoformat(start.group(1) + '+00:00').timestamp()
     buckets = defaultdict(list)
     for metric, t, value, tags in points(tag):
         if metric != 'http_req_duration' or tags.get('phase') == 'setup': continue
@@ -72,7 +72,7 @@ def chart_load(res):
         b.plot(vus, [pl[v]['rps'] for v in vus], marker='o', label=label)
     a.set(xlabel='VU на плато', ylabel='p95, мс', title='p95 затримки на сталих плато', xscale='log'); a.set_xticks(vus, vus)
     b.set(xlabel='VU на плато', ylabel='запитів за секунду', title='Пропускна здатність', xscale='log'); b.set_xticks(vus, vus)
-    for x in (a, b): x.grid(alpha=.3)
+    for x in (a, b): x.grid(alpha=.3); x.minorticks_off()
     a.legend(fontsize=9); fig.tight_layout(); fig.savefig(FIG / 'load-plateaus.png', dpi=170); plt.close(fig)
 
 
@@ -85,6 +85,19 @@ def chart_read(res):
     for b_, r_, p_ in zip(bars, rps, p): ax.text(b_.get_x() + b_.get_width() / 2, r_, f'{r_:.0f} req/s\np95 {p_:.0f} мс', ha='center', va='bottom')
     ax.set_ylim(0, max(rps) * 1.25); ax.grid(axis='y', alpha=.3); ax.set_title('Read: 200 VU, список планів і деталі плану')
     fig.tight_layout(); fig.savefig(FIG / 'read-comparison.png', dpi=170); plt.close(fig)
+
+
+KEYS = {'baseline': '1 БД, 1 API', 'baseline-2api': '1 БД, 2 API', 'sharded-scaled': '16 БД 4×2 CPU, 1 API', 'sharded-scaled-2api': '16 БД 4×2 CPU, 2 API'}
+
+
+def chart_key(k):
+    fig, ax = plt.subplots(figsize=(10, 3.8))
+    labels = list(KEYS.values()); rps = [k[x]['median_rps'] for x in KEYS]; p = [k[x]['median_p95'] for x in KEYS]
+    bars = ax.bar(range(4), rps, color=['#7f7f7f', '#b0b0b0', '#2ca02c', '#17803d'])
+    ax.set_xticks(range(4), labels, fontsize=10); ax.set_ylabel('запитів за секунду (медіана 3 запусків)')
+    for b_, r_, p_ in zip(bars, rps, p): ax.text(b_.get_x() + b_.get_width() / 2, r_, f'{r_:.0f} req/s' + chr(10) + f'p95 {p_:.0f} мс', ha='center', va='bottom')
+    ax.set_ylim(0, max(rps) * 1.25); ax.grid(axis='y', alpha=.3); ax.set_title('Тільки GET /api/travel-plans/:id, 200 VU')
+    fig.tight_layout(); fig.savefig(FIG / 'key-comparison.png', dpi=170); plt.close(fig)
 
 
 def chart_distribution():
@@ -105,7 +118,7 @@ def chart_rebalance(tag, data, title):
         s = data['series'][g]; xs = sorted(s)
         ax.plot(xs, [s[x]['max'] for x in xs], label=f'max, {names[g]}', lw=1.3)
     for m in data['moves']:
-        ax.axvspan(m['startOffsetSeconds'], m['endOffsetSeconds'], color='orange', alpha=.25)
+        ax.axvspan(m['startOffsetSeconds'], m['endOffsetSeconds'], color='orange', alpha=.25, lw=0)
         ax.text(m['startOffsetSeconds'], ax.get_ylim()[1] * .92, f" {m['database']}→{m['target']}", fontsize=10)
     ax.set(xlabel='секунди від старту k6', ylabel='максимальна затримка за секунду, мс', title=title)
     ax.grid(alpha=.3); ax.legend(loc='upper right', fontsize=10)
@@ -119,6 +132,11 @@ if __name__ == '__main__':
         res[key] = {'load': summary(f'{key}-load', 'load'), 'plateaus': plateaus(f'{key}-load'),
                     'read': {'runs': reads, 'median_rps': statistics.median(r['rps'] for r in reads),
                              'median_p95': statistics.median(r['p95'] for r in reads)}}
+    res['key'] = {}
+    for key in KEYS:
+        runs = [summary(f'{key}-key-{i}', 'key') for i in (1, 2, 3)]
+        res['key'][key] = {'runs': runs, 'median_rps': statistics.median(r['rps'] for r in runs), 'median_p95': statistics.median(r['p95'] for r in runs)}
+    chart_key(res['key'])
     for tag in ('rebalance-file', 'rebalance-registry'):
         res[tag] = rebalance(tag); res[tag]['summary'] = summary(tag, 'rebalance')
     (E / 'analysis.json').write_text(json.dumps(res, indent=2, ensure_ascii=False), encoding='utf-8')

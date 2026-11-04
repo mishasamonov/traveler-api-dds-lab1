@@ -1,0 +1,23 @@
+$ node tools/shard-exec.js /sql/040_check_shard_keys.sql
+12:51:54.221 run shard_exec_20261104125154_750b1e: /sql/040_check_shard_keys.sql (528 bytes) on 16 shards, mapping v1
+shard | server      | database | status    | rows | ms | error
+------+-------------+----------+-----------+------+----+------
+0     | postgres_00 | db_0     | committed | -    | 71 |      
+1     | postgres_00 | db_1     | committed | -    | 58 |      
+2     | postgres_00 | db_2     | committed | -    | 57 |      
+3     | postgres_00 | db_3     | committed | -    | 58 |      
+4     | postgres_01 | db_4     | committed | -    | 56 |      
+5     | postgres_01 | db_5     | committed | -    | 59 |      
+6     | postgres_01 | db_6     | committed | -    | 55 |      
+7     | postgres_01 | db_7     | committed | -    | 55 |      
+8     | postgres_02 | db_8     | committed | -    | 54 |      
+9     | postgres_02 | db_9     | committed | -    | 63 |      
+a     | postgres_02 | db_a     | committed | -    | 62 |      
+b     | postgres_02 | db_b     | committed | -    | 62 |      
+c     | postgres_03 | db_c     | committed | -    | 65 |      
+d     | postgres_03 | db_d     | committed | -    | 61 |      
+e     | postgres_03 | db_e     | committed | -    | 62 |      
+f     | postgres_03 | db_f     | committed | -    | 62 |      
+12:51:54.391 COMMIT on all 16 shards; total 167 ms
+
+exit code 0

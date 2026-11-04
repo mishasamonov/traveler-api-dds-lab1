@@ -54,7 +54,7 @@ body{margin:0;padding:14px;background:#fff;font-family:'Segoe UI',sans-serif}
 .bar{background:#2b2b2b;color:#ddd;font-size:13px;padding:7px 12px;display:flex;align-items:center;gap:10px}
 .tab{background:#0c0c0c;padding:5px 14px;border-radius:6px 6px 0 0;color:#fff}
 .dots{margin-left:auto;letter-spacing:14px;color:#aaa}
-pre{margin:0;padding:12px 16px;background:#0c0c0c;color:#cccccc;font:14.5px/1.42 'Cascadia Mono',Consolas,monospace;white-space:pre}
+pre{margin:0;padding:12px 16px;background:#0c0c0c;color:#cccccc;font:14.5px/1.42 'Cascadia Mono',Consolas,monospace;white-space:pre-wrap;overflow-wrap:anywhere}
 .p{color:#16c60c}.c{color:#f9f1a5}
 .ed{background:#1f1f1f}.edbar{background:#181818;color:#ccc;font-size:13px;padding:0;display:flex}
 .edtab{background:#1f1f1f;border-top:2px solid #0078d4;padding:7px 16px;color:#fff}
@@ -67,7 +67,7 @@ pre{margin:0;padding:12px 16px;background:#0c0c0c;color:#cccccc;font:14.5px/1.42
 </style><body>@@BODY@@</body>"""
 
 
-def terminal(name, blocks, title='Terminal', width=1180):
+def terminal(name, blocks, title='Terminal', width=1400):
     """blocks: list of (command, output). Prompt uses the real project folder."""
     parts = []
     for command, output in blocks:

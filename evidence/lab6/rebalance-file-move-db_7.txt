@@ -1,0 +1,28 @@
+$ node tools/rebalance.js move db_7 postgres_02
+12:59:51.509 move db_7: postgres_01 -> postgres_02 (mapping v2)
+12:59:51.671 >> 0. pre-checks
+12:59:51.713    source postgres_01/db_7: 141 plans, 423 locations
+12:59:51.713 >> 1. create target database and logical replication
+12:59:53.419    publication move_7_pub on postgres_01, subscription move_7_02 on postgres_02
+12:59:53.419 >> 2. wait for initial copy and catch-up
+12:59:53.517    tables ready 0/2
+12:59:54.428    srsubstate=r for both tables; target has 141 plans, 423 locations; slot lag 608 bytes
+12:59:54.429 >> 3. LOCK TABLE ... IN ACCESS EXCLUSIVE MODE on source
+12:59:54.533    locked at 2026-11-04T12:59:54.448Z; source LSN 0/2F50228, confirmed 0/2F51098
+12:59:54.559    source {"plans":141,"locations":423,"plans_md5":"e50b28bed269a20520d70008ffb98b81","locations_md5":"5643364a5bbc1a0e7d3c43636c238e24"}
+12:59:54.559    target {"plans":141,"locations":423,"plans_md5":"e50b28bed269a20520d70008ffb98b81","locations_md5":"5643364a5bbc1a0e7d3c43636c238e24"}
+12:59:54.559 >> 4. promote target: drop subscription, restore constraint, grant API
+12:59:54.658 >> 5. update mapping file and shard registry
+12:59:54.787    mapping file and registry: version 3, shard 7 -> postgres_02; replicas postgres_01, postgres_02, postgres_03 confirmed
+12:59:54.787 >> 6. revoke API privileges on the old database and release the lock
+12:59:54.807    lock held 360 ms; waiting API queries now get 42501 and re-read the mapping
+step                                                                | ms  
+--------------------------------------------------------------------+-----
+0. pre-checks                                                       | 42  
+1. create target database and logical replication                   | 1706
+2. wait for initial copy and catch-up                               | 1009
+3. LOCK TABLE ... IN ACCESS EXCLUSIVE MODE on source                | 131 
+4. promote target: drop subscription, restore constraint, grant API | 99  
+5. update mapping file and shard registry                           | 129 
+6. revoke API privileges on the old database and release the lock   | 20  
+12:59:54.809 DONE db_7: postgres_01 -> postgres_02, mapping v3, write freeze 360 ms

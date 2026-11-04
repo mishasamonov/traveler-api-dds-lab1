@@ -1,0 +1,7 @@
+SERVICE       IMAGE                   STATUS                    PORTS
+postgres_00   postgres:16.15-alpine   Up 54 seconds (healthy)   5432/tcp
+postgres_01   postgres:16.15-alpine   Up 43 seconds (healthy)   5432/tcp
+postgres_02   postgres:16.15-alpine   Up 43 seconds (healthy)   5432/tcp
+postgres_03   postgres:16.15-alpine   Up 43 seconds (healthy)   5432/tcp
+web           traveler-api:lab6       Up 32 seconds (healthy)   127.0.0.1:4567->4567/tcp
+web2          traveler-api:lab6       Up 32 seconds (healthy)   127.0.0.1:4568->4567/tcp

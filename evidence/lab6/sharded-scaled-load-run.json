@@ -1,0 +1,11 @@
+{
+  "mode": "sharded",
+  "scenario": "load",
+  "tag": "sharded-scaled-load",
+  "startedUtc": "2026-11-04T13:03:54.788561+00:00",
+  "shardCpus": "2.0",
+  "shardMemory": "1G",
+  "scenarioSHA256": "abb1fd17f97435e69eb57c7cbfafa50f52a86db1f9da2b102df3f705819789af",
+  "exitCode": 99,
+  "elapsedSeconds": 172.31103239953518
+}

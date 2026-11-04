@@ -1,0 +1,23 @@
+$ node tools/shard-exec.js /sql/020_budget_limit_fails.sql
+12:51:43.628 run shard_exec_20261104125143_1ef200: /sql/020_budget_limit_fails.sql (303 bytes) on 16 shards, mapping v1
+shard | server      | database | status      | rows | ms | error                                                                                   
+------+-------------+----------+-------------+------+----+-----------------------------------------------------------------------------------------
+0     | postgres_00 | db_0     | rolled back | 1,-  | 57 |                                                                                         
+1     | postgres_00 | db_1     | rolled back | 1,-  | 47 |                                                                                         
+2     | postgres_00 | db_2     | rolled back | 1,-  | 59 |                                                                                         
+3     | postgres_00 | db_3     | FAILED      |      | 46 | 23514 check constraint "budget_limit" of relation "travel_plans" is violated by some row
+4     | postgres_01 | db_4     | rolled back | 1,-  | 55 |                                                                                         
+5     | postgres_01 | db_5     | rolled back | 1,-  | 46 |                                                                                         
+6     | postgres_01 | db_6     | rolled back | 1,-  | 46 |                                                                                         
+7     | postgres_01 | db_7     | rolled back | 1,-  | 47 |                                                                                         
+8     | postgres_02 | db_8     | rolled back | 1,-  | 54 |                                                                                         
+9     | postgres_02 | db_9     | rolled back | 1,-  | 54 |                                                                                         
+a     | postgres_02 | db_a     | rolled back | 1,-  | 50 |                                                                                         
+b     | postgres_02 | db_b     | rolled back | 1,-  | 53 |                                                                                         
+c     | postgres_03 | db_c     | rolled back | 1,-  | 53 |                                                                                         
+d     | postgres_03 | db_d     | rolled back | 1,-  | 56 |                                                                                         
+e     | postgres_03 | db_e     | rolled back | 1,-  | 54 |                                                                                         
+f     | postgres_03 | db_f     | rolled back | 1,-  | 58 |                                                                                         
+12:51:43.765 ROLLBACK on all 16: 1 shard(s) failed; total 133 ms
+
+exit code 1

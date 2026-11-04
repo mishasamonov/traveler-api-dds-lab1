@@ -1,0 +1,4 @@
+$ node tools/shard-exec.js /sql/030_own_transaction.sql
+Statement "BEGIN" is not allowed: the tool manages one transaction per shard
+
+exit code 2

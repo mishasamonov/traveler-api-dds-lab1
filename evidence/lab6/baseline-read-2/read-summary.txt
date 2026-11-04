@@ -1,0 +1,12 @@
+k6 READ TEST
+API: http://127.0.0.1:4567
+
+http_reqs: {"rate":352.96343357596476,"count":15976}
+iterations: {"count":7988,"rate":176.48171678798238}
+checks: {"rate":1,"passes":15976,"fails":0}
+http_req_failed: {"rate":0,"passes":0,"fails":15976}
+http_req_duration: {"avg":564.8799812531299,"med":559.53975,"p(90)":868.10535,"p(95)":922.96235,"p(99)":1076.5478,"max":1503.4214}
+
+THRESHOLDS
+PASS http_req_failed: rate<0.01
+PASS checks: rate==1

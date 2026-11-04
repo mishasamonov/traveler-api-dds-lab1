@@ -1,0 +1,11 @@
+{
+  "mode": "baseline",
+  "scenario": "load",
+  "tag": "baseline-load",
+  "startedUtc": "2026-11-04T13:10:02.934321+00:00",
+  "shardCpus": "0.5",
+  "shardMemory": "256M",
+  "scenarioSHA256": "abb1fd17f97435e69eb57c7cbfafa50f52a86db1f9da2b102df3f705819789af",
+  "exitCode": 99,
+  "elapsedSeconds": 173.60098239965737
+}

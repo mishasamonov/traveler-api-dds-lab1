@@ -1,0 +1,26 @@
+===== web =====
+{"event":"mapping_loaded","version":2,"previous":1,"source":"file /mapping/mapping.json","reason":"shard 3: 42501"}
+{"event":"shard_retry","shard":"3","from":{"host":"postgres_00","port":5432,"database":"db_3"},"to":{"host":"postgres_03","port":5432,"database":"db_3"},"version":2}
+{"event":"mapping_loaded","version":2,"previous":2,"source":"file /mapping/mapping.json","reason":"shard 3: 42501"}
+{"event":"shard_retry","shard":"3","from":{"host":"postgres_00","port":5432,"database":"db_3"},"to":{"host":"postgres_03","port":5432,"database":"db_3"},"version":2}
+{"event":"mapping_loaded","version":2,"previous":2,"source":"file /mapping/mapping.json","reason":"shard 3: 42501"}
+{"event":"shard_retry","shard":"3","from":{"host":"postgres_00","port":5432,"database":"db_3"},"to":{"host":"postgres_03","port":5432,"database":"db_3"},"version":2}
+{"event":"mapping_loaded","version":3,"previous":2,"source":"file /mapping/mapping.json","reason":"shard 7: 42501"}
+{"event":"shard_retry","shard":"7","from":{"host":"postgres_01","port":5432,"database":"db_7"},"to":{"host":"postgres_02","port":5432,"database":"db_7"},"version":3}
+{"event":"mapping_loaded","version":3,"previous":3,"source":"file /mapping/mapping.json","reason":"shard 7: 42501"}
+{"event":"shard_retry","shard":"7","from":{"host":"postgres_01","port":5432,"database":"db_7"},"to":{"host":"postgres_02","port":5432,"database":"db_7"},"version":3}
+{"event":"mapping_loaded","version":3,"previous":3,"source":"file /mapping/mapping.json","reason":"shard 7: 42501"}
+{"event":"shard_retry","shard":"7","from":{"host":"postgres_01","port":5432,"database":"db_7"},"to":{"host":"postgres_02","port":5432,"database":"db_7"},"version":3}
+{"event":"mapping_loaded","version":3,"previous":3,"source":"file /mapping/mapping.json","reason":"shard 7: 42501"}
+{"event":"shard_retry","shard":"7","from":{"host":"postgres_01","port":5432,"database":"db_7"},"to":{"host":"postgres_02","port":5432,"database":"db_7"},"version":3}
+===== web2 =====
+{"event":"mapping_loaded","version":2,"previous":1,"source":"file /mapping/mapping.json","reason":"shard 3: 42501"}
+{"event":"shard_retry","shard":"3","from":{"host":"postgres_00","port":5432,"database":"db_3"},"to":{"host":"postgres_03","port":5432,"database":"db_3"},"version":2}
+{"event":"mapping_loaded","version":2,"previous":2,"source":"file /mapping/mapping.json","reason":"shard 3: 42501"}
+{"event":"shard_retry","shard":"3","from":{"host":"postgres_00","port":5432,"database":"db_3"},"to":{"host":"postgres_03","port":5432,"database":"db_3"},"version":2}
+{"event":"mapping_loaded","version":2,"previous":2,"source":"file /mapping/mapping.json","reason":"shard 3: 42501"}
+{"event":"shard_retry","shard":"3","from":{"host":"postgres_00","port":5432,"database":"db_3"},"to":{"host":"postgres_03","port":5432,"database":"db_3"},"version":2}
+{"event":"mapping_loaded","version":3,"previous":2,"source":"file /mapping/mapping.json","reason":"shard 7: 42501"}
+{"event":"shard_retry","shard":"7","from":{"host":"postgres_01","port":5432,"database":"db_7"},"to":{"host":"postgres_02","port":5432,"database":"db_7"},"version":3}
+{"event":"mapping_loaded","version":3,"previous":3,"source":"file /mapping/mapping.json","reason":"shard 7: 42501"}
+{"event":"shard_retry","shard":"7","from":{"host":"postgres_01","port":5432,"database":"db_7"},"to":{"host":"postgres_02","port":5432,"database":"db_7"},"version":3}

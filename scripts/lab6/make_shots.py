@@ -65,7 +65,7 @@ for tag in ('rebalance-file', 'rebalance-registry'):
     terminal(f't18-{tag}-status-after', [(f'{TOOLS} tools/rebalance.js status', read(f'{tag}-status-after.txt'))])
     terminal(f't19-{tag}-api-logs', [(f'{DC} logs web web2 | findstr "mapping_loaded shard_retry"', read(f'{tag}-api-logs.txt'))], width=1500)
     terminal(f't20-{tag}-k6', [(f'k6 run tests/performance-tests/rebalance-test.js   # 60 VU, 100 s, two API instances', read(f'{tag}/rebalance-summary.txt'))], width=1500)
-for tag in ('baseline-load', 'sharded-naive-load', 'sharded-equal-load', 'sharded-scaled-load'):
+for tag in ('baseline-load', 'baseline-2api-load', 'sharded-naive-load', 'sharded-equal-load', 'sharded-scaled-load', 'sharded-scaled-2api-load'):
     terminal(f't21-{tag}', [('k6 run tests/performance-tests/load-test.js', read(f'{tag}/load-summary.txt'))], width=1500)
 terminal('t22-list-order', [('python scripts/lab6/verify_list.py', read('list-order-check.txt'))])
 terminal('t23-hurl-after', [('hurl --test /tests/*.hurl   # after both moves (mapping file)', read('rebalance-file-after-hurl.txt')),

@@ -1,0 +1,12 @@
+{
+  "mode": "baseline",
+  "scenario": "key",
+  "tag": "baseline-key-2",
+  "startedUtc": "2026-11-04T13:38:53.421361+00:00",
+  "shardCpus": "0.5",
+  "shardMemory": "256M",
+  "apiUrl": "http://127.0.0.1:4567",
+  "scenarioSHA256": "3c2b0bda0e14ebab7f62bb4b09ba0e3c0a1b5b1e553b07744794d80d277cd6dd",
+  "exitCode": 0,
+  "elapsedSeconds": 48.03547570016235
+}

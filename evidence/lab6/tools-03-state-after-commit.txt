@@ -1,0 +1,16 @@
+0 | postgres_00 | db_0 | migrations=010     | budget_limit=0 | idx_plans_public=1 | plans>5000=0
+1 | postgres_00 | db_1 | migrations=010     | budget_limit=0 | idx_plans_public=1 | plans>5000=0
+2 | postgres_00 | db_2 | migrations=010     | budget_limit=0 | idx_plans_public=1 | plans>5000=0
+3 | postgres_00 | db_3 | migrations=010     | budget_limit=0 | idx_plans_public=1 | plans>5000=0
+4 | postgres_01 | db_4 | migrations=010     | budget_limit=0 | idx_plans_public=1 | plans>5000=0
+5 | postgres_01 | db_5 | migrations=010     | budget_limit=0 | idx_plans_public=1 | plans>5000=0
+6 | postgres_01 | db_6 | migrations=010     | budget_limit=0 | idx_plans_public=1 | plans>5000=0
+7 | postgres_01 | db_7 | migrations=010     | budget_limit=0 | idx_plans_public=1 | plans>5000=0
+8 | postgres_02 | db_8 | migrations=010     | budget_limit=0 | idx_plans_public=1 | plans>5000=0
+9 | postgres_02 | db_9 | migrations=010     | budget_limit=0 | idx_plans_public=1 | plans>5000=0
+a | postgres_02 | db_a | migrations=010     | budget_limit=0 | idx_plans_public=1 | plans>5000=0
+b | postgres_02 | db_b | migrations=010     | budget_limit=0 | idx_plans_public=1 | plans>5000=0
+c | postgres_03 | db_c | migrations=010     | budget_limit=0 | idx_plans_public=1 | plans>5000=0
+d | postgres_03 | db_d | migrations=010     | budget_limit=0 | idx_plans_public=1 | plans>5000=0
+e | postgres_03 | db_e | migrations=010     | budget_limit=0 | idx_plans_public=1 | plans>5000=0
+f | postgres_03 | db_f | migrations=010     | budget_limit=0 | idx_plans_public=1 | plans>5000=0

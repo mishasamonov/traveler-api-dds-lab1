@@ -1,0 +1,121 @@
+{
+  "mappingVersion": 3,
+  "rows": [
+    {
+      "shard": "0",
+      "server": "postgres_00",
+      "database": "db_0",
+      "plans": 114,
+      "locations": 342
+    },
+    {
+      "shard": "1",
+      "server": "postgres_00",
+      "database": "db_1",
+      "plans": 117,
+      "locations": 351
+    },
+    {
+      "shard": "2",
+      "server": "postgres_00",
+      "database": "db_2",
+      "plans": 141,
+      "locations": 423
+    },
+    {
+      "shard": "3",
+      "server": "postgres_03",
+      "database": "db_3",
+      "plans": 117,
+      "locations": 351
+    },
+    {
+      "shard": "4",
+      "server": "postgres_01",
+      "database": "db_4",
+      "plans": 135,
+      "locations": 405
+    },
+    {
+      "shard": "5",
+      "server": "postgres_01",
+      "database": "db_5",
+      "plans": 119,
+      "locations": 357
+    },
+    {
+      "shard": "6",
+      "server": "postgres_01",
+      "database": "db_6",
+      "plans": 113,
+      "locations": 339
+    },
+    {
+      "shard": "7",
+      "server": "postgres_02",
+      "database": "db_7",
+      "plans": 141,
+      "locations": 423
+    },
+    {
+      "shard": "8",
+      "server": "postgres_02",
+      "database": "db_8",
+      "plans": 119,
+      "locations": 357
+    },
+    {
+      "shard": "9",
+      "server": "postgres_02",
+      "database": "db_9",
+      "plans": 127,
+      "locations": 381
+    },
+    {
+      "shard": "a",
+      "server": "postgres_02",
+      "database": "db_a",
+      "plans": 103,
+      "locations": 309
+    },
+    {
+      "shard": "b",
+      "server": "postgres_02",
+      "database": "db_b",
+      "plans": 134,
+      "locations": 402
+    },
+    {
+      "shard": "c",
+      "server": "postgres_03",
+      "database": "db_c",
+      "plans": 125,
+      "locations": 375
+    },
+    {
+      "shard": "d",
+      "server": "postgres_03",
+      "database": "db_d",
+      "plans": 135,
+      "locations": 405
+    },
+    {
+      "shard": "e",
+      "server": "postgres_03",
+      "database": "db_e",
+      "plans": 129,
+      "locations": 387
+    },
+    {
+      "shard": "f",
+      "server": "postgres_03",
+      "database": "db_f",
+      "plans": 131,
+      "locations": 393
+    }
+  ],
+  "total": {
+    "plans": 2000,
+    "locations": 6000
+  }
+}

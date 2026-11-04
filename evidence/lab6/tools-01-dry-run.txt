@@ -1,0 +1,23 @@
+$ node tools/shard-exec.js /sql/010_schema_migrations.sql --dry-run
+12:51:29.581 run shard_exec_20261104125129_fc0ce0: /sql/010_schema_migrations.sql (532 bytes) on 16 shards, mapping v1, DRY RUN
+shard | server      | database | status                | rows    | ms  | error
+------+-------------+----------+-----------------------+---------+-----+------
+0     | postgres_00 | db_0     | rolled back (dry run) | -,1,-,0 | 171 |      
+1     | postgres_00 | db_1     | rolled back (dry run) | -,1,-,0 | 227 |      
+2     | postgres_00 | db_2     | rolled back (dry run) | -,1,-,0 | 158 |      
+3     | postgres_00 | db_3     | rolled back (dry run) | -,1,-,0 | 151 |      
+4     | postgres_01 | db_4     | rolled back (dry run) | -,1,-,0 | 243 |      
+5     | postgres_01 | db_5     | rolled back (dry run) | -,1,-,0 | 239 |      
+6     | postgres_01 | db_6     | rolled back (dry run) | -,1,-,0 | 247 |      
+7     | postgres_01 | db_7     | rolled back (dry run) | -,1,-,0 | 238 |      
+8     | postgres_02 | db_8     | rolled back (dry run) | -,1,-,0 | 232 |      
+9     | postgres_02 | db_9     | rolled back (dry run) | -,1,-,0 | 171 |      
+a     | postgres_02 | db_a     | rolled back (dry run) | -,1,-,0 | 169 |      
+b     | postgres_02 | db_b     | rolled back (dry run) | -,1,-,0 | 154 |      
+c     | postgres_03 | db_c     | rolled back (dry run) | -,1,-,0 | 228 |      
+d     | postgres_03 | db_d     | rolled back (dry run) | -,1,-,0 | 252 |      
+e     | postgres_03 | db_e     | rolled back (dry run) | -,1,-,0 | 252 |      
+f     | postgres_03 | db_f     | rolled back (dry run) | -,1,-,0 | 171 |      
+12:51:29.896 DRY RUN: everything rolled back; total 310 ms
+
+exit code 0

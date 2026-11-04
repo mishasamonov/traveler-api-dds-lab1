@@ -1,0 +1,6 @@
+{
+  "id": "05c6b1b1-fcb4-4615-8724-4279e75c9703",
+  "shard": "3",
+  "budget": 9000,
+  "server": "postgres_00"
+}

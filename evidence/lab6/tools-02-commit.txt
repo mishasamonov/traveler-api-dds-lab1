@@ -1,0 +1,27 @@
+$ node tools/shard-exec.js /sql/010_schema_migrations.sql --show-prepared
+12:51:31.624 run shard_exec_20261104125131_8cd939: /sql/010_schema_migrations.sql (532 bytes) on 16 shards, mapping v1
+12:51:31.839 pg_prepared_xacts on postgres_00: db_0, db_1, db_2, db_3
+12:51:31.859 pg_prepared_xacts on postgres_01: db_4, db_5, db_6, db_7
+12:51:31.877 pg_prepared_xacts on postgres_02: db_8, db_9, db_a, db_b
+12:51:31.894 pg_prepared_xacts on postgres_03: db_c, db_d, db_e, db_f
+shard | server      | database | status    | rows    | ms  | error
+------+-------------+----------+-----------+---------+-----+------
+0     | postgres_00 | db_0     | committed | -,1,-,0 | 109 |      
+1     | postgres_00 | db_1     | committed | -,1,-,0 | 109 |      
+2     | postgres_00 | db_2     | committed | -,1,-,0 | 100 |      
+3     | postgres_00 | db_3     | committed | -,1,-,0 | 108 |      
+4     | postgres_01 | db_4     | committed | -,1,-,0 | 126 |      
+5     | postgres_01 | db_5     | committed | -,1,-,0 | 130 |      
+6     | postgres_01 | db_6     | committed | -,1,-,0 | 129 |      
+7     | postgres_01 | db_7     | committed | -,1,-,0 | 133 |      
+8     | postgres_02 | db_8     | committed | -,1,-,0 | 104 |      
+9     | postgres_02 | db_9     | committed | -,1,-,0 | 106 |      
+a     | postgres_02 | db_a     | committed | -,1,-,0 | 103 |      
+b     | postgres_02 | db_b     | committed | -,1,-,0 | 103 |      
+c     | postgres_03 | db_c     | committed | -,1,-,0 | 116 |      
+d     | postgres_03 | db_d     | committed | -,1,-,0 | 121 |      
+e     | postgres_03 | db_e     | committed | -,1,-,0 | 115 |      
+f     | postgres_03 | db_f     | committed | -,1,-,0 | 116 |      
+12:51:31.943 COMMIT on all 16 shards; total 314 ms
+
+exit code 0

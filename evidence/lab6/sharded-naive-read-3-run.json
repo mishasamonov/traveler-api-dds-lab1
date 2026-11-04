@@ -1,0 +1,11 @@
+{
+  "mode": "sharded",
+  "scenario": "read",
+  "tag": "sharded-equal-read-3",
+  "startedUtc": "2026-11-04T12:57:15.482198+00:00",
+  "shardCpus": "0.5",
+  "shardMemory": "256M",
+  "scenarioSHA256": "2f6f9511350b50f04b54fc536a54a8ed72cf9f868f79180d88dc5abf20d9e8af",
+  "exitCode": 0,
+  "elapsedSeconds": 50.04341860022396
+}

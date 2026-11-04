@@ -1,0 +1,10 @@
+{
+  "status": "ok",
+  "database": "connected",
+  "shards": 16,
+  "mapping": {
+    "version": 1,
+    "source": "file /mapping/mapping.json",
+    "pools": 16
+  }
+}

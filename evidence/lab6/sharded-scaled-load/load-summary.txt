@@ -1,0 +1,14 @@
+k6 LOAD TEST
+API: http://127.0.0.1:4567
+
+http_reqs: {"count":43978,"rate":257.92379107364746}
+iterations: {"count":4225,"rate":24.778935315070274}
+checks: {"rate":1,"passes":43978,"fails":0}
+http_req_failed: {"rate":0,"passes":0,"fails":43978}
+http_req_duration: {"med":123.48065,"max":2122.9993,"p(90)":945.1629800000007,"p(95)":1547.849615,"p(99)":1843.3231920000005,"avg":301.65646783619246,"min":1.0297}
+api_errors: {"rate":0,"passes":0,"fails":43978}
+
+THRESHOLDS
+PASS http_req_failed: rate<0.01
+FAIL http_req_duration: p(95)<500
+PASS checks: rate>0.99

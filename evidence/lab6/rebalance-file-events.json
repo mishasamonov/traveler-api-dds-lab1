@@ -1,0 +1,19 @@
+{
+  "k6StartEpoch": 1793797128.9727693,
+  "moves": [
+    {
+      "database": "db_3",
+      "target": "postgres_03",
+      "startOffsetSeconds": 30.099,
+      "endOffsetSeconds": 36.479,
+      "exitCode": 0
+    },
+    {
+      "database": "db_7",
+      "target": "postgres_02",
+      "startOffsetSeconds": 60.193,
+      "endOffsetSeconds": 66.513,
+      "exitCode": 0
+    }
+  ]
+}

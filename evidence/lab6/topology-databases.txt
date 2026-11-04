@@ -1,0 +1,8 @@
+postgres_00: db_0 (7927 kB), db_1 (7935 kB), db_2 (7951 kB), db_3 (7927 kB), shard_registry (7719 kB)
+  max_connections=300, max_prepared_transactions=64, max_replication_slots=20, wal_level=logical
+postgres_01: db_4 (7943 kB), db_5 (7927 kB), db_6 (7935 kB), db_7 (7951 kB), shard_registry (7679 kB)
+  max_connections=300, max_prepared_transactions=64, max_replication_slots=20, wal_level=logical
+postgres_02: db_8 (7927 kB), db_9 (7927 kB), db_a (7919 kB), db_b (7951 kB), shard_registry (7679 kB)
+  max_connections=300, max_prepared_transactions=64, max_replication_slots=20, wal_level=logical
+postgres_03: db_c (7927 kB), db_d (7943 kB), db_e (7935 kB), db_f (7943 kB), shard_registry (7679 kB)
+  max_connections=300, max_prepared_transactions=64, max_replication_slots=20, wal_level=logical

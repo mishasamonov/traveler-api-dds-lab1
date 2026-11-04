@@ -1,0 +1,31 @@
+$ node tools/rebalance.js move db_7 postgres_02 --drop-source
+13:24:06.880 move db_7: postgres_01 -> postgres_02 (mapping v2)
+13:24:06.986 >> 0. pre-checks
+13:24:07.036    source postgres_01/db_7: 141 plans, 423 locations
+13:24:07.037 >> 1. create target database and logical replication
+13:24:08.029    publication move_7_pub on postgres_01, subscription move_7_02 on postgres_02
+13:24:08.029 >> 2. wait for initial copy and catch-up
+13:24:08.034    tables ready 0/2
+13:24:08.892    srsubstate=r for both tables; target has 141 plans, 423 locations; slot lag 408 bytes
+13:24:08.893 >> 3. LOCK TABLE ... IN ACCESS EXCLUSIVE MODE on source
+13:24:09.021    locked at 2026-11-04T13:24:09.014Z; source LSN 0/2F7F4E8, confirmed 0/2F7F660
+13:24:09.106    source {"plans":141,"locations":423,"plans_md5":"2534af5069ebf883d719d03af313da51","locations_md5":"a5f4c0b10e5eb179ec2ea325f4052de4"}
+13:24:09.107    target {"plans":141,"locations":423,"plans_md5":"2534af5069ebf883d719d03af313da51","locations_md5":"a5f4c0b10e5eb179ec2ea325f4052de4"}
+13:24:09.107 >> 4. promote target: drop subscription, restore constraint, grant API
+13:24:09.226 >> 5. update mapping file and shard registry
+13:24:09.469    mapping file and registry: version 3, shard 7 -> postgres_02; replicas postgres_01, postgres_02, postgres_03 confirmed
+13:24:09.470 >> 6. revoke API privileges on the old database and release the lock
+13:24:09.504    lock held 511 ms; waiting API queries now get 42501 and re-read the mapping
+13:24:09.505 >> 7. drop the old database
+13:24:09.918    postgres_01/db_7 dropped; API pools to it are closed by the server
+step                                                                | ms 
+--------------------------------------------------------------------+----
+0. pre-checks                                                       | 51 
+1. create target database and logical replication                   | 992
+2. wait for initial copy and catch-up                               | 864
+3. LOCK TABLE ... IN ACCESS EXCLUSIVE MODE on source                | 214
+4. promote target: drop subscription, restore constraint, grant API | 119
+5. update mapping file and shard registry                           | 244
+6. revoke API privileges on the old database and release the lock   | 35 
+7. drop the old database                                            | 413
+13:24:09.919 DONE db_7: postgres_01 -> postgres_02, mapping v3, write freeze 511 ms

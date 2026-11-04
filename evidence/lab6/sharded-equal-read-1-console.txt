@@ -1,0 +1,165 @@
+
+         /\      Grafana   /‾‾/  
+    /\  /  \     |\  __   /  /   
+   /  \/    \    | |/ /  /   ‾‾\ 
+  /          \   |   (  |  (‾)  |
+ / __________ \  |_|\_\  \_____/ 
+
+
+     execution: local
+        script: D:\Documents\ChatGPT\Розподілені сховища даних\traveler-api-lab6\tests\performance-tests\read-test.js
+        output: json (evidence/lab6/sharded-equal-read-1-raw.json.gz)
+
+     scenarios: (100.00%) 1 scenario, 200 max VUs, 55s max duration (incl. graceful stop):
+              * reads: 200 looping VUs for 45s (gracefulStop: 10s)
+
+
+running (00.9s), 200/200 VUs, 81 complete and 0 interrupted iterations
+reads   [   2% ] 200 VUs  00.9s/45s
+
+running (01.9s), 200/200 VUs, 192 complete and 0 interrupted iterations
+reads   [   4% ] 200 VUs  01.9s/45s
+
+running (02.9s), 200/200 VUs, 304 complete and 0 interrupted iterations
+reads   [   7% ] 200 VUs  02.9s/45s
+
+running (03.9s), 200/200 VUs, 420 complete and 0 interrupted iterations
+reads   [   9% ] 200 VUs  03.9s/45s
+
+running (04.9s), 200/200 VUs, 525 complete and 0 interrupted iterations
+reads   [  11% ] 200 VUs  04.9s/45s
+
+running (05.9s), 200/200 VUs, 609 complete and 0 interrupted iterations
+reads   [  13% ] 200 VUs  05.9s/45s
+
+running (06.9s), 200/200 VUs, 768 complete and 0 interrupted iterations
+reads   [  15% ] 200 VUs  06.9s/45s
+
+running (07.9s), 200/200 VUs, 898 complete and 0 interrupted iterations
+reads   [  18% ] 200 VUs  07.9s/45s
+
+running (08.9s), 200/200 VUs, 1036 complete and 0 interrupted iterations
+reads   [  20% ] 200 VUs  08.9s/45s
+
+running (09.9s), 200/200 VUs, 1171 complete and 0 interrupted iterations
+reads   [  22% ] 200 VUs  09.9s/45s
+
+running (10.9s), 200/200 VUs, 1264 complete and 0 interrupted iterations
+reads   [  24% ] 200 VUs  10.9s/45s
+
+running (11.9s), 200/200 VUs, 1353 complete and 0 interrupted iterations
+reads   [  27% ] 200 VUs  11.9s/45s
+
+running (12.9s), 200/200 VUs, 1465 complete and 0 interrupted iterations
+reads   [  29% ] 200 VUs  12.9s/45s
+
+running (13.9s), 200/200 VUs, 1572 complete and 0 interrupted iterations
+reads   [  31% ] 200 VUs  13.9s/45s
+
+running (14.9s), 200/200 VUs, 1676 complete and 0 interrupted iterations
+reads   [  33% ] 200 VUs  14.9s/45s
+
+running (15.9s), 200/200 VUs, 1732 complete and 0 interrupted iterations
+reads   [  35% ] 200 VUs  15.9s/45s
+
+running (16.9s), 200/200 VUs, 1815 complete and 0 interrupted iterations
+reads   [  38% ] 200 VUs  16.9s/45s
+
+running (17.9s), 200/200 VUs, 1923 complete and 0 interrupted iterations
+reads   [  40% ] 200 VUs  17.9s/45s
+
+running (19.0s), 200/200 VUs, 2053 complete and 0 interrupted iterations
+reads   [  42% ] 200 VUs  19.0s/45s
+
+running (19.9s), 200/200 VUs, 2125 complete and 0 interrupted iterations
+reads   [  44% ] 200 VUs  19.9s/45s
+
+running (20.9s), 200/200 VUs, 2171 complete and 0 interrupted iterations
+reads   [  47% ] 200 VUs  20.9s/45s
+
+running (21.9s), 200/200 VUs, 2255 complete and 0 interrupted iterations
+reads   [  49% ] 200 VUs  21.9s/45s
+
+running (22.9s), 200/200 VUs, 2342 complete and 0 interrupted iterations
+reads   [  51% ] 200 VUs  22.9s/45s
+
+running (23.9s), 200/200 VUs, 2438 complete and 0 interrupted iterations
+reads   [  53% ] 200 VUs  23.9s/45s
+
+running (24.9s), 200/200 VUs, 2522 complete and 0 interrupted iterations
+reads   [  55% ] 200 VUs  24.9s/45s
+
+running (25.9s), 200/200 VUs, 2619 complete and 0 interrupted iterations
+reads   [  58% ] 200 VUs  25.9s/45s
+
+running (26.9s), 200/200 VUs, 2720 complete and 0 interrupted iterations
+reads   [  60% ] 200 VUs  26.9s/45s
+
+running (27.9s), 200/200 VUs, 2855 complete and 0 interrupted iterations
+reads   [  62% ] 200 VUs  27.9s/45s
+
+running (28.9s), 200/200 VUs, 2985 complete and 0 interrupted iterations
+reads   [  64% ] 200 VUs  28.9s/45s
+
+running (29.9s), 200/200 VUs, 3097 complete and 0 interrupted iterations
+reads   [  67% ] 200 VUs  29.9s/45s
+
+running (30.9s), 200/200 VUs, 3222 complete and 0 interrupted iterations
+reads   [  69% ] 200 VUs  30.9s/45s
+
+running (31.9s), 200/200 VUs, 3336 complete and 0 interrupted iterations
+reads   [  71% ] 200 VUs  31.9s/45s
+
+running (32.9s), 200/200 VUs, 3433 complete and 0 interrupted iterations
+reads   [  73% ] 200 VUs  32.9s/45s
+
+running (33.9s), 200/200 VUs, 3532 complete and 0 interrupted iterations
+reads   [  75% ] 200 VUs  33.9s/45s
+
+running (34.9s), 200/200 VUs, 3647 complete and 0 interrupted iterations
+reads   [  78% ] 200 VUs  34.9s/45s
+
+running (35.9s), 200/200 VUs, 3736 complete and 0 interrupted iterations
+reads   [  80% ] 200 VUs  35.9s/45s
+
+running (36.9s), 200/200 VUs, 3860 complete and 0 interrupted iterations
+reads   [  82% ] 200 VUs  36.9s/45s
+
+running (37.9s), 200/200 VUs, 3971 complete and 0 interrupted iterations
+reads   [  84% ] 200 VUs  37.9s/45s
+
+running (38.9s), 200/200 VUs, 4099 complete and 0 interrupted iterations
+reads   [  87% ] 200 VUs  38.9s/45s
+
+running (39.9s), 200/200 VUs, 4227 complete and 0 interrupted iterations
+reads   [  89% ] 200 VUs  39.9s/45s
+
+running (40.9s), 200/200 VUs, 4354 complete and 0 interrupted iterations
+reads   [  91% ] 200 VUs  40.9s/45s
+
+running (41.9s), 200/200 VUs, 4458 complete and 0 interrupted iterations
+reads   [  93% ] 200 VUs  41.9s/45s
+
+running (42.9s), 200/200 VUs, 4578 complete and 0 interrupted iterations
+reads   [  95% ] 200 VUs  42.9s/45s
+
+running (43.9s), 200/200 VUs, 4715 complete and 0 interrupted iterations
+reads   [  98% ] 200 VUs  43.9s/45s
+
+running (44.9s), 200/200 VUs, 4822 complete and 0 interrupted iterations
+reads   [ 100% ] 200 VUs  44.9s/45s
+k6 READ TEST
+API: http://127.0.0.1:4567
+
+http_reqs: {"rate":219.54484114762647,"count":10046}
+iterations: {"count":5023,"rate":109.77242057381324}
+checks: {"rate":1,"passes":10046,"fails":0}
+http_req_failed: {"passes":0,"fails":10046,"rate":0}
+http_req_duration: {"p(90)":2188.4579999999996,"p(95)":2518.7852249999996,"p(99)":3278.6005649999997,"max":6390.5431,"avg":905.14491413498,"med":531.5923}
+
+THRESHOLDS
+PASS http_req_failed: rate<0.01
+PASS checks: rate==1
+
+running (45.8s), 000/200 VUs, 5023 complete and 0 interrupted iterations
+reads ✓ [ 100% ] 200 VUs  45s

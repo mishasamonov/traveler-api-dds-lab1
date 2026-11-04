@@ -1,0 +1,5 @@
+NAME                                     IMAGE                   STATUS                    PORTS
+traveler_lab6_baseline-lb_baseline-1     nginx:1.27-alpine       Up 1 second               127.0.0.1:4570->80/tcp
+traveler_lab6_baseline-postgres-1        postgres:16.15-alpine   Up 12 seconds (healthy)   5432/tcp
+traveler_lab6_baseline-web_baseline-1    traveler-api:lab4       Up 6 seconds (healthy)    127.0.0.1:4567->4567/tcp
+traveler_lab6_baseline-web_baseline2-1   traveler-api:lab4       Up 6 seconds (healthy)    127.0.0.1:4569->4567/tcp

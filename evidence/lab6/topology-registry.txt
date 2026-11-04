@@ -1,0 +1,44 @@
+postgres_00 (publisher):
+   pubname    |              string_agg               
+--------------+---------------------------------------
+ registry_pub | registry_meta, shard_map, shard_moves
+(1 row)
+      slot_name       |  plugin  |    database    | active 
+----------------------+----------+----------------+--------
+ registry_postgres_01 | pgoutput | shard_registry | t
+ registry_postgres_02 | pgoutput | shard_registry | t
+ registry_postgres_03 | pgoutput | shard_registry | t
+(3 rows)
+
+postgres_01 (subscriber):
+       subname        | subenabled | received_lsn | latest_end_lsn 
+----------------------+------------+--------------+----------------
+ registry_postgres_01 | t          | 0/2B805E8    | 0/2B805E8
+(1 row)
+
+ version | shards 
+---------+--------
+       1 |     16
+(1 row)
+
+postgres_02 (subscriber):
+       subname        | subenabled | received_lsn | latest_end_lsn 
+----------------------+------------+--------------+----------------
+ registry_postgres_02 | t          | 0/2B80620    | 0/2B80620
+(1 row)
+
+ version | shards 
+---------+--------
+       1 |     16
+(1 row)
+
+postgres_03 (subscriber):
+       subname        | subenabled | received_lsn | latest_end_lsn 
+----------------------+------------+--------------+----------------
+ registry_postgres_03 | t          | 0/2B80620    | 0/2B80620
+(1 row)
+
+ version | shards 
+---------+--------
+       1 |     16
+(1 row)

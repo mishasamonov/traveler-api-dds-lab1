@@ -1,0 +1,20 @@
+13:49:00.711 run shard_exec_20261104134900_25d07a: /sql/000_seed_lab2_dataset.sql (1120 bytes) on 16 shards, mapping v1
+shard | server      | database | status    | rows          | ms  | error
+------+-------------+----------+-----------+---------------+-----+------
+0     | postgres_00 | db_0     | committed | -,114,342,-,- | 211 |      
+1     | postgres_00 | db_1     | committed | -,117,351,-,- | 155 |      
+2     | postgres_00 | db_2     | committed | -,141,423,-,- | 207 |      
+3     | postgres_00 | db_3     | committed | -,117,351,-,- | 211 |      
+4     | postgres_01 | db_4     | committed | -,135,405,-,- | 185 |      
+5     | postgres_01 | db_5     | committed | -,119,357,-,- | 223 |      
+6     | postgres_01 | db_6     | committed | -,113,339,-,- | 173 |      
+7     | postgres_01 | db_7     | committed | -,141,423,-,- | 225 |      
+8     | postgres_02 | db_8     | committed | -,119,357,-,- | 154 |      
+9     | postgres_02 | db_9     | committed | -,127,381,-,- | 212 |      
+a     | postgres_02 | db_a     | committed | -,103,309,-,- | 190 |      
+b     | postgres_02 | db_b     | committed | -,134,402,-,- | 209 |      
+c     | postgres_03 | db_c     | committed | -,125,375,-,- | 190 |      
+d     | postgres_03 | db_d     | committed | -,135,405,-,- | 196 |      
+e     | postgres_03 | db_e     | committed | -,129,387,-,- | 159 |      
+f     | postgres_03 | db_f     | committed | -,131,393,-,- | 191 |      
+13:49:01.067 COMMIT on all 16 shards; total 353 ms

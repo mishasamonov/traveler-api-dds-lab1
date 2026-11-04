@@ -1,0 +1,22 @@
+  rolname   | rolsuper | rolreplication | rolcreatedb 
+------------+----------+----------------+-------------
+ lab6_admin | t        | t              | t
+ lab6_repl  | f        | t              | f
+ traveler   | f        | f              | f
+(3 rows)
+
+ grantee  |         string_agg          
+----------+-----------------------------
+ traveler | DELETE,INSERT,SELECT,UPDATE
+(1 row)
+
+ type  |   database    |  user_name   |   address   |  auth_method  
+-------+---------------+--------------+-------------+---------------
+ local | {all}         | {all}        |             | trust
+ host  | {all}         | {traveler}   | 172.29.60.0 | scram-sha-256
+ host  | {all}         | {lab6_repl}  | 172.29.60.0 | scram-sha-256
+ host  | {replication} | {lab6_repl}  | 172.29.60.0 | scram-sha-256
+ host  | {all}         | {lab6_admin} | 172.29.60.0 | scram-sha-256
+ host  | {all}         | {all}        | 0.0.0.0     | reject
+ host  | {all}         | {all}        | ::          | reject
+(7 rows)

@@ -1,0 +1,12 @@
+k6 KEY TEST
+API: http://127.0.0.1:4567
+
+http_reqs: {"count":42192,"rate":934.9525488867979}
+iterations: {"count":42192,"rate":934.9525488867979}
+checks: {"rate":1,"passes":42192,"fails":0}
+http_req_failed: {"fails":42192,"rate":0,"passes":0}
+http_req_duration: {"med":152.5944,"p(90)":368.32915,"p(95)":543.3010099999997,"p(99)":825.0490299999966,"max":6340.272,"avg":213.42562751943362}
+
+THRESHOLDS
+PASS http_req_failed: rate<0.01
+PASS checks: rate==1
