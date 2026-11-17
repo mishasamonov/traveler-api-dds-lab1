@@ -30,12 +30,13 @@ groups:
           description: 'p95 = {{ $value | humanizeDuration }} (поріг k6 з лабораторної №2 - 500 мс).'
 
       - alert: ShardDatabaseErrors
+        # One alert per PostgreSQL service; shards and SQLSTATE codes are on the API dashboard.
         # 42501/3D000 are the expected signals of a moved shard (one retry, see lab 6).
-        expr: sum by (shard, server, code) (increase(db_errors_total{code!~"42501|3D000"}[1m])) > 0
+        expr: sum by (server) (increase(db_errors_total{code!~"42501|3D000"}[1m])) > 0
         labels: {severity: critical}
         annotations:
-          summary: 'Помилки запитів до шарду {{ $labels.shard }} на {{ $labels.server }}'
-          description: 'Код {{ $labels.code }}: {{ $value | humanize }} помилок за хвилину.'
+          summary: 'Помилки запитів до шардів на {{ $labels.server }}'
+          description: '{{ $value | humanize }} помилок БД за хвилину (крім очікуваних 42501 / 3D000).'
 
       - alert: ShardPoolSaturated
         expr: max by (database, server) (db_pool_connections{state="waiting"}) > 0

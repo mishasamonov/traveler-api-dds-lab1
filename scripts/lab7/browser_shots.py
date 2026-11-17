@@ -72,6 +72,7 @@ class Browser:
         if expand:
             for control in self.page.locator('.mantine-Accordion-control').all():
                 control.click(); time.sleep(0.4)
+        self.page.evaluate('window.scrollTo(0, 0)')
         time.sleep(1)
         out = SHOTS / f'{name}.png'
         self.page.screenshot(path=str(out), full_page=False)

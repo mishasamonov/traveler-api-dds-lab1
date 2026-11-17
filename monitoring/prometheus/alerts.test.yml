@@ -141,7 +141,7 @@ tests:
       - eval_time: 40s
         alertname: ShardDatabaseErrors
         exp_alerts:
-          - exp_labels: {severity: critical, shard: '9', server: postgres_02, code: ENOTFOUND}
+          - exp_labels: {severity: critical, server: postgres_02}
             exp_annotations:
-              summary: 'Помилки запитів до шарду 9 на postgres_02'
-              description: 'Код ENOTFOUND: 7 помилок за хвилину.'
+              summary: 'Помилки запитів до шардів на postgres_02'
+              description: '7 помилок БД за хвилину (крім очікуваних 42501 / 3D000).'
