@@ -1,0 +1,130 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Laboratory 7 architecture</title>
+<style>
+  body { margin: 0; padding: 14px; background: #fff; font-family: 'Segoe UI', Arial, sans-serif; }
+  svg text { font-family: 'Segoe UI', Arial, sans-serif; }
+  .box { fill: #f4f7fb; stroke: #4a6a8a; stroke-width: 1.4; }
+  .api { fill: #e8f1fb; stroke: #1f5f9f; stroke-width: 1.6; }
+  .pg { fill: #eef6ee; stroke: #2e7d32; stroke-width: 1.6; }
+  .exp { fill: #fff6e5; stroke: #c77700; stroke-width: 1.4; }
+  .prom { fill: #fdecea; stroke: #c6381f; stroke-width: 1.8; }
+  .graf { fill: #fff3e0; stroke: #e46c0a; stroke-width: 1.8; }
+  .net { fill: none; stroke: #9aa7b4; stroke-width: 1.2; stroke-dasharray: 8 5; }
+  .t { font-size: 15px; font-weight: 600; fill: #1b2733; }
+  .s { font-size: 12.5px; fill: #38485a; }
+  .d { font-size: 12.5px; fill: #1b4d1e; font-weight: 600; }
+  .n { font-size: 12px; fill: #6b7885; font-style: italic; }
+  .sql { stroke: #1f5f9f; stroke-width: 1.4; fill: none; }
+  .arr { marker-end: url(#blue); }
+  .scrape { stroke: #c6381f; stroke-width: 1.6; fill: none; stroke-dasharray: 6 4; }
+  .sarr { marker-end: url(#red); }
+  .rw { stroke: #6a3fa0; stroke-width: 1.5; fill: none; stroke-dasharray: 3 3; marker-end: url(#violet); }
+  .mon { stroke: #c77700; stroke-width: 1.4; fill: none; marker-end: url(#orange); }
+  .h { paint-order: stroke; stroke: #fff; stroke-width: 5px; stroke-linejoin: round; }
+  .q { stroke: #e46c0a; stroke-width: 1.8; fill: none; marker-end: url(#orange2); }
+</style>
+<svg width="1140" height="640" viewBox="0 0 1140 640" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="blue" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#1f5f9f"/></marker>
+    <marker id="red" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#c6381f"/></marker>
+    <marker id="violet" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#6a3fa0"/></marker>
+    <marker id="orange" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#c77700"/></marker>
+    <marker id="orange2" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#e46c0a"/></marker>
+  </defs>
+
+  <!-- internal backend network -->
+  <rect class="net" x="22" y="112" width="728" height="490" rx="12"/>
+  <text class="n" x="34" y="596">мережа backend (internal): порти PostgreSQL і exporters не публікуються</text>
+
+  <!-- client -->
+  <rect class="box" x="40" y="14" width="250" height="58" rx="8"/>
+  <text class="t" x="165" y="37" text-anchor="middle">Клієнт / k6 / Hurl</text>
+  <text class="s" x="165" y="57" text-anchor="middle">HTTP 127.0.0.1:4567 і :4568</text>
+  <path class="sql arr" d="M130,72 L130,128"/><path class="sql arr" d="M230,72 L420,128"/>
+
+  <!-- APIs -->
+  <rect class="api" x="40" y="130" width="250" height="88" rx="8"/>
+  <text class="t" x="165" y="153" text-anchor="middle">web - TravelerAPI #1</text>
+  <text class="s" x="165" y="174" text-anchor="middle">Express + 16 pg.Pool</text>
+  <text class="d" x="165" y="196" text-anchor="middle" fill="#1f5f9f">GET /metrics (prom-client)</text>
+  <rect class="api" x="320" y="130" width="250" height="88" rx="8"/>
+  <text class="t" x="445" y="153" text-anchor="middle">web2 - TravelerAPI #2</text>
+  <text class="s" x="445" y="174" text-anchor="middle">Express + 16 pg.Pool</text>
+  <text class="d" x="445" y="196" text-anchor="middle" fill="#1f5f9f">GET /metrics (prom-client)</text>
+
+  <!-- SQL bus -->
+  <path class="sql" d="M165,218 L165,290"/><path class="sql" d="M445,218 L445,290"/>
+  <path class="sql" d="M115,290 L655,290"/>
+  <path class="sql arr" d="M115,290 L115,326"/><path class="sql arr" d="M295,290 L295,326"/>
+  <path class="sql arr" d="M475,290 L475,326"/><path class="sql arr" d="M655,290 L655,326"/>
+  <text class="s h" x="175" y="283">SQL: шард = останній символ UUID</text>
+
+  <!-- PostgreSQL services -->
+  <g>
+    <rect class="pg" x="40" y="328" width="150" height="100" rx="8"/>
+    <text class="t" x="115" y="351" text-anchor="middle">postgres_00</text>
+    <text class="d" x="115" y="376" text-anchor="middle">db_0  db_1</text><text class="d" x="115" y="396" text-anchor="middle">db_2  db_3</text>
+    <text class="s" x="115" y="417" text-anchor="middle">+ shard_registry</text>
+    <rect class="pg" x="220" y="328" width="150" height="100" rx="8"/>
+    <text class="t" x="295" y="351" text-anchor="middle">postgres_01</text>
+    <text class="d" x="295" y="376" text-anchor="middle">db_4  db_5</text><text class="d" x="295" y="396" text-anchor="middle">db_6  db_7</text>
+    <text class="s" x="295" y="417" text-anchor="middle">+ shard_registry</text>
+    <rect class="pg" x="400" y="328" width="150" height="100" rx="8"/>
+    <text class="t" x="475" y="351" text-anchor="middle">postgres_02</text>
+    <text class="d" x="475" y="376" text-anchor="middle">db_8  db_9</text><text class="d" x="475" y="396" text-anchor="middle">db_a  db_b</text>
+    <text class="s" x="475" y="417" text-anchor="middle">+ shard_registry</text>
+    <rect class="pg" x="580" y="328" width="150" height="100" rx="8"/>
+    <text class="t" x="655" y="351" text-anchor="middle">postgres_03</text>
+    <text class="d" x="655" y="376" text-anchor="middle">db_c  db_d</text><text class="d" x="655" y="396" text-anchor="middle">db_e  db_f</text>
+    <text class="s" x="655" y="417" text-anchor="middle">+ shard_registry</text>
+  </g>
+
+  <!-- exporters -->
+  <g>
+    <rect class="exp" x="40" y="478" width="150" height="56" rx="8"/>
+    <text class="t" x="115" y="500" text-anchor="middle">pg_exporter_00</text><text class="s" x="115" y="520" text-anchor="middle">:9187</text>
+    <rect class="exp" x="220" y="478" width="150" height="56" rx="8"/>
+    <text class="t" x="295" y="500" text-anchor="middle">pg_exporter_01</text><text class="s" x="295" y="520" text-anchor="middle">:9187</text>
+    <rect class="exp" x="400" y="478" width="150" height="56" rx="8"/>
+    <text class="t" x="475" y="500" text-anchor="middle">pg_exporter_02</text><text class="s" x="475" y="520" text-anchor="middle">:9187</text>
+    <rect class="exp" x="580" y="478" width="150" height="56" rx="8"/>
+    <text class="t" x="655" y="500" text-anchor="middle">pg_exporter_03</text><text class="s" x="655" y="520" text-anchor="middle">:9187</text>
+    <path class="mon" d="M115,478 L115,431"/><path class="mon" d="M295,478 L295,431"/>
+    <path class="mon" d="M475,478 L475,431"/><path class="mon" d="M655,478 L655,431"/>
+    <text class="s h" x="385" y="459" text-anchor="middle" fill="#9a5b00">роль lab7_monitor (pg_monitor), лише БД postgres</text>
+  </g>
+
+  <!-- Prometheus -->
+  <rect class="prom" x="800" y="250" width="310" height="150" rx="10"/>
+  <text class="t" x="955" y="276" text-anchor="middle">Prometheus v3.5</text>
+  <text class="s" x="955" y="300" text-anchor="middle">scrape кожні 5 с: web, web2, 4 exporters</text>
+  <text class="s" x="955" y="322" text-anchor="middle">alerts.yml: 11 правил (API, шарди, PostgreSQL)</text>
+  <text class="s" x="955" y="344" text-anchor="middle">remote write receiver для k6</text>
+  <text class="s" x="955" y="366" text-anchor="middle">TSDB у томі prometheus_data</text>
+  <text class="d" x="955" y="389" text-anchor="middle" fill="#c6381f">127.0.0.1:9090</text>
+
+  <!-- scrape paths (pull) -->
+  <path class="scrape" d="M800,270 L765,270 L765,248 L240,248"/>
+  <path class="scrape sarr" d="M520,248 L520,222"/><path class="scrape sarr" d="M240,248 L240,222"/>
+  <path class="scrape" d="M955,400 L955,566 L115,566"/>
+  <path class="scrape sarr" d="M115,566 L115,538"/><path class="scrape sarr" d="M295,566 L295,538"/>
+  <path class="scrape sarr" d="M475,566 L475,538"/><path class="scrape sarr" d="M655,566 L655,538"/>
+  <text class="s" x="955" y="586" text-anchor="middle" fill="#c6381f">scrape /metrics :9187</text>
+  <text class="s h" x="660" y="242" text-anchor="middle" fill="#c6381f">scrape /metrics</text>
+
+  <!-- k6 remote write -->
+  <path class="rw" d="M290,30 L770,30 L770,330 L798,330"/>
+  <text class="s" x="530" y="22" text-anchor="middle" fill="#6a3fa0">k6 -o experimental-prometheus-rw (k6_vus, k6_http_reqs)</text>
+
+  <!-- Grafana -->
+  <rect class="graf" x="800" y="60" width="310" height="120" rx="10"/>
+  <text class="t" x="955" y="86" text-anchor="middle">Grafana 12</text>
+  <text class="s" x="955" y="110" text-anchor="middle">datasource і дашборди з файлів (provisioning)</text>
+  <text class="s" x="955" y="132" text-anchor="middle">«TravelerAPI — API і шарди»</text>
+  <text class="s" x="955" y="152" text-anchor="middle">«PostgreSQL — 4 сервіси, 16 шардів»</text>
+  <text class="d" x="955" y="172" text-anchor="middle" fill="#e46c0a">127.0.0.1:3000</text>
+  <path class="q" d="M955,180 L955,247"/>
+  <text class="s" x="1010" y="220" text-anchor="middle" fill="#e46c0a">PromQL</text>
+  <text class="n" x="955" y="46" text-anchor="middle">браузер (анонімний Viewer)</text>
+</svg>

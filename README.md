@@ -1,17 +1,18 @@
-# TravelerAPI laboratory 6
+# TravelerAPI laboratory 7
 
-Sharding of TravelerAPI: 16 virtual nodes (databases `db_0..db_f`) on four
-PostgreSQL services, CLI tools for distributed DDL/DML and rebalancing, and a
-shared shard registry.
+Monitoring of the sharded TravelerAPI with Prometheus and Grafana: prom-client metrics in
+the API, one postgres_exporter per PostgreSQL service, alerting rules and two provisioned
+Grafana dashboards.
 
-See [README-LAB6.md](README-LAB6.md). Previous laboratory: branch `lab4-replication`
-([README-LAB4.md](README-LAB4.md)).
+See [README-LAB7.md](README-LAB7.md). Previous laboratory: sharding
+([README-LAB6.md](README-LAB6.md)).
 
 ```powershell
-python scripts/lab6/bootstrap-env.py
-python scripts/lab6/lab6.py up sharded
-python scripts/lab6/lab6.py seed sharded
+python scripts/lab7/bootstrap-env.py
+python scripts/lab7/lab7.py up
+python scripts/lab7/lab7.py seed
 ```
 
-Measured results and screenshots are in `evidence/lab6/`.
+Grafana: http://127.0.0.1:3000, Prometheus: http://127.0.0.1:9090.
+Measured results and screenshots are in `evidence/lab7/`.
 Secrets are excluded from Git and archives.
