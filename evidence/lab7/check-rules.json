@@ -1,0 +1,231 @@
+{
+  "groups": [
+    {
+      "name": "postgres",
+      "file": "/etc/prometheus/alerts.yml",
+      "rules": [
+        {
+          "state": "inactive",
+          "name": "PostgresDown",
+          "query": "pg_up == 0",
+          "duration": 10,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "critical"
+          },
+          "annotations": {
+            "description": "postgres_exporter не може під’єднатися до {{ $labels.server }}; шарди цього сервісу недоступні.",
+            "summary": "PostgreSQL {{ $labels.server }} недоступний"
+          },
+          "alerts": [],
+          "health": "ok",
+          "evaluationTime": 0.000217697,
+          "lastEvaluation": "2026-11-17T16:47:26.638960279Z",
+          "type": "alerting"
+        },
+        {
+          "state": "inactive",
+          "name": "PostgresExporterDown",
+          "query": "up{job=\"postgres\"} == 0",
+          "duration": 15,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "warning"
+          },
+          "annotations": {
+            "summary": "postgres_exporter для {{ $labels.server }} не відповідає"
+          },
+          "alerts": [],
+          "health": "ok",
+          "evaluationTime": 7.3748e-05,
+          "lastEvaluation": "2026-11-17T16:47:26.639186644Z",
+          "type": "alerting"
+        },
+        {
+          "state": "inactive",
+          "name": "PostgresTooManyConnections",
+          "query": "sum by (server) (pg_stat_activity_count) / max by (server) (pg_settings_max_connections) > 0.8",
+          "duration": 60,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "warning"
+          },
+          "annotations": {
+            "summary": "{{ $labels.server }}: використано понад 80 % max_connections"
+          },
+          "alerts": [],
+          "health": "ok",
+          "evaluationTime": 0.001041723,
+          "lastEvaluation": "2026-11-17T16:47:26.639263311Z",
+          "type": "alerting"
+        },
+        {
+          "state": "inactive",
+          "name": "RegistryReplicationSlotInactive",
+          "query": "pg_replication_slot_slot_is_active{server=\"postgres_00\"} == 0",
+          "duration": 60,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "warning"
+          },
+          "annotations": {
+            "description": "Копія реєстру сховищ на одному із сервісів не отримує змін.",
+            "summary": "Слот реплікації {{ $labels.slot_name }} неактивний"
+          },
+          "alerts": [],
+          "health": "ok",
+          "evaluationTime": 7.0505e-05,
+          "lastEvaluation": "2026-11-17T16:47:26.640312026Z",
+          "type": "alerting"
+        }
+      ],
+      "interval": 5,
+      "limit": 0,
+      "evaluationTime": 0.001476981,
+      "lastEvaluation": "2026-11-17T16:47:26.638907757Z"
+    },
+    {
+      "name": "traveler-api",
+      "file": "/etc/prometheus/alerts.yml",
+      "rules": [
+        {
+          "state": "inactive",
+          "name": "TravelerApiDown",
+          "query": "up{job=\"traveler-api\"} == 0",
+          "duration": 15,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "critical"
+          },
+          "annotations": {
+            "description": "Prometheus не може зібрати /metrics з {{ $labels.instance }} понад 15 с.",
+            "summary": "API {{ $labels.api }} не відповідає"
+          },
+          "alerts": [],
+          "health": "ok",
+          "evaluationTime": 0.000168858,
+          "lastEvaluation": "2026-11-17T16:47:25.198170764Z",
+          "type": "alerting"
+        },
+        {
+          "state": "inactive",
+          "name": "TravelerApiHighErrorRate",
+          "query": "sum by (api) (rate(http_request_duration_seconds_count{status=~\"5..\"}[1m])) / sum by (api) (rate(http_request_duration_seconds_count[1m])) > 0.01",
+          "duration": 15,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "critical"
+          },
+          "annotations": {
+            "description": "Частка помилок {{ $value | humanizePercentage }} за останню хвилину.",
+            "summary": "API {{ $labels.api }}: понад 1 % відповідей 5xx"
+          },
+          "alerts": [],
+          "health": "ok",
+          "evaluationTime": 0.000147289,
+          "lastEvaluation": "2026-11-17T16:47:25.19834282Z",
+          "type": "alerting"
+        },
+        {
+          "state": "inactive",
+          "name": "TravelerApiHighLatencyP95",
+          "query": "histogram_quantile(0.95, sum by (le) (rate(http_request_duration_seconds_bucket{route!~\"/health|/metrics\"}[1m]))) > 0.5",
+          "duration": 60,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "warning"
+          },
+          "annotations": {
+            "description": "p95 = {{ $value | humanizeDuration }} (поріг k6 з лабораторної №2 - 500 мс).",
+            "summary": "p95 затримки API вище 500 мс"
+          },
+          "alerts": [],
+          "health": "ok",
+          "evaluationTime": 9.0161e-05,
+          "lastEvaluation": "2026-11-17T16:47:25.198493068Z",
+          "type": "alerting"
+        },
+        {
+          "state": "inactive",
+          "name": "ShardDatabaseErrors",
+          "query": "sum by (shard, server, code) (increase(db_errors_total{code!~\"42501|3D000\"}[1m])) > 0",
+          "duration": 0,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "critical"
+          },
+          "annotations": {
+            "description": "Код {{ $labels.code }}: {{ $value | humanize }} помилок за хвилину.",
+            "summary": "Помилки запитів до шарду {{ $labels.shard }} на {{ $labels.server }}"
+          },
+          "alerts": [],
+          "health": "ok",
+          "evaluationTime": 4.0983e-05,
+          "lastEvaluation": "2026-11-17T16:47:25.198584844Z",
+          "type": "alerting"
+        },
+        {
+          "state": "inactive",
+          "name": "ShardPoolSaturated",
+          "query": "max by (database, server) (db_pool_connections{state=\"waiting\"}) > 0",
+          "duration": 30,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "warning"
+          },
+          "annotations": {
+            "description": "Запити чекають на вільне з’єднання понад 30 с (PG_POOL_PER_SHARD).",
+            "summary": "Пул {{ $labels.database }} на {{ $labels.server }} вичерпано"
+          },
+          "alerts": [],
+          "health": "ok",
+          "evaluationTime": 0.000145636,
+          "lastEvaluation": "2026-11-17T16:47:25.198627155Z",
+          "type": "alerting"
+        },
+        {
+          "state": "inactive",
+          "name": "ShardHotspot",
+          "query": "max(sum by (shard) (rate(db_query_duration_seconds_count[1m]))) > 3 * avg(sum by (shard) (rate(db_query_duration_seconds_count[1m]))) and sum(rate(db_query_duration_seconds_count[1m])) > 20",
+          "duration": 30,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "warning"
+          },
+          "annotations": {
+            "description": "Найбільш завантажений шард отримує понад утричі більше запитів, ніж у середньому.",
+            "summary": "Гарячий шард: навантаження розподілене нерівномірно"
+          },
+          "alerts": [],
+          "health": "ok",
+          "evaluationTime": 0.000301332,
+          "lastEvaluation": "2026-11-17T16:47:25.198776056Z",
+          "type": "alerting"
+        },
+        {
+          "state": "inactive",
+          "name": "ShardMappingVersionMismatch",
+          "query": "max(shard_mapping_version) != min(shard_mapping_version)",
+          "duration": 30,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "warning"
+          },
+          "annotations": {
+            "description": "Після перенесення шарду один з API не перечитав mapping понад 30 с.",
+            "summary": "Екземпляри API використовують різні версії mapping"
+          },
+          "alerts": [],
+          "health": "ok",
+          "evaluationTime": 4.8319e-05,
+          "lastEvaluation": "2026-11-17T16:47:25.199080711Z",
+          "type": "alerting"
+        }
+      ],
+      "interval": 5,
+      "limit": 0,
+      "evaluationTime": 0.000995539,
+      "lastEvaluation": "2026-11-17T16:47:25.19813474Z"
+    }
+  ]
+}

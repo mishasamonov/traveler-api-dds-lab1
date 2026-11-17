@@ -1,0 +1,460 @@
+[
+  {
+    "labels": {
+      "alertname": "TravelerApiHighErrorRate",
+      "api": "web",
+      "severity": "critical"
+    },
+    "annotations": {
+      "description": "Частка помилок 2.445% за останню хвилину.",
+      "summary": "API web: понад 1 % відповідей 5xx"
+    },
+    "state": "pending",
+    "activeAt": "2026-11-17T17:22:40.201696581Z",
+    "value": "2.4447031431897553e-02"
+  },
+  {
+    "labels": {
+      "alertname": "TravelerApiHighErrorRate",
+      "api": "web2",
+      "severity": "critical"
+    },
+    "annotations": {
+      "description": "Частка помилок 2.704% за останню хвилину.",
+      "summary": "API web2: понад 1 % відповідей 5xx"
+    },
+    "state": "firing",
+    "activeAt": "2026-11-17T17:22:35.201696581Z",
+    "value": "2.7040560841261895e-02"
+  },
+  {
+    "labels": {
+      "alertname": "ShardDatabaseErrors",
+      "code": "57P03",
+      "server": "postgres_02",
+      "severity": "critical",
+      "shard": "a"
+    },
+    "annotations": {
+      "description": "Код 57P03: 45.82 помилок за хвилину.",
+      "summary": "Помилки запитів до шарду a на postgres_02"
+    },
+    "state": "firing",
+    "activeAt": "2026-11-17T17:22:15.201696581Z",
+    "value": "4.582068112806153e+01"
+  },
+  {
+    "labels": {
+      "alertname": "ShardDatabaseErrors",
+      "code": "57P03",
+      "server": "postgres_02",
+      "severity": "critical",
+      "shard": "8"
+    },
+    "annotations": {
+      "description": "Код 57P03: 44.73 помилок за хвилину.",
+      "summary": "Помилки запитів до шарду 8 на postgres_02"
+    },
+    "state": "firing",
+    "activeAt": "2026-11-17T17:22:15.201696581Z",
+    "value": "4.4729712529774346e+01"
+  },
+  {
+    "labels": {
+      "alertname": "ShardDatabaseErrors",
+      "code": "pool_timeout",
+      "server": "postgres_02",
+      "severity": "critical",
+      "shard": "8"
+    },
+    "annotations": {
+      "description": "Код pool_timeout: 129.8 помилок за хвилину.",
+      "summary": "Помилки запитів до шарду 8 на postgres_02"
+    },
+    "state": "firing",
+    "activeAt": "2026-11-17T17:22:20.201696581Z",
+    "value": "1.2982526319617432e+02"
+  },
+  {
+    "labels": {
+      "alertname": "ShardDatabaseErrors",
+      "code": "pool_timeout",
+      "server": "postgres_02",
+      "severity": "critical",
+      "shard": "b"
+    },
+    "annotations": {
+      "description": "Код pool_timeout: 122.2 помилок за хвилину.",
+      "summary": "Помилки запитів до шарду b на postgres_02"
+    },
+    "state": "firing",
+    "activeAt": "2026-11-17T17:22:20.201696581Z",
+    "value": "1.2218848300816407e+02"
+  },
+  {
+    "labels": {
+      "alertname": "ShardDatabaseErrors",
+      "code": "pool_timeout",
+      "server": "postgres_02",
+      "severity": "critical",
+      "shard": "9"
+    },
+    "annotations": {
+      "description": "Код pool_timeout: 136.4 помилок за хвилину.",
+      "summary": "Помилки запитів до шарду 9 на postgres_02"
+    },
+    "state": "firing",
+    "activeAt": "2026-11-17T17:22:20.201696581Z",
+    "value": "1.363710747858974e+02"
+  },
+  {
+    "labels": {
+      "alertname": "ShardDatabaseErrors",
+      "code": "ECONNRESET",
+      "server": "postgres_02",
+      "severity": "critical",
+      "shard": "9"
+    },
+    "annotations": {
+      "description": "Код ECONNRESET: 10.91 помилок за хвилину.",
+      "summary": "Помилки запитів до шарду 9 на postgres_02"
+    },
+    "state": "firing",
+    "activeAt": "2026-11-17T17:22:15.201696581Z",
+    "value": "1.0909685982871792e+01"
+  },
+  {
+    "labels": {
+      "alertname": "ShardDatabaseErrors",
+      "code": "ECONNRESET",
+      "server": "postgres_02",
+      "severity": "critical",
+      "shard": "a"
+    },
+    "annotations": {
+      "description": "Код ECONNRESET: 9.819 помилок за хвилину.",
+      "summary": "Помилки запитів до шарду a на postgres_02"
+    },
+    "state": "firing",
+    "activeAt": "2026-11-17T17:22:15.201696581Z",
+    "value": "9.818717384584613e+00"
+  },
+  {
+    "labels": {
+      "alertname": "ShardDatabaseErrors",
+      "code": "57P01",
+      "server": "postgres_02",
+      "severity": "critical",
+      "shard": "a"
+    },
+    "annotations": {
+      "description": "Код 57P01: 3.273 помилок за хвилину.",
+      "summary": "Помилки запитів до шарду a на postgres_02"
+    },
+    "state": "firing",
+    "activeAt": "2026-11-17T17:22:15.201696581Z",
+    "value": "3.272905794861538e+00"
+  },
+  {
+    "labels": {
+      "alertname": "ShardDatabaseErrors",
+      "code": "ECONNRESET",
+      "server": "postgres_02",
+      "severity": "critical",
+      "shard": "b"
+    },
+    "annotations": {
+      "description": "Код ECONNRESET: 7.637 помилок за хвилину.",
+      "summary": "Помилки запитів до шарду b на postgres_02"
+    },
+    "state": "firing",
+    "activeAt": "2026-11-17T17:22:15.201696581Z",
+    "value": "7.636780188010254e+00"
+  },
+  {
+    "labels": {
+      "alertname": "ShardDatabaseErrors",
+      "code": "57P01",
+      "server": "postgres_02",
+      "severity": "critical",
+      "shard": "9"
+    },
+    "annotations": {
+      "description": "Код 57P01: 5.455 помилок за хвилину.",
+      "summary": "Помилки запитів до шарду 9 на postgres_02"
+    },
+    "state": "firing",
+    "activeAt": "2026-11-17T17:22:15.201696581Z",
+    "value": "5.454842991435896e+00"
+  },
+  {
+    "labels": {
+      "alertname": "ShardDatabaseErrors",
+      "code": "57P01",
+      "server": "postgres_02",
+      "severity": "critical",
+      "shard": "b"
+    },
+    "annotations": {
+      "description": "Код 57P01: 7.637 помилок за хвилину.",
+      "summary": "Помилки запитів до шарду b на postgres_02"
+    },
+    "state": "firing",
+    "activeAt": "2026-11-17T17:22:15.201696581Z",
+    "value": "7.636780188010255e+00"
+  },
+  {
+    "labels": {
+      "alertname": "ShardDatabaseErrors",
+      "code": "57P03",
+      "server": "postgres_02",
+      "severity": "critical",
+      "shard": "b"
+    },
+    "annotations": {
+      "description": "Код 57P03: 33.82 помилок за хвилину.",
+      "summary": "Помилки запитів до шарду b на postgres_02"
+    },
+    "state": "firing",
+    "activeAt": "2026-11-17T17:22:15.201696581Z",
+    "value": "3.382002654690256e+01"
+  },
+  {
+    "labels": {
+      "alertname": "ShardDatabaseErrors",
+      "code": "pool_timeout",
+      "server": "postgres_02",
+      "severity": "critical",
+      "shard": "a"
+    },
+    "annotations": {
+      "description": "Код pool_timeout: 106.9 помилок за хвилину.",
+      "summary": "Помилки запитів до шарду a на postgres_02"
+    },
+    "state": "firing",
+    "activeAt": "2026-11-17T17:22:20.201696581Z",
+    "value": "1.0691492263214357e+02"
+  },
+  {
+    "labels": {
+      "alertname": "ShardDatabaseErrors",
+      "code": "57P01",
+      "server": "postgres_02",
+      "severity": "critical",
+      "shard": "8"
+    },
+    "annotations": {
+      "description": "Код 57P01: 4.364 помилок за хвилину.",
+      "summary": "Помилки запитів до шарду 8 на postgres_02"
+    },
+    "state": "firing",
+    "activeAt": "2026-11-17T17:22:15.201696581Z",
+    "value": "4.363874393148717e+00"
+  },
+  {
+    "labels": {
+      "alertname": "ShardDatabaseErrors",
+      "code": "ECONNRESET",
+      "server": "postgres_02",
+      "severity": "critical",
+      "shard": "8"
+    },
+    "annotations": {
+      "description": "Код ECONNRESET: 7.637 помилок за хвилину.",
+      "summary": "Помилки запитів до шарду 8 на postgres_02"
+    },
+    "state": "firing",
+    "activeAt": "2026-11-17T17:22:15.201696581Z",
+    "value": "7.636780188010254e+00"
+  },
+  {
+    "labels": {
+      "alertname": "ShardDatabaseErrors",
+      "code": "ECONNREFUSED",
+      "server": "postgres_02",
+      "severity": "critical",
+      "shard": "8"
+    },
+    "annotations": {
+      "description": "Код ECONNREFUSED: 3.273 помилок за хвилину.",
+      "summary": "Помилки запитів до шарду 8 на postgres_02"
+    },
+    "state": "firing",
+    "activeAt": "2026-11-17T17:22:15.201696581Z",
+    "value": "3.272905794861538e+00"
+  },
+  {
+    "labels": {
+      "alertname": "ShardDatabaseErrors",
+      "code": "ENOTFOUND",
+      "server": "postgres_02",
+      "severity": "critical",
+      "shard": "8"
+    },
+    "annotations": {
+      "description": "Код ENOTFOUND: 1.091 помилок за хвилину.",
+      "summary": "Помилки запитів до шарду 8 на postgres_02"
+    },
+    "state": "firing",
+    "activeAt": "2026-11-17T17:22:20.201696581Z",
+    "value": "1.0909685982871793e+00"
+  },
+  {
+    "labels": {
+      "alertname": "ShardDatabaseErrors",
+      "code": "57P03",
+      "server": "postgres_02",
+      "severity": "critical",
+      "shard": "9"
+    },
+    "annotations": {
+      "description": "Код 57P03: 43.64 помилок за хвилину.",
+      "summary": "Помилки запитів до шарду 9 на postgres_02"
+    },
+    "state": "firing",
+    "activeAt": "2026-11-17T17:22:15.201696581Z",
+    "value": "4.363874393148717e+01"
+  },
+  {
+    "labels": {
+      "alertname": "ShardDatabaseErrors",
+      "code": "ECONNREFUSED",
+      "server": "postgres_02",
+      "severity": "critical",
+      "shard": "b"
+    },
+    "annotations": {
+      "description": "Код ECONNREFUSED: 6.546 помилок за хвилину.",
+      "summary": "Помилки запитів до шарду b на postgres_02"
+    },
+    "state": "firing",
+    "activeAt": "2026-11-17T17:22:15.201696581Z",
+    "value": "6.545811589723076e+00"
+  },
+  {
+    "labels": {
+      "alertname": "ShardDatabaseErrors",
+      "code": "ECONNREFUSED",
+      "server": "postgres_02",
+      "severity": "critical",
+      "shard": "a"
+    },
+    "annotations": {
+      "description": "Код ECONNREFUSED: 2.182 помилок за хвилину.",
+      "summary": "Помилки запитів до шарду a на postgres_02"
+    },
+    "state": "firing",
+    "activeAt": "2026-11-17T17:22:15.201696581Z",
+    "value": "2.1819371965743586e+00"
+  },
+  {
+    "labels": {
+      "alertname": "ShardDatabaseErrors",
+      "code": "ECONNREFUSED",
+      "server": "postgres_02",
+      "severity": "critical",
+      "shard": "9"
+    },
+    "annotations": {
+      "description": "Код ECONNREFUSED: 4.364 помилок за хвилину.",
+      "summary": "Помилки запитів до шарду 9 на postgres_02"
+    },
+    "state": "firing",
+    "activeAt": "2026-11-17T17:22:15.201696581Z",
+    "value": "4.363874393148717e+00"
+  },
+  {
+    "labels": {
+      "alertname": "ShardPoolSaturated",
+      "database": "db_9",
+      "server": "postgres_02",
+      "severity": "warning"
+    },
+    "annotations": {
+      "description": "Запити чекають на вільне з’єднання понад 30 с (PG_POOL_PER_SHARD).",
+      "summary": "Пул db_9 на postgres_02 вичерпано"
+    },
+    "state": "firing",
+    "activeAt": "2026-11-17T17:22:15.201696581Z",
+    "value": "9e+00"
+  },
+  {
+    "labels": {
+      "alertname": "ShardPoolSaturated",
+      "database": "db_a",
+      "server": "postgres_02",
+      "severity": "warning"
+    },
+    "annotations": {
+      "description": "Запити чекають на вільне з’єднання понад 30 с (PG_POOL_PER_SHARD).",
+      "summary": "Пул db_a на postgres_02 вичерпано"
+    },
+    "state": "firing",
+    "activeAt": "2026-11-17T17:22:15.201696581Z",
+    "value": "7e+00"
+  },
+  {
+    "labels": {
+      "alertname": "ShardPoolSaturated",
+      "database": "db_8",
+      "server": "postgres_02",
+      "severity": "warning"
+    },
+    "annotations": {
+      "description": "Запити чекають на вільне з’єднання понад 30 с (PG_POOL_PER_SHARD).",
+      "summary": "Пул db_8 на postgres_02 вичерпано"
+    },
+    "state": "firing",
+    "activeAt": "2026-11-17T17:22:15.201696581Z",
+    "value": "9e+00"
+  },
+  {
+    "labels": {
+      "alertname": "ShardPoolSaturated",
+      "database": "db_b",
+      "server": "postgres_02",
+      "severity": "warning"
+    },
+    "annotations": {
+      "description": "Запити чекають на вільне з’єднання понад 30 с (PG_POOL_PER_SHARD).",
+      "summary": "Пул db_b на postgres_02 вичерпано"
+    },
+    "state": "firing",
+    "activeAt": "2026-11-17T17:22:15.201696581Z",
+    "value": "1e+01"
+  },
+  {
+    "labels": {
+      "alertname": "PostgresDown",
+      "instance": "pg_exporter_02:9187",
+      "job": "postgres",
+      "server": "postgres_02",
+      "severity": "critical"
+    },
+    "annotations": {
+      "description": "postgres_exporter не може під’єднатися до postgres_02; шарди цього сервісу недоступні.",
+      "summary": "PostgreSQL postgres_02 недоступний"
+    },
+    "state": "firing",
+    "activeAt": "2026-11-17T17:22:11.641744512Z",
+    "value": "0e+00"
+  },
+  {
+    "labels": {
+      "alertname": "RegistryReplicationSlotInactive",
+      "instance": "pg_exporter_00:9187",
+      "job": "postgres",
+      "server": "postgres_00",
+      "severity": "warning",
+      "slot_name": "registry_postgres_02",
+      "slot_type": "logical"
+    },
+    "annotations": {
+      "description": "Копія реєстру сховищ на одному із сервісів не отримує змін.",
+      "summary": "Слот реплікації registry_postgres_02 неактивний"
+    },
+    "state": "pending",
+    "activeAt": "2026-11-17T17:22:11.641744512Z",
+    "value": "0e+00"
+  }
+]

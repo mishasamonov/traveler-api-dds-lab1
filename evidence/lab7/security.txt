@@ -1,0 +1,36 @@
+-- role of postgres_exporter
+   rolname    | rolsuper | rolcreatedb | rolcreaterole | rolreplication | rolconnlimit 
+--------------+----------+-------------+---------------+----------------+--------------
+ lab7_monitor | f        | f           | f             | f              |            5
+(1 row)
+
+    member    | granted_role 
+--------------+--------------
+ lab7_monitor | pg_monitor
+(1 row)
+
+-- can the monitoring role read the shard data? (privileges on db_0)
+ connect_db_0 | connect_postgres 
+--------------+------------------
+ f            | t
+(1 row)
+
+-- pg_hba.conf rules
+ line_number | type  |   database    |   user_name    |   address   |    netmask    |  auth_method  
+-------------+-------+---------------+----------------+-------------+---------------+---------------
+           1 | local | {all}         | {all}          |             |               | trust
+           2 | host  | {all}         | {traveler}     | 172.29.70.0 | 255.255.255.0 | scram-sha-256
+           3 | host  | {all}         | {lab6_repl}    | 172.29.70.0 | 255.255.255.0 | scram-sha-256
+           4 | host  | {replication} | {lab6_repl}    | 172.29.70.0 | 255.255.255.0 | scram-sha-256
+           5 | host  | {all}         | {lab6_admin}   | 172.29.70.0 | 255.255.255.0 | scram-sha-256
+           6 | host  | {postgres}    | {lab7_monitor} | 172.29.70.0 | 255.255.255.0 | scram-sha-256
+           7 | host  | {all}         | {all}          | 0.0.0.0     | 0.0.0.0       | reject
+           8 | host  | {all}         | {all}          | ::          | ::            | reject
+(8 rows)
+
+-- sessions of the exporter
+   usename    | datname  | application_name | client_addr | state 
+--------------+----------+------------------+-------------+-------
+ lab7_monitor | postgres |                  | 172.29.70.8 | idle
+(1 row)
+

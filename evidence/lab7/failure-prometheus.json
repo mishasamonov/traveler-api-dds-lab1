@@ -1,0 +1,41 @@
+{
+  "outageSeconds": 78,
+  "rpsBefore": 784.5202529244356,
+  "errorsByServerCode": [
+    {
+      "code": "ENOTFOUND",
+      "server": "postgres_02",
+      "count": 1
+    },
+    {
+      "code": "pool_timeout",
+      "server": "postgres_02",
+      "count": 968
+    },
+    {
+      "code": "pool_timeout",
+      "server": "postgres_00",
+      "count": 2
+    },
+    {
+      "code": "pool_timeout",
+      "server": "postgres_01",
+      "count": 1
+    }
+  ],
+  "httpByStatus": [
+    {
+      "status": "200",
+      "count": 2013
+    },
+    {
+      "status": "500",
+      "count": 606
+    }
+  ],
+  "rpsDuring": 33.06870987538295,
+  "errorRpsDuring": 7.833754094818124,
+  "rpsAfter": 863.2199449843872,
+  "restartSecond": 79,
+  "errorsStopSecond": 100
+}

@@ -1,0 +1,22 @@
+k6 SHARDS-HOTSPOT TEST
+API: http://127.0.0.1:4567
+
+http_reqs: {"rate":558.1215142310716,"count":67005}
+iterations: {"rate":418.51825210865144,"count":50245}
+checks: {"rate":1,"passes":67005,"fails":0}
+http_req_failed: {"fails":66812,"rate":0.002880382061040221,"passes":193}
+http_req_duration: {"avg":15.619399271696224,"med":5.9178,"p(95)":53.30099999999998,"p(99)":101.15488400000004,"max":368.0937}
+
+THRESHOLDS
+PASS http_req_duration{server:postgres_03}: max>=0
+PASS http_reqs{server:postgres_00}: count>=0
+PASS http_req_failed{server:postgres_03}: rate>=0
+PASS http_req_duration{server:postgres_01}: max>=0
+PASS http_req_duration{server:postgres_02}: max>=0
+PASS http_reqs{server:postgres_03}: count>=0
+PASS http_reqs{server:postgres_01}: count>=0
+PASS http_reqs{server:postgres_02}: count>=0
+PASS http_req_failed{server:postgres_02}: rate>=0
+PASS http_req_failed{server:postgres_00}: rate>=0
+PASS http_req_failed{server:postgres_01}: rate>=0
+PASS http_req_duration{server:postgres_00}: max>=0

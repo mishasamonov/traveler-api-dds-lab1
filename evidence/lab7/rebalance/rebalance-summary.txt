@@ -1,0 +1,18 @@
+k6 REBALANCE TEST
+API: http://127.0.0.1:4567
+
+http_reqs: {"count":109981,"rate":915.2590855294715}
+iterations: {"count":34353,"rate":285.88479251137863}
+checks: {"rate":1,"passes":106520,"fails":0}
+http_req_failed: {"rate":0,"passes":0,"fails":109981}
+http_req_duration: {"p(99)":199.6010199999996,"max":1464.826,"avg":33.95204733544918,"med":22.6901,"p(95)":93.1718}
+
+THRESHOLDS
+PASS http_req_failed{shard:other}: rate<0.01
+PASS http_req_failed{shard:7}: rate<0.01
+PASS checks: rate>0.99
+PASS http_req_failed{shard:3}: rate<0.01
+PASS http_req_duration{shard:3}: max>=0
+PASS http_req_duration{shard:7}: max>=0
+PASS http_req_duration{shard:other}: max>=0
+PASS http_req_failed: rate<0.01

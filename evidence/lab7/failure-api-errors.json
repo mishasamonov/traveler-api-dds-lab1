@@ -1,0 +1,387 @@
+[
+  {
+    "metric": {
+      "code": "57P01",
+      "server": "postgres_02",
+      "shard": "9"
+    },
+    "value": [
+      1794936205.989,
+      "0"
+    ]
+  },
+  {
+    "metric": {
+      "code": "57P01",
+      "server": "postgres_02",
+      "shard": "b"
+    },
+    "value": [
+      1794936205.989,
+      "0"
+    ]
+  },
+  {
+    "metric": {
+      "code": "57P01",
+      "server": "postgres_02",
+      "shard": "a"
+    },
+    "value": [
+      1794936205.989,
+      "0"
+    ]
+  },
+  {
+    "metric": {
+      "code": "57P01",
+      "server": "postgres_02",
+      "shard": "8"
+    },
+    "value": [
+      1794936205.989,
+      "0"
+    ]
+  },
+  {
+    "metric": {
+      "code": "57P03",
+      "server": "postgres_02",
+      "shard": "a"
+    },
+    "value": [
+      1794936205.989,
+      "0"
+    ]
+  },
+  {
+    "metric": {
+      "code": "57P03",
+      "server": "postgres_02",
+      "shard": "b"
+    },
+    "value": [
+      1794936205.989,
+      "0"
+    ]
+  },
+  {
+    "metric": {
+      "code": "57P03",
+      "server": "postgres_02",
+      "shard": "8"
+    },
+    "value": [
+      1794936205.989,
+      "0"
+    ]
+  },
+  {
+    "metric": {
+      "code": "57P03",
+      "server": "postgres_02",
+      "shard": "9"
+    },
+    "value": [
+      1794936205.989,
+      "0"
+    ]
+  },
+  {
+    "metric": {
+      "code": "ECONNRESET",
+      "server": "postgres_02",
+      "shard": "8"
+    },
+    "value": [
+      1794936205.989,
+      "0"
+    ]
+  },
+  {
+    "metric": {
+      "code": "ECONNRESET",
+      "server": "postgres_02",
+      "shard": "b"
+    },
+    "value": [
+      1794936205.989,
+      "0"
+    ]
+  },
+  {
+    "metric": {
+      "code": "ECONNRESET",
+      "server": "postgres_02",
+      "shard": "9"
+    },
+    "value": [
+      1794936205.989,
+      "0"
+    ]
+  },
+  {
+    "metric": {
+      "code": "ECONNRESET",
+      "server": "postgres_02",
+      "shard": "a"
+    },
+    "value": [
+      1794936205.989,
+      "0"
+    ]
+  },
+  {
+    "metric": {
+      "code": "ECONNREFUSED",
+      "server": "postgres_02",
+      "shard": "8"
+    },
+    "value": [
+      1794936205.989,
+      "0"
+    ]
+  },
+  {
+    "metric": {
+      "code": "ECONNREFUSED",
+      "server": "postgres_02",
+      "shard": "9"
+    },
+    "value": [
+      1794936205.989,
+      "0"
+    ]
+  },
+  {
+    "metric": {
+      "code": "ECONNREFUSED",
+      "server": "postgres_02",
+      "shard": "a"
+    },
+    "value": [
+      1794936205.989,
+      "0"
+    ]
+  },
+  {
+    "metric": {
+      "code": "ECONNREFUSED",
+      "server": "postgres_02",
+      "shard": "b"
+    },
+    "value": [
+      1794936205.989,
+      "0"
+    ]
+  },
+  {
+    "metric": {
+      "code": "ENOTFOUND",
+      "server": "postgres_02",
+      "shard": "8"
+    },
+    "value": [
+      1794936205.989,
+      "0"
+    ]
+  },
+  {
+    "metric": {
+      "code": "ENOTFOUND",
+      "server": "postgres_02",
+      "shard": "a"
+    },
+    "value": [
+      1794936205.989,
+      "0"
+    ]
+  },
+  {
+    "metric": {
+      "code": "pool_timeout",
+      "server": "postgres_02",
+      "shard": "8"
+    },
+    "value": [
+      1794936205.989,
+      "180.01457970798805"
+    ]
+  },
+  {
+    "metric": {
+      "code": "pool_timeout",
+      "server": "postgres_02",
+      "shard": "a"
+    },
+    "value": [
+      1794936205.989,
+      "168.01362756541232"
+    ]
+  },
+  {
+    "metric": {
+      "code": "pool_timeout",
+      "server": "postgres_02",
+      "shard": "b"
+    },
+    "value": [
+      1794936205.989,
+      "185.46975994108283"
+    ]
+  },
+  {
+    "metric": {
+      "code": "pool_timeout",
+      "server": "postgres_02",
+      "shard": "9"
+    },
+    "value": [
+      1794936205.989,
+      "198.56166084326748"
+    ]
+  },
+  {
+    "metric": {
+      "code": "pool_timeout",
+      "server": "postgres_00",
+      "shard": "1"
+    },
+    "value": [
+      1794936205.989,
+      "1.091008273479407"
+    ]
+  },
+  {
+    "metric": {
+      "code": "pool_timeout",
+      "server": "postgres_03",
+      "shard": "d"
+    },
+    "value": [
+      1794936205.989,
+      "0"
+    ]
+  },
+  {
+    "metric": {
+      "code": "pool_timeout",
+      "server": "postgres_01",
+      "shard": "6"
+    },
+    "value": [
+      1794936205.989,
+      "1.091008273479407"
+    ]
+  },
+  {
+    "metric": {
+      "code": "pool_timeout",
+      "server": "postgres_03",
+      "shard": "c"
+    },
+    "value": [
+      1794936205.989,
+      "0"
+    ]
+  },
+  {
+    "metric": {
+      "code": "pool_timeout",
+      "server": "postgres_03",
+      "shard": "e"
+    },
+    "value": [
+      1794936205.989,
+      "0"
+    ]
+  },
+  {
+    "metric": {
+      "code": "pool_timeout",
+      "server": "postgres_01",
+      "shard": "7"
+    },
+    "value": [
+      1794936205.989,
+      "0"
+    ]
+  },
+  {
+    "metric": {
+      "code": "pool_timeout",
+      "server": "postgres_00",
+      "shard": "2"
+    },
+    "value": [
+      1794936205.989,
+      "1.0909884355225834"
+    ]
+  },
+  {
+    "metric": {
+      "code": "pool_timeout",
+      "server": "postgres_00",
+      "shard": "0"
+    },
+    "value": [
+      1794936205.989,
+      "0"
+    ]
+  },
+  {
+    "metric": {
+      "code": "ENOTFOUND",
+      "server": "postgres_02",
+      "shard": "9"
+    },
+    "value": [
+      1794936205.989,
+      "0"
+    ]
+  },
+  {
+    "metric": {
+      "code": "ENOTFOUND",
+      "server": "postgres_02",
+      "shard": "b"
+    },
+    "value": [
+      1794936205.989,
+      "0"
+    ]
+  },
+  {
+    "metric": {
+      "code": "pool_timeout",
+      "server": "postgres_00",
+      "shard": "3"
+    },
+    "value": [
+      1794936205.989,
+      "0"
+    ]
+  },
+  {
+    "metric": {
+      "code": "pool_timeout",
+      "server": "postgres_01",
+      "shard": "4"
+    },
+    "value": [
+      1794936205.989,
+      "0"
+    ]
+  },
+  {
+    "metric": {
+      "code": "pool_timeout",
+      "server": "postgres_01",
+      "shard": "5"
+    },
+    "value": [
+      1794936205.989,
+      "0"
+    ]
+  }
+]

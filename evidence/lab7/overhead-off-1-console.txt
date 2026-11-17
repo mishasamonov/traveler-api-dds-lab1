@@ -1,0 +1,165 @@
+
+         /\      Grafana   /‾‾/  
+    /\  /  \     |\  __   /  /   
+   /  \/    \    | |/ /  /   ‾‾\ 
+  /          \   |   (  |  (‾)  |
+ / __________ \  |_|\_\  \_____/ 
+
+
+     execution: local
+        script: tests/performance-tests/key-test.js
+        output: -
+
+     scenarios: (100.00%) 1 scenario, 200 max VUs, 55s max duration (incl. graceful stop):
+              * keys: 200 looping VUs for 45s (gracefulStop: 10s)
+
+
+running (01.0s), 200/200 VUs, 535 complete and 0 interrupted iterations
+keys   [   2% ] 200 VUs  01.0s/45s
+
+running (02.0s), 200/200 VUs, 1561 complete and 0 interrupted iterations
+keys   [   4% ] 200 VUs  02.0s/45s
+
+running (03.0s), 200/200 VUs, 2745 complete and 0 interrupted iterations
+keys   [   7% ] 200 VUs  03.0s/45s
+
+running (04.0s), 200/200 VUs, 3784 complete and 0 interrupted iterations
+keys   [   9% ] 200 VUs  04.0s/45s
+
+running (05.0s), 200/200 VUs, 4802 complete and 0 interrupted iterations
+keys   [  11% ] 200 VUs  05.0s/45s
+
+running (06.0s), 200/200 VUs, 5689 complete and 0 interrupted iterations
+keys   [  13% ] 200 VUs  06.0s/45s
+
+running (07.0s), 200/200 VUs, 6875 complete and 0 interrupted iterations
+keys   [  15% ] 200 VUs  07.0s/45s
+
+running (08.0s), 200/200 VUs, 8083 complete and 0 interrupted iterations
+keys   [  18% ] 200 VUs  08.0s/45s
+
+running (09.0s), 200/200 VUs, 9396 complete and 0 interrupted iterations
+keys   [  20% ] 200 VUs  09.0s/45s
+
+running (10.0s), 200/200 VUs, 10701 complete and 0 interrupted iterations
+keys   [  22% ] 200 VUs  10.0s/45s
+
+running (11.0s), 200/200 VUs, 11824 complete and 0 interrupted iterations
+keys   [  24% ] 200 VUs  11.0s/45s
+
+running (12.0s), 200/200 VUs, 12983 complete and 0 interrupted iterations
+keys   [  27% ] 200 VUs  12.0s/45s
+
+running (13.0s), 200/200 VUs, 14327 complete and 0 interrupted iterations
+keys   [  29% ] 200 VUs  13.0s/45s
+
+running (14.0s), 200/200 VUs, 15552 complete and 0 interrupted iterations
+keys   [  31% ] 200 VUs  14.0s/45s
+
+running (15.0s), 200/200 VUs, 16689 complete and 0 interrupted iterations
+keys   [  33% ] 200 VUs  15.0s/45s
+
+running (16.0s), 200/200 VUs, 17276 complete and 0 interrupted iterations
+keys   [  35% ] 200 VUs  16.0s/45s
+
+running (17.0s), 200/200 VUs, 18343 complete and 0 interrupted iterations
+keys   [  38% ] 200 VUs  17.0s/45s
+
+running (18.0s), 200/200 VUs, 19443 complete and 0 interrupted iterations
+keys   [  40% ] 200 VUs  18.0s/45s
+
+running (19.0s), 200/200 VUs, 20666 complete and 0 interrupted iterations
+keys   [  42% ] 200 VUs  19.0s/45s
+
+running (20.0s), 200/200 VUs, 21816 complete and 0 interrupted iterations
+keys   [  44% ] 200 VUs  20.0s/45s
+
+running (21.0s), 200/200 VUs, 23089 complete and 0 interrupted iterations
+keys   [  47% ] 200 VUs  21.0s/45s
+
+running (22.0s), 200/200 VUs, 24281 complete and 0 interrupted iterations
+keys   [  49% ] 200 VUs  22.0s/45s
+
+running (23.0s), 200/200 VUs, 25446 complete and 0 interrupted iterations
+keys   [  51% ] 200 VUs  23.0s/45s
+
+running (24.0s), 200/200 VUs, 26650 complete and 0 interrupted iterations
+keys   [  53% ] 200 VUs  24.0s/45s
+
+running (25.0s), 200/200 VUs, 27771 complete and 0 interrupted iterations
+keys   [  55% ] 200 VUs  25.0s/45s
+
+running (26.0s), 200/200 VUs, 28484 complete and 0 interrupted iterations
+keys   [  58% ] 200 VUs  26.0s/45s
+
+running (27.0s), 200/200 VUs, 29632 complete and 0 interrupted iterations
+keys   [  60% ] 200 VUs  27.0s/45s
+
+running (28.0s), 200/200 VUs, 30754 complete and 0 interrupted iterations
+keys   [  62% ] 200 VUs  28.0s/45s
+
+running (29.0s), 200/200 VUs, 31916 complete and 0 interrupted iterations
+keys   [  64% ] 200 VUs  29.0s/45s
+
+running (30.0s), 200/200 VUs, 33118 complete and 0 interrupted iterations
+keys   [  67% ] 200 VUs  30.0s/45s
+
+running (31.0s), 200/200 VUs, 34377 complete and 0 interrupted iterations
+keys   [  69% ] 200 VUs  31.0s/45s
+
+running (32.0s), 200/200 VUs, 35437 complete and 0 interrupted iterations
+keys   [  71% ] 200 VUs  32.0s/45s
+
+running (33.0s), 200/200 VUs, 36595 complete and 0 interrupted iterations
+keys   [  73% ] 200 VUs  33.0s/45s
+
+running (34.0s), 200/200 VUs, 37783 complete and 0 interrupted iterations
+keys   [  75% ] 200 VUs  34.0s/45s
+
+running (35.0s), 200/200 VUs, 38776 complete and 0 interrupted iterations
+keys   [  78% ] 200 VUs  35.0s/45s
+
+running (36.0s), 200/200 VUs, 39503 complete and 0 interrupted iterations
+keys   [  80% ] 200 VUs  36.0s/45s
+
+running (37.0s), 200/200 VUs, 40705 complete and 0 interrupted iterations
+keys   [  82% ] 200 VUs  37.0s/45s
+
+running (38.0s), 200/200 VUs, 41679 complete and 0 interrupted iterations
+keys   [  84% ] 200 VUs  38.0s/45s
+
+running (39.0s), 200/200 VUs, 42874 complete and 0 interrupted iterations
+keys   [  87% ] 200 VUs  39.0s/45s
+
+running (40.0s), 200/200 VUs, 44061 complete and 0 interrupted iterations
+keys   [  89% ] 200 VUs  40.0s/45s
+
+running (41.0s), 200/200 VUs, 45195 complete and 0 interrupted iterations
+keys   [  91% ] 200 VUs  41.0s/45s
+
+running (42.0s), 200/200 VUs, 46426 complete and 0 interrupted iterations
+keys   [  93% ] 200 VUs  42.0s/45s
+
+running (43.0s), 200/200 VUs, 47679 complete and 0 interrupted iterations
+keys   [  95% ] 200 VUs  43.0s/45s
+
+running (44.0s), 200/200 VUs, 48701 complete and 0 interrupted iterations
+keys   [  98% ] 200 VUs  44.0s/45s
+
+running (45.0s), 200/200 VUs, 49598 complete and 0 interrupted iterations
+keys   [ 100% ] 200 VUs  45.0s/45s
+k6 KEY TEST
+API: http://127.0.0.1:4567
+
+http_reqs: {"count":49819,"rate":1101.6762165395455}
+iterations: {"count":49819,"rate":1101.6762165395455}
+checks: {"passes":49819,"fails":0,"rate":1}
+http_req_failed: {"rate":0,"passes":0,"fails":49819}
+http_req_duration: {"avg":180.93331759368797,"med":126.8285,"p(90)":324.32300000000004,"p(95)":510.70846999999986,"p(99)":696.9764579999999,"max":4761.1339}
+
+THRESHOLDS
+PASS checks: rate==1
+PASS http_req_failed: rate<0.01
+
+running (45.2s), 000/200 VUs, 49819 complete and 0 interrupted iterations
+keys ✓ [ 100% ] 200 VUs  45s

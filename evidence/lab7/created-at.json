@@ -1,0 +1,114 @@
+[
+  {
+    "shard": "0",
+    "server": "postgres_00",
+    "plans": 114,
+    "distinct": 1,
+    "createdAt": "17:07:36.917761"
+  },
+  {
+    "shard": "1",
+    "server": "postgres_00",
+    "plans": 117,
+    "distinct": 1,
+    "createdAt": "17:07:36.918115"
+  },
+  {
+    "shard": "2",
+    "server": "postgres_00",
+    "plans": 141,
+    "distinct": 1,
+    "createdAt": "17:07:36.918421"
+  },
+  {
+    "shard": "3",
+    "server": "postgres_00",
+    "plans": 117,
+    "distinct": 1,
+    "createdAt": "17:07:36.918581"
+  },
+  {
+    "shard": "4",
+    "server": "postgres_01",
+    "plans": 135,
+    "distinct": 1,
+    "createdAt": "17:07:36.918709"
+  },
+  {
+    "shard": "5",
+    "server": "postgres_01",
+    "plans": 119,
+    "distinct": 1,
+    "createdAt": "17:07:36.918832"
+  },
+  {
+    "shard": "9",
+    "server": "postgres_02",
+    "plans": 127,
+    "distinct": 1,
+    "createdAt": "17:07:36.921099"
+  },
+  {
+    "shard": "c",
+    "server": "postgres_03",
+    "plans": 125,
+    "distinct": 1,
+    "createdAt": "17:07:36.921844"
+  },
+  {
+    "shard": "6",
+    "server": "postgres_01",
+    "plans": 113,
+    "distinct": 1,
+    "createdAt": "17:07:36.923166"
+  },
+  {
+    "shard": "8",
+    "server": "postgres_02",
+    "plans": 119,
+    "distinct": 1,
+    "createdAt": "17:07:36.924279"
+  },
+  {
+    "shard": "b",
+    "server": "postgres_02",
+    "plans": 134,
+    "distinct": 1,
+    "createdAt": "17:07:36.924443"
+  },
+  {
+    "shard": "f",
+    "server": "postgres_03",
+    "plans": 131,
+    "distinct": 1,
+    "createdAt": "17:07:36.927057"
+  },
+  {
+    "shard": "a",
+    "server": "postgres_02",
+    "plans": 103,
+    "distinct": 1,
+    "createdAt": "17:07:36.927762"
+  },
+  {
+    "shard": "d",
+    "server": "postgres_03",
+    "plans": 135,
+    "distinct": 1,
+    "createdAt": "17:07:36.927953"
+  },
+  {
+    "shard": "e",
+    "server": "postgres_03",
+    "plans": 129,
+    "distinct": 1,
+    "createdAt": "17:07:36.931680"
+  },
+  {
+    "shard": "7",
+    "server": "postgres_01",
+    "plans": 141,
+    "distinct": 1,
+    "createdAt": "17:07:36.934342"
+  }
+]

@@ -1,0 +1,88 @@
+[
+  {
+    "job": "cadvisor",
+    "instance": "cadvisor:8080",
+    "health": "up",
+    "lastScrapeDuration": 0.002831659,
+    "labels": {
+      "instance": "cadvisor:8080",
+      "job": "cadvisor"
+    }
+  },
+  {
+    "job": "postgres",
+    "instance": "pg_exporter_00:9187",
+    "health": "up",
+    "lastScrapeDuration": 0.034268065,
+    "labels": {
+      "instance": "pg_exporter_00:9187",
+      "job": "postgres",
+      "server": "postgres_00"
+    }
+  },
+  {
+    "job": "postgres",
+    "instance": "pg_exporter_01:9187",
+    "health": "up",
+    "lastScrapeDuration": 0.054981045,
+    "labels": {
+      "instance": "pg_exporter_01:9187",
+      "job": "postgres",
+      "server": "postgres_01"
+    }
+  },
+  {
+    "job": "postgres",
+    "instance": "pg_exporter_02:9187",
+    "health": "up",
+    "lastScrapeDuration": 0.037796132,
+    "labels": {
+      "instance": "pg_exporter_02:9187",
+      "job": "postgres",
+      "server": "postgres_02"
+    }
+  },
+  {
+    "job": "postgres",
+    "instance": "pg_exporter_03:9187",
+    "health": "up",
+    "lastScrapeDuration": 0.035927951,
+    "labels": {
+      "instance": "pg_exporter_03:9187",
+      "job": "postgres",
+      "server": "postgres_03"
+    }
+  },
+  {
+    "job": "prometheus",
+    "instance": "localhost:9090",
+    "health": "up",
+    "lastScrapeDuration": 0.003439688,
+    "labels": {
+      "instance": "localhost:9090",
+      "job": "prometheus"
+    }
+  },
+  {
+    "job": "traveler-api",
+    "instance": "web:4567",
+    "health": "up",
+    "lastScrapeDuration": 0.003830324,
+    "labels": {
+      "api": "web",
+      "instance": "web:4567",
+      "job": "traveler-api"
+    }
+  },
+  {
+    "job": "traveler-api",
+    "instance": "web2:4567",
+    "health": "up",
+    "lastScrapeDuration": 0.003537213,
+    "labels": {
+      "api": "web2",
+      "instance": "web2:4567",
+      "job": "traveler-api"
+    }
+  }
+]

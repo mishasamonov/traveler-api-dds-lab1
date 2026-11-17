@@ -1,0 +1,14 @@
+$ promtool check config prometheus.yml
+Checking prometheus.yml
+  SUCCESS: 1 rule files found
+ SUCCESS: prometheus.yml is valid prometheus config file syntax
+
+Checking /etc/prometheus/alerts.yml
+  SUCCESS: 11 rules found
+
+$ promtool test rules alerts.test.yml   # 5 groups: 5
+  SUCCESS
+
+$ promtool test rules alerts.test.yml --run "hot shard"
+  SUCCESS
+

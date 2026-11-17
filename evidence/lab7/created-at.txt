@@ -1,0 +1,17 @@
+shard | server      | plans | distinct created_at | created_at (UTC)
+db_0  | postgres_00 |   114 |                   1 | 17:07:36.917761
+db_1  | postgres_00 |   117 |                   1 | 17:07:36.918115
+db_2  | postgres_00 |   141 |                   1 | 17:07:36.918421
+db_3  | postgres_00 |   117 |                   1 | 17:07:36.918581
+db_4  | postgres_01 |   135 |                   1 | 17:07:36.918709
+db_5  | postgres_01 |   119 |                   1 | 17:07:36.918832
+db_9  | postgres_02 |   127 |                   1 | 17:07:36.921099
+db_c  | postgres_03 |   125 |                   1 | 17:07:36.921844
+db_6  | postgres_01 |   113 |                   1 | 17:07:36.923166
+db_8  | postgres_02 |   119 |                   1 | 17:07:36.924279
+db_b  | postgres_02 |   134 |                   1 | 17:07:36.924443
+db_f  | postgres_03 |   131 |                   1 | 17:07:36.927057
+db_a  | postgres_02 |   103 |                   1 | 17:07:36.927762
+db_d  | postgres_03 |   135 |                   1 | 17:07:36.927953
+db_e  | postgres_03 |   129 |                   1 | 17:07:36.931680
+db_7  | postgres_01 |   141 |                   1 | 17:07:36.934342

@@ -1,0 +1,38 @@
+$ psql -d db_5 -c "BEGIN; LOCK TABLE locations IN ROW EXCLUSIVE MODE; SELECT pg_sleep(12); COMMIT;" &
+BEGIN
+LOCK TABLE
+ holder_started | pg_sleep 
+----------------+----------
+ 17:39:00       | 
+(1 row)
+
+COMMIT
+$ node tools/rebalance.js move db_5 postgres_00
+17:39:00.784 move db_5: postgres_01 -> postgres_00 (mapping v3)
+17:39:00.847 >> 0. pre-checks
+17:39:00.860    source postgres_01/db_5: 119 plans, 357 locations
+17:39:00.861 >> 1. create target database and logical replication
+17:39:01.111    publication move_5_pub on postgres_01, subscription move_5_00 on postgres_00
+17:39:01.111 >> 2. wait for initial copy and catch-up
+17:39:01.115    tables ready 0/2
+17:39:01.372    srsubstate=r for both tables; target has 119 plans, 357 locations; slot lag 0 bytes
+17:39:01.372 >> 3. LOCK TABLE ... IN ACCESS EXCLUSIVE MODE on source
+17:39:06.381    attempt 1: canceling statement due to lock timeout (55P03); the source keeps serving, retry in 200 ms
+17:39:11.578    locked at 2026-11-17T17:39:11.575Z; source LSN 0/32ECFA8, confirmed 0/32ECFA8
+17:39:11.594    source {"plans":119,"locations":357,"plans_md5":"116e13b2681428396b157b3e697075de","locations_md5":"360bf6d1c4cf43727b3f7ed4efe28907"}
+17:39:11.594    target {"plans":119,"locations":357,"plans_md5":"116e13b2681428396b157b3e697075de","locations_md5":"360bf6d1c4cf43727b3f7ed4efe28907"}
+17:39:11.594 >> 4. promote target: drop subscription, restore constraint, grant API
+17:39:11.617 >> 5. update mapping file and shard registry
+17:39:11.693    mapping file and registry: version 4, shard 5 -> postgres_00; replicas postgres_01, postgres_02, postgres_03 confirmed
+17:39:11.693 >> 6. revoke API privileges on the old database and release the lock
+17:39:11.700    lock held 5118 ms; waiting API queries now get 42501 and re-read the mapping
+step                                                                | ms   
+--------------------------------------------------------------------+------
+0. pre-checks                                                       | 14   
+1. create target database and logical replication                   | 250  
+2. wait for initial copy and catch-up                               | 261  
+3. LOCK TABLE ... IN ACCESS EXCLUSIVE MODE on source                | 10222
+4. promote target: drop subscription, restore constraint, grant API | 23   
+5. update mapping file and shard registry                           | 76   
+6. revoke API privileges on the old database and release the lock   | 8    
+17:39:11.701 DONE db_5: postgres_01 -> postgres_00, mapping v4, write freeze 5118 ms

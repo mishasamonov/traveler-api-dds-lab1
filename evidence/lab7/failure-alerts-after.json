@@ -1,0 +1,126 @@
+[
+  {
+    "labels": {
+      "alertname": "TravelerApiHighErrorRate",
+      "api": "web2",
+      "severity": "critical"
+    },
+    "annotations": {
+      "description": "Частка помилок 1.231% за останню хвилину.",
+      "summary": "API web2: понад 1 % відповідей 5xx"
+    },
+    "state": "firing",
+    "activeAt": "2026-11-17T17:22:35.201696581Z",
+    "value": "1.2314007183170857e-02"
+  },
+  {
+    "labels": {
+      "alertname": "TravelerApiHighErrorRate",
+      "api": "web",
+      "severity": "critical"
+    },
+    "annotations": {
+      "description": "Частка помилок 1.37% за останню хвилину.",
+      "summary": "API web: понад 1 % відповідей 5xx"
+    },
+    "state": "firing",
+    "activeAt": "2026-11-17T17:22:40.201696581Z",
+    "value": "1.3697116977797415e-02"
+  },
+  {
+    "labels": {
+      "alertname": "ShardDatabaseErrors",
+      "code": "pool_timeout",
+      "server": "postgres_01",
+      "severity": "critical",
+      "shard": "6"
+    },
+    "annotations": {
+      "description": "Код pool_timeout: 1.091 помилок за хвилину.",
+      "summary": "Помилки запитів до шарду 6 на postgres_01"
+    },
+    "state": "firing",
+    "activeAt": "2026-11-17T17:23:10.201696581Z",
+    "value": "1.09102811215769e+00"
+  },
+  {
+    "labels": {
+      "alertname": "ShardDatabaseErrors",
+      "code": "pool_timeout",
+      "server": "postgres_02",
+      "severity": "critical",
+      "shard": "8"
+    },
+    "annotations": {
+      "description": "Код pool_timeout: 99.28 помилок за хвилину.",
+      "summary": "Помилки запитів до шарду 8 на postgres_02"
+    },
+    "state": "firing",
+    "activeAt": "2026-11-17T17:22:20.201696581Z",
+    "value": "9.928258611111394e+01"
+  },
+  {
+    "labels": {
+      "alertname": "ShardDatabaseErrors",
+      "code": "pool_timeout",
+      "server": "postgres_02",
+      "severity": "critical",
+      "shard": "b"
+    },
+    "annotations": {
+      "description": "Код pool_timeout: 111.3 помилок за хвилину.",
+      "summary": "Помилки запитів до шарду b на postgres_02"
+    },
+    "state": "firing",
+    "activeAt": "2026-11-17T17:22:20.201696581Z",
+    "value": "1.1128387550617025e+02"
+  },
+  {
+    "labels": {
+      "alertname": "ShardDatabaseErrors",
+      "code": "pool_timeout",
+      "server": "postgres_02",
+      "severity": "critical",
+      "shard": "9"
+    },
+    "annotations": {
+      "description": "Код pool_timeout: 126.6 помилок за хвилину.",
+      "summary": "Помилки запитів до шарду 9 на postgres_02"
+    },
+    "state": "firing",
+    "activeAt": "2026-11-17T17:22:20.201696581Z",
+    "value": "1.2655811036695164e+02"
+  },
+  {
+    "labels": {
+      "alertname": "ShardDatabaseErrors",
+      "code": "pool_timeout",
+      "server": "postgres_00",
+      "severity": "critical",
+      "shard": "1"
+    },
+    "annotations": {
+      "description": "Код pool_timeout: 1.091 помилок за хвилину.",
+      "summary": "Помилки запитів до шарду 1 на postgres_00"
+    },
+    "state": "firing",
+    "activeAt": "2026-11-17T17:23:15.201696581Z",
+    "value": "1.09102811215769e+00"
+  },
+  {
+    "labels": {
+      "alertname": "ShardDatabaseErrors",
+      "code": "pool_timeout",
+      "server": "postgres_02",
+      "severity": "critical",
+      "shard": "a"
+    },
+    "annotations": {
+      "description": "Код pool_timeout: 90.55 помилок за хвилину.",
+      "summary": "Помилки запитів до шарду a на postgres_02"
+    },
+    "state": "firing",
+    "activeAt": "2026-11-17T17:22:20.201696581Z",
+    "value": "9.055453976195696e+01"
+  }
+]

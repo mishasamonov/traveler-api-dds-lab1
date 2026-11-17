@@ -1,0 +1,12 @@
+[1;32mSuccess[0m [1m/tests/crud.hurl[0m (6 request(s) in 30 ms)
+[1;32mSuccess[0m [1m/tests/validation.hurl[0m (31 request(s) in 63 ms)
+[1;32mSuccess[0m [1m/tests/management.hurl[0m (10 request(s) in 55 ms)
+[1;32mSuccess[0m [1m/tests/race-conditions.hurl[0m (9 request(s) in 48 ms)
+[1;32mSuccess[0m [1m/tests/metrics.hurl[0m (5 request(s) in 27 ms)
+--------------------------------------------------------------------------------
+Executed files:    5
+Executed requests: 61 (234.6/s)
+Succeeded files:   5 (100.0%)
+Failed files:      0 (0.0%)
+Duration:          260 ms (0h:0m:0s:260ms)
+

@@ -1,0 +1,12 @@
+$ node tools/rebalance.js move db_3 postgres_03
+17:25:55.205 move db_3: postgres_00 -> postgres_03 (mapping v1)
+17:25:55.348 >> 0. pre-checks
+17:25:55.434    source postgres_00/db_3: 117 plans, 351 locations
+17:25:55.434 >> 1. create target database and logical replication
+17:25:59.303    publication move_3_pub on postgres_00, subscription move_3_03 on postgres_03
+17:25:59.304 >> 2. wait for initial copy and catch-up
+17:25:59.307    tables ready 0/2
+17:25:59.822    srsubstate=r for both tables; target has 117 plans, 351 locations; slot lag 1584 bytes
+17:25:59.822 >> 3. LOCK TABLE ... IN ACCESS EXCLUSIVE MODE on source
+17:26:00.851 FAILED: deadlock detected. The source keeps serving the shard; target postgres_03/db_3 must be dropped before a retry.
+deadlock detected

@@ -1,0 +1,30 @@
+[
+  {
+    "labels": {
+      "alertname": "ShardPoolSaturated",
+      "database": "db_5",
+      "server": "postgres_01",
+      "severity": "warning"
+    },
+    "annotations": {
+      "description": "Запити чекають на вільне з’єднання понад 30 с (PG_POOL_PER_SHARD).",
+      "summary": "Пул db_5 на postgres_01 вичерпано"
+    },
+    "state": "pending",
+    "activeAt": "2026-11-17T17:21:20.201696581Z",
+    "value": "7e+00"
+  },
+  {
+    "labels": {
+      "alertname": "ShardHotspot",
+      "severity": "warning"
+    },
+    "annotations": {
+      "description": "Найбільш завантажений шард отримує понад утричі більше запитів, ніж у середньому.",
+      "summary": "Гарячий шард: навантаження розподілене нерівномірно"
+    },
+    "state": "firing",
+    "activeAt": "2026-11-17T17:19:35.201696581Z",
+    "value": "1.2374268205580966e+03"
+  }
+]

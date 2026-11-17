@@ -1,0 +1,13 @@
+SERVICE          IMAGE                                                   STATUS                    PORTS
+grafana          grafana/grafana:12.1.1                                  Up 55 minutes (healthy)   127.0.0.1:3000->3000/tcp
+pg_exporter_00   quay.io/prometheuscommunity/postgres-exporter:v0.17.1   Up 8 minutes              9187/tcp
+pg_exporter_01   quay.io/prometheuscommunity/postgres-exporter:v0.17.1   Up 8 minutes              9187/tcp
+pg_exporter_02   quay.io/prometheuscommunity/postgres-exporter:v0.17.1   Up 8 minutes              9187/tcp
+pg_exporter_03   quay.io/prometheuscommunity/postgres-exporter:v0.17.1   Up 8 minutes              9187/tcp
+postgres_00      postgres:16.15-alpine                                   Up 8 minutes (healthy)    5432/tcp
+postgres_01      postgres:16.15-alpine                                   Up 8 minutes (healthy)    5432/tcp
+postgres_02      postgres:16.15-alpine                                   Up 8 minutes (healthy)    5432/tcp
+postgres_03      postgres:16.15-alpine                                   Up 8 minutes (healthy)    5432/tcp
+prometheus       prom/prometheus:v3.5.0                                  Up 36 minutes (healthy)   127.0.0.1:9090->9090/tcp
+web              traveler-api:lab7                                       Up 6 seconds (healthy)    127.0.0.1:4567->4567/tcp
+web2             traveler-api:lab7                                       Up 6 seconds (healthy)    127.0.0.1:4568->4567/tcp

@@ -1,0 +1,381 @@
+{
+  "root_group": {
+    "path": "",
+    "id": "d41d8cd98f00b204e9800998ecf8427e",
+    "groups": [],
+    "checks": [
+        {
+          "passes": 50245,
+          "fails": 0,
+          "name": "read 200",
+          "path": "::read 200",
+          "id": "0e2edf58435ab027aec533a7b02a45ba"
+        },
+        {
+          "passes": 16760,
+          "fails": 0,
+          "name": "update 200/409",
+          "path": "::update 200/409",
+          "id": "c0453a1ef3c4bed15d38618eab27a9bc"
+        }
+      ],
+    "name": ""
+  },
+  "options": {
+    "summaryTrendStats": [
+      "avg",
+      "med",
+      "p(95)",
+      "p(99)",
+      "max"
+    ],
+    "summaryTimeUnit": "",
+    "noColor": false
+  },
+  "state": {
+    "isStdErrTTY": false,
+    "testRunDurationMs": 120054.5012,
+    "isStdOutTTY": false
+  },
+  "metrics": {
+    "http_req_duration{server:postgres_03}": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "avg": 0,
+        "med": 0,
+        "p(95)": 0,
+        "p(99)": 0,
+        "max": 0
+      },
+      "thresholds": {
+        "max>=0": {
+          "ok": true
+        }
+      }
+    },
+    "http_reqs{server:postgres_00}": {
+      "values": {
+        "count": 0,
+        "rate": 0
+      },
+      "thresholds": {
+        "count>=0": {
+          "ok": true
+        }
+      },
+      "type": "counter",
+      "contains": "default"
+    },
+    "http_req_blocked": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "avg": 0.0048930169390344,
+        "med": 0,
+        "p(95)": 0,
+        "p(99)": 0,
+        "max": 5.5447
+      }
+    },
+    "iteration_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "p(95)": 117.08438,
+        "p(99)": 200.96121199999996,
+        "max": 550.8475,
+        "avg": 71.65849984277094,
+        "med": 59.1036
+      }
+    },
+    "http_req_failed{server:postgres_03}": {
+      "type": "rate",
+      "contains": "default",
+      "values": {
+        "fails": 0,
+        "rate": 0,
+        "passes": 0
+      },
+      "thresholds": {
+        "rate>=0": {
+          "ok": true
+        }
+      }
+    },
+    "http_req_duration{server:postgres_01}": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "avg": 15.619399271696224,
+        "med": 5.9178,
+        "p(95)": 53.30099999999998,
+        "p(99)": 101.15488400000004,
+        "max": 368.0937
+      },
+      "thresholds": {
+        "max>=0": {
+          "ok": true
+        }
+      }
+    },
+    "http_req_duration{server:postgres_02}": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "p(95)": 0,
+        "p(99)": 0,
+        "max": 0,
+        "avg": 0,
+        "med": 0
+      },
+      "thresholds": {
+        "max>=0": {
+          "ok": true
+        }
+      }
+    },
+    "http_reqs{server:postgres_03}": {
+      "values": {
+        "count": 0,
+        "rate": 0
+      },
+      "thresholds": {
+        "count>=0": {
+          "ok": true
+        }
+      },
+      "type": "counter",
+      "contains": "default"
+    },
+    "http_reqs{server:postgres_01}": {
+      "contains": "default",
+      "values": {
+        "count": 67005,
+        "rate": 558.1215142310716
+      },
+      "thresholds": {
+        "count>=0": {
+          "ok": true
+        }
+      },
+      "type": "counter"
+    },
+    "http_req_failed": {
+      "contains": "default",
+      "values": {
+        "rate": 0.002880382061040221,
+        "passes": 193,
+        "fails": 66812
+      },
+      "type": "rate"
+    },
+    "http_reqs": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 67005,
+        "rate": 558.1215142310716
+      }
+    },
+    "http_req_waiting": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "med": 5.8701,
+        "p(95)": 53.16575999999999,
+        "p(99)": 100.47714000000028,
+        "max": 359.9159,
+        "avg": 15.469009051563381
+      }
+    },
+    "vus_max": {
+      "values": {
+        "min": 30,
+        "max": 30,
+        "value": 30
+      },
+      "type": "gauge",
+      "contains": "default"
+    },
+    "http_req_duration": {
+      "values": {
+        "avg": 15.619399271696224,
+        "med": 5.9178,
+        "p(95)": 53.30099999999998,
+        "p(99)": 101.15488400000004,
+        "max": 368.0937
+      },
+      "type": "trend",
+      "contains": "time"
+    },
+    "http_reqs{server:postgres_02}": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 0,
+        "rate": 0
+      },
+      "thresholds": {
+        "count>=0": {
+          "ok": true
+        }
+      }
+    },
+    "http_req_failed{server:postgres_02}": {
+      "type": "rate",
+      "contains": "default",
+      "values": {
+        "passes": 0,
+        "fails": 0,
+        "rate": 0
+      },
+      "thresholds": {
+        "rate>=0": {
+          "ok": true
+        }
+      }
+    },
+    "data_sent": {
+      "type": "counter",
+      "contains": "data",
+      "values": {
+        "count": 9582415,
+        "rate": 79817.20722021541
+      }
+    },
+    "vus": {
+      "type": "gauge",
+      "contains": "default",
+      "values": {
+        "value": 30,
+        "min": 30,
+        "max": 30
+      }
+    },
+    "http_req_failed{server:postgres_00}": {
+      "type": "rate",
+      "contains": "default",
+      "values": {
+        "rate": 0,
+        "passes": 0,
+        "fails": 0
+      },
+      "thresholds": {
+        "rate>=0": {
+          "ok": true
+        }
+      }
+    },
+    "checks": {
+      "type": "rate",
+      "contains": "default",
+      "values": {
+        "passes": 67005,
+        "fails": 0,
+        "rate": 1
+      }
+    },
+    "http_req_connecting": {
+      "values": {
+        "avg": 0.0012988941123796731,
+        "med": 0,
+        "p(95)": 0,
+        "p(99)": 0,
+        "max": 4.8122
+      },
+      "type": "trend",
+      "contains": "time"
+    },
+    "http_req_tls_handshaking": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "avg": 0,
+        "med": 0,
+        "p(95)": 0,
+        "p(99)": 0,
+        "max": 0
+      }
+    },
+    "data_received": {
+      "type": "counter",
+      "contains": "data",
+      "values": {
+        "count": 88929468,
+        "rate": 740742.4720531844
+      }
+    },
+    "http_req_failed{server:postgres_01}": {
+      "type": "rate",
+      "contains": "default",
+      "values": {
+        "fails": 66812,
+        "rate": 0.002880382061040221,
+        "passes": 193
+      },
+      "thresholds": {
+        "rate>=0": {
+          "ok": true
+        }
+      }
+    },
+    "http_req_duration{expected_response:true}": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "avg": 15.58673397443582,
+        "med": 5.9091000000000005,
+        "p(95)": 53.207184999999996,
+        "p(99)": 101.04081199999999,
+        "max": 368.0937
+      }
+    },
+    "http_req_duration{server:postgres_00}": {
+      "values": {
+        "p(95)": 0,
+        "p(99)": 0,
+        "max": 0,
+        "avg": 0,
+        "med": 0
+      },
+      "thresholds": {
+        "max>=0": {
+          "ok": true
+        }
+      },
+      "type": "trend",
+      "contains": "time"
+    },
+    "http_req_receiving": {
+      "values": {
+        "p(95)": 0.5396,
+        "p(99)": 0.9761640000000217,
+        "max": 233.0085,
+        "avg": 0.13243429445563812,
+        "med": 0
+      },
+      "type": "trend",
+      "contains": "time"
+    },
+    "iterations": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 50245,
+        "rate": 418.51825210865144
+      }
+    },
+    "http_req_sending": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "avg": 0.017955925677188286,
+        "med": 0,
+        "p(95)": 0,
+        "p(99)": 0.5409,
+        "max": 232.0179
+      }
+    }
+  }
+}

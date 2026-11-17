@@ -1,0 +1,71 @@
+{
+  "windowSeconds": 176,
+  "rows": [
+    {
+      "shard": "0",
+      "queries": 20924
+    },
+    {
+      "shard": "1",
+      "queries": 19716
+    },
+    {
+      "shard": "2",
+      "queries": 21324
+    },
+    {
+      "shard": "3",
+      "queries": 23073
+    },
+    {
+      "shard": "4",
+      "queries": 22326
+    },
+    {
+      "shard": "5",
+      "queries": 21343
+    },
+    {
+      "shard": "6",
+      "queries": 19940
+    },
+    {
+      "shard": "7",
+      "queries": 33780
+    },
+    {
+      "shard": "8",
+      "queries": 20354
+    },
+    {
+      "shard": "9",
+      "queries": 20510
+    },
+    {
+      "shard": "a",
+      "queries": 19945
+    },
+    {
+      "shard": "b",
+      "queries": 22552
+    },
+    {
+      "shard": "c",
+      "queries": 21266
+    },
+    {
+      "shard": "d",
+      "queries": 21913
+    },
+    {
+      "shard": "e",
+      "queries": 25516
+    },
+    {
+      "shard": "f",
+      "queries": 21494
+    }
+  ],
+  "prometheusP95Seconds": 1.4663057935975172,
+  "prometheusRps": 262.0349188869665
+}
