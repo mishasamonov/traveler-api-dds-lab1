@@ -1,0 +1,126 @@
+# Laboratory 7: monitoring overlay for the sharded stack of laboratory 6.
+#   docker compose -f docker-compose.lab6.yml -f docker-compose.monitoring.yml up -d
+# (COMPOSE_PROFILES=sharded,monitoring; python scripts/lab7/lab7.py up does it all)
+#
+# Prometheus scrapes:  web, web2 (/metrics, prom-client)
+#                      pg_exporter_00..03 (one postgres_exporter per PostgreSQL service)
+# k6 pushes its own metrics to Prometheus (remote write) during load tests.
+# Grafana reads Prometheus; datasource and dashboards are provisioned from files.
+x-exporter: &exporter
+  image: quay.io/prometheuscommunity/postgres-exporter:v0.17.1
+  profiles: [monitoring]
+  restart: unless-stopped
+  # Default collectors: pg_stat_database (per database = per shard), database
+  # size, locks, pg_stat_activity, replication slots, bgwriter, WAL.
+  command: [--collector.long_running_transactions, --log.level=warn]
+  networks: [backend]
+  read_only: true
+  security_opt: [no-new-privileges:true]
+  deploy:
+    resources:
+      limits: {cpus: '0.25', memory: 64M}
+  logging: &logging
+    driver: json-file
+    options: {max-size: 10m, max-file: '3'}
+
+x-monitor-env: &monitor-env
+  MONITOR_USER: ${MONITOR_USER:?Run scripts/lab7/bootstrap-env.py}
+  MONITOR_PASSWORD: ${MONITOR_PASSWORD}
+
+services:
+  # The init script creates the read-only role MONITOR_USER (GRANT pg_monitor).
+  postgres_00: {environment: *monitor-env}
+  postgres_01: {environment: *monitor-env}
+  postgres_02: {environment: *monitor-env}
+  postgres_03: {environment: *monitor-env}
+  # Own image tag, so laboratory 6 keeps traveler-api:lab6.
+  # METRICS=off disables the prom-client instrumentation (overhead experiment).
+  web: {image: 'traveler-api:lab7', environment: {METRICS: '${METRICS:-on}'}}
+  web2: {image: 'traveler-api:lab7', environment: {METRICS: '${METRICS:-on}'}}
+  tools: {image: 'traveler-api:lab7'}
+
+  pg_exporter_00:
+    <<: *exporter
+    environment: &exporter-env
+      DATA_SOURCE_URI: postgres_00:5432/postgres?sslmode=disable
+      DATA_SOURCE_USER: ${MONITOR_USER}
+      DATA_SOURCE_PASS: ${MONITOR_PASSWORD}
+    depends_on: {postgres_00: {condition: service_healthy}}
+  pg_exporter_01:
+    <<: *exporter
+    environment: {<<: *exporter-env, DATA_SOURCE_URI: 'postgres_01:5432/postgres?sslmode=disable'}
+    depends_on: {postgres_01: {condition: service_healthy}}
+  pg_exporter_02:
+    <<: *exporter
+    environment: {<<: *exporter-env, DATA_SOURCE_URI: 'postgres_02:5432/postgres?sslmode=disable'}
+    depends_on: {postgres_02: {condition: service_healthy}}
+  pg_exporter_03:
+    <<: *exporter
+    environment: {<<: *exporter-env, DATA_SOURCE_URI: 'postgres_03:5432/postgres?sslmode=disable'}
+    depends_on: {postgres_03: {condition: service_healthy}}
+
+  prometheus:
+    image: prom/prometheus:v3.5.0
+    profiles: [monitoring]
+    restart: unless-stopped
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+      - --storage.tsdb.path=/prometheus
+      - --storage.tsdb.retention.time=15d
+      - --web.enable-remote-write-receiver # k6 -o experimental-prometheus-rw
+      - --enable-feature=promql-experimental-functions # sort_by_label in dashboards
+    volumes:
+      - ./monitoring/prometheus:/etc/prometheus:ro
+      - prometheus_data:/prometheus
+    ports: ['127.0.0.1:${PROMETHEUS_PORT:-9090}:9090']
+    # backend: scrape targets; frontend: published port for the browser, k6 and Grafana.
+    networks: [backend, frontend]
+    healthcheck:
+      test: [CMD, wget, -q, -O, /dev/null, http://127.0.0.1:9090/-/ready]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    deploy:
+      resources:
+        limits: {cpus: '1.0', memory: 512M}
+    security_opt: [no-new-privileges:true]
+    logging: *logging
+
+  grafana:
+    image: grafana/grafana:12.1.1
+    profiles: [monitoring]
+    restart: unless-stopped
+    environment:
+      GF_SECURITY_ADMIN_USER: admin
+      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_ADMIN_PASSWORD:?Run scripts/lab7/bootstrap-env.py}
+      # Read-only dashboards without login on the local machine; editing needs admin.
+      GF_AUTH_ANONYMOUS_ENABLED: 'true'
+      GF_AUTH_ANONYMOUS_ORG_ROLE: Viewer
+      GF_DASHBOARDS_DEFAULT_HOME_DASHBOARD_PATH: /etc/grafana/dashboards/traveler-api.json
+      GF_ANALYTICS_REPORTING_ENABLED: 'false'
+      GF_ANALYTICS_CHECK_FOR_UPDATES: 'false'
+      GF_ANALYTICS_CHECK_FOR_PLUGIN_UPDATES: 'false'
+      GF_NEWS_NEWS_FEED_ENABLED: 'false'
+      GF_USERS_DEFAULT_THEME: light
+      GF_DATE_FORMATS_DEFAULT_TIMEZONE: browser
+    volumes:
+      - ./monitoring/grafana/provisioning:/etc/grafana/provisioning:ro
+      - ./monitoring/grafana/dashboards:/etc/grafana/dashboards:ro
+      - grafana_data:/var/lib/grafana
+    ports: ['127.0.0.1:${GRAFANA_PORT:-3000}:3000']
+    depends_on: {prometheus: {condition: service_healthy}}
+    networks: [frontend]
+    healthcheck:
+      test: [CMD, wget, -q, -O, /dev/null, http://127.0.0.1:3000/api/health]
+      interval: 5s
+      timeout: 3s
+      retries: 30
+    deploy:
+      resources:
+        limits: {cpus: '1.0', memory: 512M}
+    security_opt: [no-new-privileges:true]
+    logging: *logging
+
+volumes:
+  prometheus_data:
+  grafana_data:

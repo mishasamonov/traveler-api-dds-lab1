@@ -4,6 +4,7 @@
 const fs = require('node:fs');
 const crypto = require('node:crypto');
 const { Pool, types } = require('pg');
+const metrics = require('./metrics');
 
 types.setTypeParser(1082, value => value); // DATE stays YYYY-MM-DD in JSON.
 types.setTypeParser(1700, value => Number(value)); // NUMERIC values in the API.
@@ -66,6 +67,7 @@ async function reload(reason) {
   if (!reloading) reloading = (async () => {
     const previous = mapping && mapping.version;
     mapping = await load();
+    metrics.mappingLoaded(mapping, reason === 'startup' ? 'startup' : (reason.match(/: (\w+)$/) || [])[1] || 'manual');
     console.log(JSON.stringify({ event: 'mapping_loaded', version: mapping.version, previous, source: mapping.source, reason }));
     return mapping;
   })().finally(() => { reloading = null; });
@@ -95,20 +97,22 @@ async function target(shard) {
 async function withShard(shard, fn) {
   const before = await current();
   try {
-    return await fn(poolFor(before.shards[shard]));
+    return await fn(poolFor(before.shards[shard]), before.shards[shard]);
   } catch (error) {
     if (!MOVED.has(error.code)) throw error;
     const after = await reload(`shard ${shard}: ${error.code}`);
     if (after.version === before.version && JSON.stringify(after.shards[shard]) === JSON.stringify(before.shards[shard])) throw error;
     console.log(JSON.stringify({ event: 'shard_retry', shard, from: before.shards[shard], to: after.shards[shard], version: after.version }));
-    return fn(poolFor(after.shards[shard]));
+    metrics.retried(shard);
+    return fn(poolFor(after.shards[shard]), after.shards[shard]);
   }
 }
 
-const query = (shard, text, params) => withShard(shard, pool => pool.query(text, params));
+const query = (shard, text, params) =>
+  withShard(shard, (pool, t) => metrics.observe(shard, t, 'query', () => pool.query(text, params)));
 
 async function transaction(shard, fn) {
-  return withShard(shard, async pool => {
+  return withShard(shard, (pool, t) => metrics.observe(shard, t, 'transaction', async () => {
     const client = await pool.connect();
     try {
       await client.query('BEGIN');
@@ -121,11 +125,22 @@ async function transaction(shard, fn) {
     } finally {
       client.release();
     }
-  });
+  }));
 }
 
 // Scatter-gather: the same statement on all 16 shards in parallel.
-const all = (text, params) => Promise.all(SHARDS.map(s => query(s, text, params).then(r => ({ shard: s, rows: r.rows }))));
+async function all(text, params) {
+  const end = metrics.timeScatter();
+  try {
+    return await Promise.all(SHARDS.map(s => query(s, text, params).then(r => ({ shard: s, rows: r.rows }))));
+  } finally { end(); }
+}
+
+// Live pool statistics for GET /metrics (one pg.Pool per database and server).
+metrics.setPoolSource(() => [...pools].map(([key, pool]) => ({
+  server: key.split(':')[0], database: key.split('/')[1],
+  total: pool.totalCount, idle: pool.idleCount, waiting: pool.waitingCount,
+})));
 
 async function end() { await Promise.all([...pools.values()].map(p => p.end())); }
 const info = () => mapping && { version: mapping.version, source: mapping.source, pools: pools.size };

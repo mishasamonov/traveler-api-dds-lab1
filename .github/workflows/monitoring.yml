@@ -1,0 +1,33 @@
+name: Monitoring configuration
+
+on:
+  push:
+    paths:
+      - 'monitoring/**'
+      - 'scripts/lab7/dashboards.py'
+      - 'docker-compose.monitoring.yml'
+      - 'src/metrics.js'
+      - '.github/workflows/monitoring.yml'
+  workflow_dispatch:
+
+jobs:
+  monitoring:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Prometheus configuration and alerting rules (promtool)
+        run: |
+          docker run --rm --entrypoint promtool -v "$PWD/monitoring/prometheus:/etc/prometheus:ro" \
+            prom/prometheus:v3.5.0 check config /etc/prometheus/prometheus.yml
+      - name: Unit tests of the alerting rules (promtool test rules)
+        run: |
+          docker run --rm --entrypoint promtool -v "$PWD/monitoring/prometheus:/etc/prometheus:ro" -w /etc/prometheus \
+            prom/prometheus:v3.5.0 test rules alerts.test.yml
+      - name: Grafana dashboards are up to date with scripts/lab7/dashboards.py
+        run: |
+          python3 scripts/lab7/dashboards.py
+          git diff --exit-code monitoring/grafana/dashboards
+      - name: Compose overlay is valid
+        run: |
+          sed 's/GENERATE_LOCALLY/ci-only/' .env.example > .env
+          COMPOSE_PROFILES=sharded,monitoring docker compose -f docker-compose.lab6.yml -f docker-compose.monitoring.yml config --quiet

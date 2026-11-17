@@ -16,6 +16,16 @@ SELECT format('CREATE ROLE %I LOGIN PASSWORD %L NOSUPERUSER NOCREATEDB NOCREATER
 SELECT format('CREATE ROLE %I LOGIN REPLICATION PASSWORD %L NOSUPERUSER NOCREATEDB NOCREATEROLE', :'repl_user', :'repl_password') \gexec
 SQL
 
+# Laboratory 7: read-only monitoring role for postgres_exporter (pg_monitor),
+# allowed to connect only to the "postgres" maintenance database.
+if [ -n "${MONITOR_USER:-}" ]; then
+  [[ "$MONITOR_USER" =~ ^[a-z][a-z0-9_]*$ ]] || { echo "Invalid role identifier MONITOR_USER" >&2; exit 1; }
+  "${admin[@]}" -d postgres -v mon_user="$MONITOR_USER" -v mon_password="$MONITOR_PASSWORD" <<'SQL'
+SELECT format('CREATE ROLE %I LOGIN PASSWORD %L NOSUPERUSER NOCREATEDB NOCREATEROLE NOREPLICATION CONNECTION LIMIT 5', :'mon_user', :'mon_password') \gexec
+SELECT format('GRANT pg_monitor TO %I', :'mon_user') \gexec
+SQL
+fi
+
 prepare_database() { # name schema_file
   local db="$1" schema="$2"
   "${admin[@]}" -d postgres -c "CREATE DATABASE $db"
@@ -70,6 +80,7 @@ host all $APP_USER $DOCKER_SUBNET scram-sha-256
 host all $REPL_USER $DOCKER_SUBNET scram-sha-256
 host replication $REPL_USER $DOCKER_SUBNET scram-sha-256
 host all $POSTGRES_USER $DOCKER_SUBNET scram-sha-256
+${MONITOR_USER:+host postgres $MONITOR_USER $DOCKER_SUBNET scram-sha-256}
 host all all 0.0.0.0/0 reject
 host all all ::/0 reject
 EOF

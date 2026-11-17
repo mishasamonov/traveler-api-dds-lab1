@@ -1,0 +1,12 @@
+# Laboratory 7: dashboards are JSON files in Git (monitoring/grafana/dashboards).
+apiVersion: 1
+providers:
+  - name: TravelerAPI
+    folder: TravelerAPI
+    type: file
+    disableDeletion: true
+    allowUiUpdates: false
+    updateIntervalSeconds: 30
+    options:
+      path: /etc/grafana/dashboards
+      foldersFromFilesStructure: false

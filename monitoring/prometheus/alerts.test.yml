@@ -1,0 +1,147 @@
+# Laboratory 7: unit tests of the alerting rules.
+#   promtool test rules monitoring/prometheus/alerts.test.yml
+rule_files: [alerts.yml]
+evaluation_interval: 5s
+
+tests:
+  # postgres_02 stops answering: PostgresDown fires after 10 s, the other services stay quiet.
+  - name: postgres_02 down
+    interval: 5s
+    input_series:
+      - series: 'pg_up{job="postgres", instance="pg_exporter_02:9187", server="postgres_02"}'
+        values: '1 1 1 0 0 0 0 0 0 0'
+      - series: 'pg_up{job="postgres", instance="pg_exporter_01:9187", server="postgres_01"}'
+        values: '1 1 1 1 1 1 1 1 1 1'
+    alert_rule_test:
+      - eval_time: 15s
+        alertname: PostgresDown
+        exp_alerts: []
+      - eval_time: 40s
+        alertname: PostgresDown
+        exp_alerts:
+          - exp_labels: {severity: critical, job: postgres, instance: 'pg_exporter_02:9187', server: postgres_02}
+            exp_annotations:
+              summary: 'PostgreSQL postgres_02 недоступний'
+              description: 'postgres_exporter не може під’єднатися до postgres_02; шарди цього сервісу недоступні.'
+
+  # 5 % of the responses of web are 500: error-rate alert for that API only.
+  - name: error rate of web
+    interval: 5s
+    input_series:
+      - series: 'http_request_duration_seconds_count{job="traveler-api", api="web", method="GET", route="/api/travel-plans/:id", status="200"}'
+        values: '0+100x30'
+      - series: 'http_request_duration_seconds_count{job="traveler-api", api="web", method="GET", route="/api/travel-plans/:id", status="500"}'
+        values: '0+5x30'
+      - series: 'http_request_duration_seconds_count{job="traveler-api", api="web2", method="GET", route="/api/travel-plans/:id", status="200"}'
+        values: '0+100x30'
+    alert_rule_test:
+      - eval_time: 2m
+        alertname: TravelerApiHighErrorRate
+        exp_alerts:
+          - exp_labels: {severity: critical, api: web}
+            exp_annotations:
+              summary: 'API web: понад 1 % відповідей 5xx'
+              description: 'Частка помилок 4.762% за останню хвилину.'
+
+  # Shard 5 receives 60x more statements than every other shard: ShardHotspot.
+  - name: hot shard 5
+    interval: 5s
+    input_series:
+      - series: 'db_query_duration_seconds_count{job="traveler-api", api="web", shard="0", server="postgres_00", kind="query", outcome="ok"}'
+        values: '0+10x40'
+      - series: 'db_query_duration_seconds_count{job="traveler-api", api="web", shard="1", server="postgres_00", kind="query", outcome="ok"}'
+        values: '0+10x40'
+      - series: 'db_query_duration_seconds_count{job="traveler-api", api="web", shard="2", server="postgres_00", kind="query", outcome="ok"}'
+        values: '0+10x40'
+      - series: 'db_query_duration_seconds_count{job="traveler-api", api="web", shard="3", server="postgres_00", kind="query", outcome="ok"}'
+        values: '0+10x40'
+      - series: 'db_query_duration_seconds_count{job="traveler-api", api="web", shard="4", server="postgres_01", kind="query", outcome="ok"}'
+        values: '0+10x40'
+      - series: 'db_query_duration_seconds_count{job="traveler-api", api="web", shard="5", server="postgres_01", kind="query", outcome="ok"}'
+        values: '0+600x40'
+      - series: 'db_query_duration_seconds_count{job="traveler-api", api="web", shard="6", server="postgres_01", kind="query", outcome="ok"}'
+        values: '0+10x40'
+      - series: 'db_query_duration_seconds_count{job="traveler-api", api="web", shard="7", server="postgres_01", kind="query", outcome="ok"}'
+        values: '0+10x40'
+      - series: 'db_query_duration_seconds_count{job="traveler-api", api="web", shard="8", server="postgres_02", kind="query", outcome="ok"}'
+        values: '0+10x40'
+      - series: 'db_query_duration_seconds_count{job="traveler-api", api="web", shard="9", server="postgres_02", kind="query", outcome="ok"}'
+        values: '0+10x40'
+      - series: 'db_query_duration_seconds_count{job="traveler-api", api="web", shard="a", server="postgres_02", kind="query", outcome="ok"}'
+        values: '0+10x40'
+      - series: 'db_query_duration_seconds_count{job="traveler-api", api="web", shard="b", server="postgres_02", kind="query", outcome="ok"}'
+        values: '0+10x40'
+      - series: 'db_query_duration_seconds_count{job="traveler-api", api="web", shard="c", server="postgres_03", kind="query", outcome="ok"}'
+        values: '0+10x40'
+      - series: 'db_query_duration_seconds_count{job="traveler-api", api="web", shard="d", server="postgres_03", kind="query", outcome="ok"}'
+        values: '0+10x40'
+      - series: 'db_query_duration_seconds_count{job="traveler-api", api="web", shard="e", server="postgres_03", kind="query", outcome="ok"}'
+        values: '0+10x40'
+      - series: 'db_query_duration_seconds_count{job="traveler-api", api="web", shard="f", server="postgres_03", kind="query", outcome="ok"}'
+        values: '0+10x40'
+    alert_rule_test:
+      - eval_time: 2m
+        alertname: ShardHotspot
+        exp_alerts:
+          - exp_labels: {severity: warning}
+            exp_annotations:
+              summary: 'Гарячий шард: навантаження розподілене нерівномірно'
+              description: 'Найбільш завантажений шард отримує понад утричі більше запитів, ніж у середньому.'
+
+  # Even load (laboratory 2 dataset): no hotspot alert.
+  - name: even load, no hotspot
+    interval: 5s
+    input_series:
+      - series: 'db_query_duration_seconds_count{job="traveler-api", api="web", shard="0", server="postgres_00", kind="query", outcome="ok"}'
+        values: '0+100x40'
+      - series: 'db_query_duration_seconds_count{job="traveler-api", api="web", shard="1", server="postgres_00", kind="query", outcome="ok"}'
+        values: '0+101x40'
+      - series: 'db_query_duration_seconds_count{job="traveler-api", api="web", shard="2", server="postgres_00", kind="query", outcome="ok"}'
+        values: '0+102x40'
+      - series: 'db_query_duration_seconds_count{job="traveler-api", api="web", shard="3", server="postgres_00", kind="query", outcome="ok"}'
+        values: '0+103x40'
+      - series: 'db_query_duration_seconds_count{job="traveler-api", api="web", shard="4", server="postgres_01", kind="query", outcome="ok"}'
+        values: '0+104x40'
+      - series: 'db_query_duration_seconds_count{job="traveler-api", api="web", shard="5", server="postgres_01", kind="query", outcome="ok"}'
+        values: '0+105x40'
+      - series: 'db_query_duration_seconds_count{job="traveler-api", api="web", shard="6", server="postgres_01", kind="query", outcome="ok"}'
+        values: '0+106x40'
+      - series: 'db_query_duration_seconds_count{job="traveler-api", api="web", shard="7", server="postgres_01", kind="query", outcome="ok"}'
+        values: '0+107x40'
+      - series: 'db_query_duration_seconds_count{job="traveler-api", api="web", shard="8", server="postgres_02", kind="query", outcome="ok"}'
+        values: '0+108x40'
+      - series: 'db_query_duration_seconds_count{job="traveler-api", api="web", shard="9", server="postgres_02", kind="query", outcome="ok"}'
+        values: '0+109x40'
+      - series: 'db_query_duration_seconds_count{job="traveler-api", api="web", shard="a", server="postgres_02", kind="query", outcome="ok"}'
+        values: '0+110x40'
+      - series: 'db_query_duration_seconds_count{job="traveler-api", api="web", shard="b", server="postgres_02", kind="query", outcome="ok"}'
+        values: '0+111x40'
+      - series: 'db_query_duration_seconds_count{job="traveler-api", api="web", shard="c", server="postgres_03", kind="query", outcome="ok"}'
+        values: '0+112x40'
+      - series: 'db_query_duration_seconds_count{job="traveler-api", api="web", shard="d", server="postgres_03", kind="query", outcome="ok"}'
+        values: '0+113x40'
+      - series: 'db_query_duration_seconds_count{job="traveler-api", api="web", shard="e", server="postgres_03", kind="query", outcome="ok"}'
+        values: '0+114x40'
+      - series: 'db_query_duration_seconds_count{job="traveler-api", api="web", shard="f", server="postgres_03", kind="query", outcome="ok"}'
+        values: '0+115x40'
+    alert_rule_test:
+      - eval_time: 2m
+        alertname: ShardHotspot
+        exp_alerts: []
+
+  # A moved shard answers 42501 once; that is expected and must not page anybody.
+  - name: 42501 is ignored
+    interval: 5s
+    input_series:
+      - series: 'db_errors_total{job="traveler-api", api="web", shard="3", server="postgres_00", code="42501"}'
+        values: '0 0 4 4 4 4 4 4 4 4 4 4 4 4 4 4'
+      - series: 'db_errors_total{job="traveler-api", api="web", shard="9", server="postgres_02", code="ENOTFOUND"}'
+        values: '0 0 0 0 0 0 7 7 7 7 7 7 7 7 7 7'
+    alert_rule_test:
+      - eval_time: 40s
+        alertname: ShardDatabaseErrors
+        exp_alerts:
+          - exp_labels: {severity: critical, shard: '9', server: postgres_02, code: ENOTFOUND}
+            exp_annotations:
+              summary: 'Помилки запитів до шарду 9 на postgres_02'
+              description: 'Код ENOTFOUND: 7 помилок за хвилину.'

@@ -1,0 +1,101 @@
+# Laboratory 7: alerting rules (visible on http://127.0.0.1:9090/alerts and in Grafana).
+groups:
+  - name: traveler-api
+    rules:
+      - alert: TravelerApiDown
+        expr: up{job="traveler-api"} == 0
+        for: 15s
+        labels: {severity: critical}
+        annotations:
+          summary: 'API {{ $labels.api }} не відповідає'
+          description: 'Prometheus не може зібрати /metrics з {{ $labels.instance }} понад 15 с.'
+
+      - alert: TravelerApiHighErrorRate
+        expr: |
+          sum by (api) (rate(http_request_duration_seconds_count{status=~"5.."}[1m]))
+            / sum by (api) (rate(http_request_duration_seconds_count[1m])) > 0.01
+        for: 15s
+        labels: {severity: critical}
+        annotations:
+          summary: 'API {{ $labels.api }}: понад 1 % відповідей 5xx'
+          description: 'Частка помилок {{ $value | humanizePercentage }} за останню хвилину.'
+
+      - alert: TravelerApiHighLatencyP95
+        expr: |
+          histogram_quantile(0.95, sum by (le) (rate(http_request_duration_seconds_bucket{route!~"/health|/metrics"}[1m]))) > 0.5
+        for: 1m
+        labels: {severity: warning}
+        annotations:
+          summary: 'p95 затримки API вище 500 мс'
+          description: 'p95 = {{ $value | humanizeDuration }} (поріг k6 з лабораторної №2 - 500 мс).'
+
+      - alert: ShardDatabaseErrors
+        # 42501/3D000 are the expected signals of a moved shard (one retry, see lab 6).
+        expr: sum by (shard, server, code) (increase(db_errors_total{code!~"42501|3D000"}[1m])) > 0
+        labels: {severity: critical}
+        annotations:
+          summary: 'Помилки запитів до шарду {{ $labels.shard }} на {{ $labels.server }}'
+          description: 'Код {{ $labels.code }}: {{ $value | humanize }} помилок за хвилину.'
+
+      - alert: ShardPoolSaturated
+        expr: max by (database, server) (db_pool_connections{state="waiting"}) > 0
+        for: 30s
+        labels: {severity: warning}
+        annotations:
+          summary: 'Пул {{ $labels.database }} на {{ $labels.server }} вичерпано'
+          description: 'Запити чекають на вільне з’єднання понад 30 с (PG_POOL_PER_SHARD).'
+
+      - alert: ShardHotspot
+        # One shard receives more than 3x the average load of the 16 shards.
+        expr: |
+          max(sum by (shard) (rate(db_query_duration_seconds_count[1m])))
+            > 3 * avg(sum by (shard) (rate(db_query_duration_seconds_count[1m])))
+          and sum(rate(db_query_duration_seconds_count[1m])) > 20
+        for: 30s
+        labels: {severity: warning}
+        annotations:
+          summary: 'Гарячий шард: навантаження розподілене нерівномірно'
+          description: 'Найбільш завантажений шард отримує понад утричі більше запитів, ніж у середньому.'
+
+      - alert: ShardMappingVersionMismatch
+        expr: max(shard_mapping_version) != min(shard_mapping_version)
+        for: 30s
+        labels: {severity: warning}
+        annotations:
+          summary: 'Екземпляри API використовують різні версії mapping'
+          description: 'Після перенесення шарду один з API не перечитав mapping понад 30 с.'
+
+  - name: postgres
+    rules:
+      - alert: PostgresDown
+        expr: pg_up == 0
+        for: 10s
+        labels: {severity: critical}
+        annotations:
+          summary: 'PostgreSQL {{ $labels.server }} недоступний'
+          description: 'postgres_exporter не може під’єднатися до {{ $labels.server }}; шарди цього сервісу недоступні.'
+
+      - alert: PostgresExporterDown
+        expr: up{job="postgres"} == 0
+        for: 15s
+        labels: {severity: warning}
+        annotations:
+          summary: 'postgres_exporter для {{ $labels.server }} не відповідає'
+
+      - alert: PostgresTooManyConnections
+        expr: |
+          sum by (server) (pg_stat_activity_count)
+            / max by (server) (pg_settings_max_connections) > 0.8
+        for: 1m
+        labels: {severity: warning}
+        annotations:
+          summary: '{{ $labels.server }}: використано понад 80 % max_connections'
+
+      - alert: RegistryReplicationSlotInactive
+        # postgres_00 publishes shard_registry to the other three services.
+        expr: pg_replication_slot_slot_is_active{server="postgres_00"} == 0
+        for: 1m
+        labels: {severity: warning}
+        annotations:
+          summary: 'Слот реплікації {{ $labels.slot_name }} неактивний'
+          description: 'Копія реєстру сховищ на одному із сервісів не отримує змін.'

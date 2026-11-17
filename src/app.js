@@ -2,11 +2,16 @@ const express = require('express');
 const shards = require('./shards');
 const { shardOf, newId, query, transaction } = shards;
 const { ApiError, validate, checkCombinedDates, uuid } = require('./validation');
+const metrics = require('./metrics');
 
 const app = express();
 app.disable('x-powered-by');
 app.set('json escape', true);
+app.use(metrics.httpMiddleware);
 app.use(express.json({ limit: '64kb' }));
+
+// Laboratory 7: Prometheus scrapes this endpoint (text exposition format).
+app.get('/metrics', metrics.handler);
 
 const notFound = name => new ApiError(404, `${name} not found`);
 const checkId = id => { if (!uuid(id)) throw new ApiError(400, 'Validation error: invalid UUID'); };
@@ -67,6 +72,7 @@ app.post('/api/travel-plans', async (req, res) => {
   const { rows } = await query(shardOf(data.id),
     `INSERT INTO travel_plans (${keys.join(', ')}) VALUES (${keys.map((_, i) => `$${i + 1}`).join(', ')}) RETURNING *`,
     Object.values(data));
+  metrics.planCreated(shardOf(data.id));
   res.status(201).json(rows[0]);
 });
 
