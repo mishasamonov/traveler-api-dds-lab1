@@ -63,7 +63,7 @@ def image(path, caption, width=None):
     global figure
     path = Path(path); assert path.exists(), path; figure += 1
     im = Image.open(path)
-    w = width or min(6.5, 8.6 * im.width / im.height)
+    w = min(width or 6.5, 7.6 * im.width / im.height)  # never taller than 7.6 in: the caption stays on the page
     p = text(); p.alignment = WD_ALIGN_PARAGRAPH.CENTER; p.paragraph_format.keep_with_next = True
     shape = p.add_run().add_picture(str(path), width=Inches(w)); shape._inline.docPr.set('descr', caption)
     cap = text(f'Рисунок {figure} – {caption}', 'Caption'); cap.alignment = WD_ALIGN_PARAGRAPH.CENTER

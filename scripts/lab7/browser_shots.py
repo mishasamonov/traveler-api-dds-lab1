@@ -82,7 +82,7 @@ class Browser:
 
     def url(self, url, name, height=1000, width=1600, wait=2.0, full=True):
         self.resize(width, height)
-        self.page.goto(url, wait_until='networkidle')
+        self.page.goto(url, wait_until='load')
         time.sleep(wait)
         out = SHOTS / f'{name}.png'
         self.page.screenshot(path=str(out), full_page=full)
