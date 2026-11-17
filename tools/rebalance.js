@@ -94,9 +94,22 @@ async function move(database, target, options) {
     await step('3. LOCK TABLE ... IN ACCESS EXCLUSIVE MODE on source', async () => {
       lock = await connect(source, database, { application_name: 'rebalance-lock' });
       await lock.query("SET lock_timeout = '5s'");
-      await lock.query('BEGIN');
-      lockStart = now();
-      await lock.query('LOCK TABLE travel_plans, locations IN ACCESS EXCLUSIVE MODE');
+      // Laboratory 7: API transactions lock travel_plans and locations in different
+      // orders, so the two-table LOCK can be chosen as a deadlock victim (40P01) or
+      // time out (55P03). Nothing has changed yet, so roll back and try again.
+      for (let attempt = 1; ; attempt++) {
+        await lock.query('BEGIN');
+        lockStart = now();
+        try {
+          await lock.query('LOCK TABLE travel_plans, locations IN ACCESS EXCLUSIVE MODE');
+          break;
+        } catch (error) {
+          await lock.query('ROLLBACK');
+          if (!['40P01', '55P03'].includes(error.code) || attempt === 5) throw error;
+          log(`   attempt ${attempt}: ${error.message} (${error.code}); the source keeps serving, retry in 200 ms`);
+          await sleep(200);
+        }
+      }
       lockedAt = new Date().toISOString();
       const { rows: [{ lsn }] } = await lock.query('SELECT pg_current_wal_lsn() AS lsn');
       // Writes are frozen; wait until the subscriber confirmed everything up to now.
