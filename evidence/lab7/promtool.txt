@@ -6,7 +6,7 @@ Checking prometheus.yml
 Checking /etc/prometheus/alerts.yml
   SUCCESS: 11 rules found
 
-$ promtool test rules alerts.test.yml   # 5 groups: 5
+$ promtool test rules alerts.test.yml   # 5 test groups
   SUCCESS
 
 $ promtool test rules alerts.test.yml --run "hot shard"

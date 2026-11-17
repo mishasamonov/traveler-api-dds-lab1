@@ -1,22 +1,22 @@
 k6 SHARDS-UNIFORM TEST
 API: http://127.0.0.1:4567
 
-http_reqs: {"count":61321,"rate":408.624533177657}
-iterations: {"count":44458,"rate":296.25461907033923}
-checks: {"fails":747,"rate":0.9878182025733435,"passes":60574}
-http_req_failed: {"rate":0.012181797426656447,"passes":747,"fails":60574}
-http_req_duration: {"avg":61.16216902040064,"med":5.3322,"p(95)":36.3916,"p(99)":2876.0930200001,"max":5119.3444}
+http_reqs: {"count":60327,"rate":401.8018120804155}
+iterations: {"count":43739,"rate":291.3191350238748}
+checks: {"rate":0.9865400235383824,"passes":59515,"fails":812}
+http_req_failed: {"rate":0.013459976461617517,"passes":812,"fails":59515}
+http_req_duration: {"avg":62.80423467767319,"med":5.2707,"p(95)":38.830899999999914,"p(99)":3677.532431999774,"max":5117.5337}
 
 THRESHOLDS
-PASS http_reqs{server:postgres_00}: count>=0
-PASS http_req_failed{server:postgres_01}: rate>=0
-PASS http_reqs{server:postgres_01}: count>=0
-PASS http_req_duration{server:postgres_00}: max>=0
-PASS http_reqs{server:postgres_03}: count>=0
 PASS http_reqs{server:postgres_02}: count>=0
-PASS http_req_failed{server:postgres_03}: rate>=0
-PASS http_req_duration{server:postgres_03}: max>=0
-PASS http_req_duration{server:postgres_02}: max>=0
-PASS http_req_failed{server:postgres_00}: rate>=0
 PASS http_req_failed{server:postgres_02}: rate>=0
+PASS http_req_duration{server:postgres_00}: max>=0
+PASS http_reqs{server:postgres_01}: count>=0
 PASS http_req_duration{server:postgres_01}: max>=0
+PASS http_req_duration{server:postgres_02}: max>=0
+PASS http_req_failed{server:postgres_01}: rate>=0
+PASS http_reqs{server:postgres_03}: count>=0
+PASS http_req_duration{server:postgres_03}: max>=0
+PASS http_req_failed{server:postgres_03}: rate>=0
+PASS http_reqs{server:postgres_00}: count>=0
+PASS http_req_failed{server:postgres_00}: rate>=0

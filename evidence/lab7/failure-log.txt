@@ -1,13 +1,13 @@
-STOPPED postgres_02 18:22:09
-18:22:14 alerts: ['ShardHotspot']
-18:22:19 alerts: ['ShardHotspot']
-18:22:24 alerts: ['ShardDatabaseErrors']
-18:22:29 alerts: ['PostgresDown', 'ShardDatabaseErrors']
-18:22:34 alerts: ['PostgresDown', 'ShardDatabaseErrors']
-18:22:39 alerts: ['PostgresDown', 'ShardDatabaseErrors']
-18:22:44 alerts: ['PostgresDown', 'ShardDatabaseErrors']
-18:22:49 alerts: ['PostgresDown', 'ShardDatabaseErrors']
-18:22:54 alerts: ['PostgresDown', 'ShardDatabaseErrors', 'ShardPoolSaturated']
-18:22:59 alerts: ['PostgresDown', 'ShardDatabaseErrors', 'ShardPoolSaturated', 'TravelerApiHighErrorRate']
-STARTED postgres_02 18:23:28
+STOPPED postgres_02 18:48:08
+18:48:13 alerts: []
+18:48:18 alerts: []
+18:48:23 alerts: ['ShardDatabaseErrors']
+18:48:28 alerts: ['PostgresDown', 'ShardDatabaseErrors']
+18:48:33 alerts: ['PostgresDown', 'ShardDatabaseErrors']
+18:48:38 alerts: ['PostgresDown', 'ShardDatabaseErrors', 'TravelerApiHighErrorRate']
+18:48:43 alerts: ['PostgresDown', 'ShardDatabaseErrors', 'TravelerApiHighErrorRate']
+18:48:48 alerts: ['PostgresDown', 'ShardDatabaseErrors', 'ShardPoolSaturated', 'TravelerApiHighErrorRate']
+18:48:53 alerts: ['PostgresDown', 'ShardDatabaseErrors', 'ShardPoolSaturated', 'TravelerApiHighErrorRate']
+18:48:58 alerts: ['PostgresDown', 'ShardDatabaseErrors', 'ShardPoolSaturated', 'TravelerApiHighErrorRate']
+STARTED postgres_02 18:49:25
 K6 failure exit 0

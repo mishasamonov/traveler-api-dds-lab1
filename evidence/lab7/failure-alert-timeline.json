@@ -1,34 +1,20 @@
 {
-  "stopMs": 1794936127055,
-  "startMs": 1794936205994,
+  "stopMs": 1794937685161,
+  "startMs": 1794937764220,
   "rows": [
-    {
-      "alert": "ShardHotspot",
-      "state": "firing",
-      "target": "",
-      "fromSeconds": -10,
-      "toSeconds": 5
-    },
     {
       "alert": "PostgresDown",
       "state": "pending",
       "target": "postgres_02",
-      "fromSeconds": 5,
-      "toSeconds": 10
+      "fromSeconds": 10,
+      "toSeconds": 15
     },
     {
       "alert": "RegistryReplicationSlotInactive",
       "state": "pending",
       "target": "postgres_00",
-      "fromSeconds": 5,
-      "toSeconds": 60
-    },
-    {
-      "alert": "ShardDatabaseErrors",
-      "state": "firing",
-      "target": "postgres_02",
       "fromSeconds": 10,
-      "toSeconds": 195
+      "toSeconds": 65
     },
     {
       "alert": "ShardPoolSaturated",
@@ -38,74 +24,81 @@
       "toSeconds": 35
     },
     {
-      "alert": "PostgresDown",
+      "alert": "ShardDatabaseErrors",
       "state": "firing",
       "target": "postgres_02",
       "fromSeconds": 15,
-      "toSeconds": 80
-    },
-    {
-      "alert": "TravelerApiHighErrorRate",
-      "state": "pending",
-      "target": "web2",
-      "fromSeconds": 30,
-      "toSeconds": 40
+      "toSeconds": 145
     },
     {
       "alert": "TravelerApiHighErrorRate",
       "state": "pending",
       "target": "web",
-      "fromSeconds": 35,
-      "toSeconds": 45
+      "fromSeconds": 15,
+      "toSeconds": 25
+    },
+    {
+      "alert": "PostgresDown",
+      "state": "firing",
+      "target": "postgres_02",
+      "fromSeconds": 20,
+      "toSeconds": 85
+    },
+    {
+      "alert": "TravelerApiHighErrorRate",
+      "state": "firing",
+      "target": "web",
+      "fromSeconds": 30,
+      "toSeconds": 115
     },
     {
       "alert": "ShardPoolSaturated",
       "state": "firing",
       "target": "postgres_02",
       "fromSeconds": 40,
-      "toSeconds": 85
+      "toSeconds": 90
+    },
+    {
+      "alert": "TravelerApiHighErrorRate",
+      "state": "pending",
+      "target": "web2",
+      "fromSeconds": 40,
+      "toSeconds": 50
     },
     {
       "alert": "TravelerApiHighErrorRate",
       "state": "firing",
       "target": "web2",
-      "fromSeconds": 45,
-      "toSeconds": 110
-    },
-    {
-      "alert": "TravelerApiHighErrorRate",
-      "state": "firing",
-      "target": "web",
-      "fromSeconds": 50,
-      "toSeconds": 110
-    },
-    {
-      "alert": "ShardDatabaseErrors",
-      "state": "firing",
-      "target": "postgres_00",
       "fromSeconds": 55,
-      "toSeconds": 120
+      "toSeconds": 115
     },
     {
       "alert": "TravelerApiHighLatencyP95",
       "state": "pending",
       "target": "",
       "fromSeconds": 60,
-      "toSeconds": 95
+      "toSeconds": 100
     },
     {
       "alert": "RegistryReplicationSlotInactive",
       "state": "firing",
       "target": "postgres_00",
-      "fromSeconds": 65,
-      "toSeconds": 80
+      "fromSeconds": 70,
+      "toSeconds": 85
     },
     {
       "alert": "ShardDatabaseErrors",
       "state": "firing",
-      "target": "postgres_01",
-      "fromSeconds": 65,
-      "toSeconds": 115
+      "target": "postgres_00",
+      "fromSeconds": 70,
+      "toSeconds": 120
+    },
+    {
+      "alert": "ShardDatabaseErrors",
+      "state": "firing",
+      "target": "postgres_03",
+      "fromSeconds": 70,
+      "toSeconds": 120
     }
   ]
 }

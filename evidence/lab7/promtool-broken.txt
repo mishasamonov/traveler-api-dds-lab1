@@ -1,7 +1,5 @@
-$ sed -i "PostgresDown: for: 10s -> for: 1m" alerts.yml   # deliberately broken copy
+$ # deliberately broken copy: PostgresDown "for: 10s" -> "for: 1m"
 $ promtool test rules alerts.test.yml
-
-
   FAILED:
     name: postgres_02 down,
     alertname: PostgresDown, time: 40s, 
@@ -11,4 +9,6 @@ $ promtool test rules alerts.test.yml
               Annotations:{description="postgres_exporter не може під’єднатися до postgres_02; шарди цього сервісу недоступні.", summary="PostgreSQL postgres_02 недоступний"}
             ], 
         got:[]
+
+
 exit code: 1
