@@ -8,6 +8,9 @@ avg = lambda xs: sum(xs) / len(xs)
 def change(b, a): return (a / b - 1) * 100
 
 
+def sgn(v): return ('+' if v >= 0 else '−') + num(abs(v), 1) + ' %'
+
+
 L_b, L_1, L_a = BEFORE['load'], AFTER1['load'], AFTER['load']
 K_b, K_1, K_a = BEFORE['key'], AFTER1['key'], AFTER['key']
 C_b, C_1, C_a = BEFORE['locations'], AFTER1['locations'], AFTER['locations']
@@ -55,7 +58,7 @@ shot('t-check-cost-plpgsql', 'Скільки коштує CHECK на PL/pgSQL')
 text(f'Перевірка тепер займає {num(avg(CC_PL["with_check"]) - avg(CC_PL["without_check"]), 2)} мс замість '
      f'{num(avg(CC_SQL["with_check"]) - avg(CC_SQL["without_check"]), 2)} мс, тобто приблизно в '
      f'{num((avg(CC_SQL["with_check"]) - avg(CC_SQL["without_check"])) / (avg(CC_PL["with_check"]) - avg(CC_PL["without_check"])), 0)} '
-     'рази менше. Після цього повторив усі три тести.')
+     'разів менше. Після цього повторив усі три тести.')
 
 sub('Підсумок')
 rows = []
@@ -65,9 +68,9 @@ for k in ('load', 'key', 'locations'):
                  f"{num(b['sql_per_request'], 2)} → {num(a['sql_per_request'], 2)}"])
 table(['Тест', 'Запитів/с до', 'JSONB, SQL-CHECK', 'JSONB, PL/pgSQL', 'p95 до', 'p95 після', 'SQL на HTTP-запит'],
       rows, [0.95, 0.95, 1.0, 1.0, 0.95, 0.95, 1.1], font=10)
-text(f'Помилок не було в жодному тесті. Остаточно: читання плану за id - {num(change(K_b["rps"], K_a["rps"]), 1)} % пропускної здатності '
-     f'(p95 {ms(K_b["p95"], 0)} → {ms(K_a["p95"], 0)}); тест Locations - {num(change(C_b["rps"], C_a["rps"]), 1)} %; Load - '
-     f'{num(change(L_b["rps"], L_a["rps"]), 1)} %. У Load різниця найменша: більшу частину часу там займає список, а його перша фаза - '
+text(f'Помилок не було в жодному тесті. Остаточно пропускна здатність змінилась так: читання плану за id {sgn(change(K_b["rps"], K_a["rps"]))} '
+     f'(p95 {ms(K_b["p95"], 0)} → {ms(K_a["p95"], 0)}), тест Locations {sgn(change(C_b["rps"], C_a["rps"]))}, Load '
+     f'{sgn(change(L_b["rps"], L_a["rps"]))}. Зміни в Locations і Load у межах розкиду між запусками. У Load різниця найменша:більшу частину часу там займає список, а його перша фаза - '
      '16 паралельних запитів до всіх шардів - однакова в обох версіях. Поріг p95 < 500 мс у Load на ступені 200 VU не виконується в жодній '
      'версії, як і в лабораторних №6-7: обмеження тут - чотири сервіси PostgreSQL по 0,5 CPU і scatter-gather списку.')
 shot('t-k6-key-before', 'k6 Key до міграції (реляційні таблиці)')

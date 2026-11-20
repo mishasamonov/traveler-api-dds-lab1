@@ -1,0 +1,4 @@
+remote: 
+branch 'lab8-jsonb' set up to track 'origin/lab8-jsonb'.
+To https://github.com/mishasamonov/traveler-api-dds-lab1.git
+ * [new branch]      lab8-jsonb -> lab8-jsonb

@@ -1,0 +1,6 @@
+ff93c24 Record laboratory 8 experiments, screenshots and report scripts
+af047ec Validate documents in PL/pgSQL with schema-qualified calls
+fa7a346 Store travel plans as JSONB documents
+6a77ad0 Rewrite the report introduction without referring to the task author
+2a1b4e8 Add the laboratory 7 report builder and GitHub screenshots
+2e2e5f6 Repeat the failure and rebalance experiments, add screenshots
