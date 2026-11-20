@@ -1,0 +1,25 @@
+$ node tools/shard-exec.js /app/db/migrations/002_plan_documents.sql /sql/100_migrate_to_jsonb.sql --show-prepared
+16:24:25.972 run shard_exec_20261120162425_ca5902: /app/db/migrations/002_plan_documents.sql + /sql/100_migrate_to_jsonb.sql (12190 bytes) on 16 shards, mapping v1
+16:24:27.937 pg_prepared_xacts on postgres_00: db_0, db_1, db_2, db_3
+16:24:27.959 pg_prepared_xacts on postgres_01: db_4, db_5, db_6, db_7
+16:24:27.983 pg_prepared_xacts on postgres_02: db_8, db_9, db_a, db_b
+16:24:28.000 pg_prepared_xacts on postgres_03: db_c, db_d, db_e, db_f
+shard | server      | database | status    | ms   | result                                                     
+------+-------------+----------+-----------+------+------------------------------------------------------------
+0     | postgres_00 | db_0     | committed | 1866 | plans=114 locations=342 check=rows equal plans_md5=9e7b79ed
+1     | postgres_00 | db_1     | committed | 1756 | plans=117 locations=351 check=rows equal plans_md5=4b46cc8a
+2     | postgres_00 | db_2     | committed | 1863 | plans=141 locations=423 check=rows equal plans_md5=3c2ae5b0
+3     | postgres_00 | db_3     | committed | 1751 | plans=117 locations=351 check=rows equal plans_md5=334298b5
+4     | postgres_01 | db_4     | committed | 1753 | plans=135 locations=405 check=rows equal plans_md5=cab6f23b
+5     | postgres_01 | db_5     | committed | 1655 | plans=119 locations=357 check=rows equal plans_md5=2dbe47f9
+6     | postgres_01 | db_6     | committed | 1540 | plans=113 locations=339 check=rows equal plans_md5=e0aaf3bf
+7     | postgres_01 | db_7     | committed | 1852 | plans=141 locations=423 check=rows equal plans_md5=33bc1eae
+8     | postgres_02 | db_8     | committed | 1421 | plans=119 locations=357 check=rows equal plans_md5=5494e102
+9     | postgres_02 | db_9     | committed | 1532 | plans=127 locations=381 check=rows equal plans_md5=28173a7f
+a     | postgres_02 | db_a     | committed | 1426 | plans=103 locations=309 check=rows equal plans_md5=b84af817
+b     | postgres_02 | db_b     | committed | 1315 | plans=134 locations=402 check=rows equal plans_md5=2b25eed7
+c     | postgres_03 | db_c     | committed | 1701 | plans=125 locations=375 check=rows equal plans_md5=9164edde
+d     | postgres_03 | db_d     | committed | 1595 | plans=135 locations=405 check=rows equal plans_md5=fcab0992
+e     | postgres_03 | db_e     | committed | 1499 | plans=129 locations=387 check=rows equal plans_md5=a7fba5cf
+f     | postgres_03 | db_f     | committed | 1705 | plans=131 locations=393 check=rows equal plans_md5=358cf3b5
+16:24:28.089 COMMIT on all 16 shards; total 2110 ms

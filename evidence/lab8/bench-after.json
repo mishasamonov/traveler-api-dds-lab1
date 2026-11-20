@@ -1,0 +1,56 @@
+{
+  "load": {
+    "reqs": 46286,
+    "rps": 271.5208308970582,
+    "avg": 283.89285247591005,
+    "p95": 1483.2711,
+    "failed": 0,
+    "api": "traveler-api:lab8",
+    "sql": 350895,
+    "sql_per_request": 7.581018018407294,
+    "sql_ms_per_request": 1.259929378105691,
+    "wal_per_request": 444.0254288553774
+  },
+  "key": {
+    "reqs": 57987,
+    "rps": 1282.2228645829964,
+    "avg": 155.3978221325477,
+    "p95": 339.3641599999998,
+    "failed": 0,
+    "api": "traveler-api:lab8",
+    "sql": 57987,
+    "sql_per_request": 1.0,
+    "sql_ms_per_request": 0.057946876455067534,
+    "wal_per_request": 0.0
+  },
+  "locations": {
+    "reqs": 53264,
+    "rps": 885.8211923257358,
+    "avg": 43.63806135663884,
+    "p95": 89.687275,
+    "failed": 0,
+    "ops": {
+      "GET plan": {
+        "avg": 30.605329145389067,
+        "p95": 50.873975
+      },
+      "PUT location": {
+        "avg": 67.34451016821848,
+        "p95": 114.857675
+      },
+      "DELETE location": {
+        "avg": 38.52034963953148,
+        "p95": 67.568075
+      },
+      "POST location": {
+        "avg": 38.082056473415484,
+        "p95": 70.75515
+      }
+    },
+    "api": "traveler-api:lab8",
+    "sql": 93212,
+    "sql_per_request": 1.75,
+    "sql_ms_per_request": 0.8423333451486932,
+    "wal_per_request": 1678.3922724541906
+  }
+}

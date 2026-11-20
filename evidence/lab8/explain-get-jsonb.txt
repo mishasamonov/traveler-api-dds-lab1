@@ -1,0 +1,10 @@
+jsonb_bench=# EXPLAIN (ANALYZE, BUFFERS, COSTS OFF) SELECT id, doc, version, created_at, updated_at FROM plan_documents WHERE id = 'f2af4bce-395a-1b5a-d659-10d6bb6763f1';
+                                            QUERY PLAN                                            
+--------------------------------------------------------------------------------------------------
+ Index Scan using plan_documents_pkey on plan_documents (actual time=0.021..0.021 rows=1 loops=1)
+   Index Cond: (id = 'f2af4bce-395a-1b5a-d659-10d6bb6763f1'::uuid)
+   Buffers: shared hit=3
+ Planning Time: 0.034 ms
+ Execution Time: 0.043 ms
+(5 rows)
+

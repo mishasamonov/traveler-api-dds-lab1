@@ -1,0 +1,13 @@
+jsonb_bench=# BEGIN; EXPLAIN (ANALYZE, WAL, COSTS OFF) UPDATE legacy_locations SET notes = 'WAL test', version = version + 1 WHERE id = 'd211fd5d-03dd-441c-71f1-67d245b7df0d'; ROLLBACK;
+BEGIN
+                                                 QUERY PLAN                                                 
+------------------------------------------------------------------------------------------------------------
+ Update on legacy_locations (actual time=0.166..0.167 rows=0 loops=1)
+   WAL: records=5 bytes=488
+   ->  Index Scan using legacy_locations_pkey on legacy_locations (actual time=0.054..0.056 rows=1 loops=1)
+         Index Cond: (id = 'd211fd5d-03dd-441c-71f1-67d245b7df0d'::uuid)
+ Planning Time: 0.065 ms
+ Execution Time: 0.216 ms
+(6 rows)
+
+ROLLBACK

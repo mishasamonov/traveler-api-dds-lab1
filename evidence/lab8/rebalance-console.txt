@@ -1,0 +1,397 @@
+$ k6 run -o experimental-prometheus-rw --tag testid=rebalance tests/performance-tests/rebalance-test.js
+
+         /\      Grafana   /‾‾/  
+    /\  /  \     |\  __   /  /   
+   /  \/    \    | |/ /  /   ‾‾\ 
+  /          \   |   (  |  (‾)  |
+ / __________ \  |_|\_\  \_____/ 
+
+
+     execution: local
+        script: tests/performance-tests/rebalance-test.js
+        output: Prometheus remote write (http://127.0.0.1:9090/api/v1/write)
+
+     scenarios: (100.00%) 1 scenario, 60 max VUs, 2m10s max duration (incl. graceful stop):
+              * rebalance: 60 looping VUs for 2m0s (gracefulStop: 10s)
+
+
+running (0m01.0s), 60/60 VUs, 130 complete and 0 interrupted iterations
+rebalance   [   1% ] 60 VUs  0m01.0s/2m0s
+
+running (0m02.0s), 60/60 VUs, 412 complete and 0 interrupted iterations
+rebalance   [   2% ] 60 VUs  0m02.0s/2m0s
+
+running (0m03.0s), 60/60 VUs, 721 complete and 0 interrupted iterations
+rebalance   [   2% ] 60 VUs  0m03.0s/2m0s
+
+running (0m04.0s), 60/60 VUs, 1047 complete and 0 interrupted iterations
+rebalance   [   3% ] 60 VUs  0m04.0s/2m0s
+
+running (0m05.0s), 60/60 VUs, 1330 complete and 0 interrupted iterations
+rebalance   [   4% ] 60 VUs  0m05.0s/2m0s
+
+running (0m06.0s), 60/60 VUs, 1658 complete and 0 interrupted iterations
+rebalance   [   5% ] 60 VUs  0m06.0s/2m0s
+
+running (0m07.0s), 60/60 VUs, 1977 complete and 0 interrupted iterations
+rebalance   [   6% ] 60 VUs  0m07.0s/2m0s
+
+running (0m08.0s), 60/60 VUs, 2273 complete and 0 interrupted iterations
+rebalance   [   7% ] 60 VUs  0m08.0s/2m0s
+
+running (0m09.0s), 60/60 VUs, 2605 complete and 0 interrupted iterations
+rebalance   [   7% ] 60 VUs  0m09.0s/2m0s
+
+running (0m10.0s), 60/60 VUs, 2951 complete and 0 interrupted iterations
+rebalance   [   8% ] 60 VUs  0m10.0s/2m0s
+
+running (0m11.0s), 60/60 VUs, 3325 complete and 0 interrupted iterations
+rebalance   [   9% ] 60 VUs  0m11.0s/2m0s
+
+running (0m12.0s), 60/60 VUs, 3648 complete and 0 interrupted iterations
+rebalance   [  10% ] 60 VUs  0m12.0s/2m0s
+
+running (0m13.0s), 60/60 VUs, 4012 complete and 0 interrupted iterations
+rebalance   [  11% ] 60 VUs  0m13.0s/2m0s
+
+running (0m14.0s), 60/60 VUs, 4387 complete and 0 interrupted iterations
+rebalance   [  12% ] 60 VUs  0m14.0s/2m0s
+
+running (0m15.0s), 60/60 VUs, 4716 complete and 0 interrupted iterations
+rebalance   [  12% ] 60 VUs  0m15.0s/2m0s
+
+running (0m16.0s), 60/60 VUs, 5058 complete and 0 interrupted iterations
+rebalance   [  13% ] 60 VUs  0m16.0s/2m0s
+
+running (0m17.0s), 60/60 VUs, 5371 complete and 0 interrupted iterations
+rebalance   [  14% ] 60 VUs  0m17.0s/2m0s
+
+running (0m18.0s), 60/60 VUs, 5671 complete and 0 interrupted iterations
+rebalance   [  15% ] 60 VUs  0m18.0s/2m0s
+
+running (0m19.0s), 60/60 VUs, 5993 complete and 0 interrupted iterations
+rebalance   [  16% ] 60 VUs  0m19.0s/2m0s
+
+running (0m20.0s), 60/60 VUs, 6348 complete and 0 interrupted iterations
+rebalance   [  17% ] 60 VUs  0m20.0s/2m0s
+
+running (0m21.0s), 60/60 VUs, 6734 complete and 0 interrupted iterations
+rebalance   [  17% ] 60 VUs  0m21.0s/2m0s
+
+running (0m22.0s), 60/60 VUs, 7071 complete and 0 interrupted iterations
+rebalance   [  18% ] 60 VUs  0m22.0s/2m0s
+
+running (0m23.0s), 60/60 VUs, 7416 complete and 0 interrupted iterations
+rebalance   [  19% ] 60 VUs  0m23.0s/2m0s
+
+running (0m24.0s), 60/60 VUs, 7772 complete and 0 interrupted iterations
+rebalance   [  20% ] 60 VUs  0m24.0s/2m0s
+
+running (0m25.0s), 60/60 VUs, 8101 complete and 0 interrupted iterations
+rebalance   [  21% ] 60 VUs  0m25.0s/2m0s
+
+running (0m26.0s), 60/60 VUs, 8413 complete and 0 interrupted iterations
+rebalance   [  22% ] 60 VUs  0m26.0s/2m0s
+
+running (0m27.0s), 60/60 VUs, 8715 complete and 0 interrupted iterations
+rebalance   [  22% ] 60 VUs  0m27.0s/2m0s
+
+running (0m28.0s), 60/60 VUs, 8975 complete and 0 interrupted iterations
+rebalance   [  23% ] 60 VUs  0m28.0s/2m0s
+
+running (0m29.0s), 60/60 VUs, 9244 complete and 0 interrupted iterations
+rebalance   [  24% ] 60 VUs  0m29.0s/2m0s
+
+running (0m30.0s), 60/60 VUs, 9548 complete and 0 interrupted iterations
+rebalance   [  25% ] 60 VUs  0m30.0s/2m0s
+
+running (0m31.0s), 60/60 VUs, 9895 complete and 0 interrupted iterations
+rebalance   [  26% ] 60 VUs  0m31.0s/2m0s
+
+running (0m32.0s), 60/60 VUs, 10218 complete and 0 interrupted iterations
+rebalance   [  27% ] 60 VUs  0m32.0s/2m0s
+
+running (0m33.0s), 60/60 VUs, 10579 complete and 0 interrupted iterations
+rebalance   [  27% ] 60 VUs  0m33.0s/2m0s
+
+running (0m34.0s), 60/60 VUs, 10937 complete and 0 interrupted iterations
+rebalance   [  28% ] 60 VUs  0m34.0s/2m0s
+
+running (0m35.0s), 60/60 VUs, 11260 complete and 0 interrupted iterations
+rebalance   [  29% ] 60 VUs  0m35.0s/2m0s
+
+running (0m36.0s), 60/60 VUs, 11528 complete and 0 interrupted iterations
+rebalance   [  30% ] 60 VUs  0m36.0s/2m0s
+
+running (0m37.0s), 60/60 VUs, 11774 complete and 0 interrupted iterations
+rebalance   [  31% ] 60 VUs  0m37.0s/2m0s
+
+running (0m38.0s), 60/60 VUs, 12005 complete and 0 interrupted iterations
+rebalance   [  32% ] 60 VUs  0m38.0s/2m0s
+
+running (0m39.0s), 60/60 VUs, 12233 complete and 0 interrupted iterations
+rebalance   [  32% ] 60 VUs  0m39.0s/2m0s
+
+running (0m40.0s), 60/60 VUs, 12544 complete and 0 interrupted iterations
+rebalance   [  33% ] 60 VUs  0m40.0s/2m0s
+
+running (0m41.0s), 60/60 VUs, 12858 complete and 0 interrupted iterations
+rebalance   [  34% ] 60 VUs  0m41.0s/2m0s
+
+running (0m42.0s), 60/60 VUs, 13165 complete and 0 interrupted iterations
+rebalance   [  35% ] 60 VUs  0m42.0s/2m0s
+
+running (0m43.0s), 60/60 VUs, 13433 complete and 0 interrupted iterations
+rebalance   [  36% ] 60 VUs  0m43.0s/2m0s
+
+running (0m44.0s), 60/60 VUs, 13705 complete and 0 interrupted iterations
+rebalance   [  37% ] 60 VUs  0m44.0s/2m0s
+
+running (0m45.0s), 60/60 VUs, 14026 complete and 0 interrupted iterations
+rebalance   [  37% ] 60 VUs  0m45.0s/2m0s
+
+running (0m46.0s), 60/60 VUs, 14334 complete and 0 interrupted iterations
+rebalance   [  38% ] 60 VUs  0m46.0s/2m0s
+
+running (0m47.0s), 60/60 VUs, 14610 complete and 0 interrupted iterations
+rebalance   [  39% ] 60 VUs  0m47.0s/2m0s
+
+running (0m48.0s), 60/60 VUs, 14893 complete and 0 interrupted iterations
+rebalance   [  40% ] 60 VUs  0m48.0s/2m0s
+
+running (0m49.0s), 60/60 VUs, 15201 complete and 0 interrupted iterations
+rebalance   [  41% ] 60 VUs  0m49.0s/2m0s
+
+running (0m50.0s), 60/60 VUs, 15422 complete and 0 interrupted iterations
+rebalance   [  42% ] 60 VUs  0m50.0s/2m0s
+
+running (0m51.0s), 60/60 VUs, 15503 complete and 0 interrupted iterations
+rebalance   [  42% ] 60 VUs  0m51.0s/2m0s
+
+running (0m52.0s), 60/60 VUs, 15595 complete and 0 interrupted iterations
+rebalance   [  43% ] 60 VUs  0m52.0s/2m0s
+
+running (0m53.0s), 60/60 VUs, 15656 complete and 0 interrupted iterations
+rebalance   [  44% ] 60 VUs  0m53.0s/2m0s
+
+running (0m54.0s), 60/60 VUs, 15986 complete and 0 interrupted iterations
+rebalance   [  45% ] 60 VUs  0m54.0s/2m0s
+
+running (0m55.0s), 60/60 VUs, 16309 complete and 0 interrupted iterations
+rebalance   [  46% ] 60 VUs  0m55.0s/2m0s
+
+running (0m56.0s), 60/60 VUs, 16639 complete and 0 interrupted iterations
+rebalance   [  47% ] 60 VUs  0m56.0s/2m0s
+
+running (0m57.0s), 60/60 VUs, 16923 complete and 0 interrupted iterations
+rebalance   [  47% ] 60 VUs  0m57.0s/2m0s
+
+running (0m58.0s), 60/60 VUs, 17236 complete and 0 interrupted iterations
+rebalance   [  48% ] 60 VUs  0m58.0s/2m0s
+
+running (0m59.0s), 60/60 VUs, 17548 complete and 0 interrupted iterations
+rebalance   [  49% ] 60 VUs  0m59.0s/2m0s
+
+running (1m00.0s), 60/60 VUs, 17844 complete and 0 interrupted iterations
+rebalance   [  50% ] 60 VUs  1m00.0s/2m0s
+
+running (1m01.0s), 60/60 VUs, 18180 complete and 0 interrupted iterations
+rebalance   [  51% ] 60 VUs  1m01.0s/2m0s
+
+running (1m02.0s), 60/60 VUs, 18508 complete and 0 interrupted iterations
+rebalance   [  52% ] 60 VUs  1m02.0s/2m0s
+
+running (1m03.0s), 60/60 VUs, 18836 complete and 0 interrupted iterations
+rebalance   [  52% ] 60 VUs  1m03.0s/2m0s
+
+running (1m04.0s), 60/60 VUs, 19185 complete and 0 interrupted iterations
+rebalance   [  53% ] 60 VUs  1m04.0s/2m0s
+
+running (1m05.0s), 60/60 VUs, 19492 complete and 0 interrupted iterations
+rebalance   [  54% ] 60 VUs  1m05.0s/2m0s
+
+running (1m06.0s), 60/60 VUs, 19821 complete and 0 interrupted iterations
+rebalance   [  55% ] 60 VUs  1m06.0s/2m0s
+
+running (1m07.0s), 60/60 VUs, 20085 complete and 0 interrupted iterations
+rebalance   [  56% ] 60 VUs  1m07.0s/2m0s
+
+running (1m08.0s), 60/60 VUs, 20366 complete and 0 interrupted iterations
+rebalance   [  57% ] 60 VUs  1m08.0s/2m0s
+
+running (1m09.0s), 60/60 VUs, 20678 complete and 0 interrupted iterations
+rebalance   [  57% ] 60 VUs  1m09.0s/2m0s
+
+running (1m10.0s), 60/60 VUs, 20994 complete and 0 interrupted iterations
+rebalance   [  58% ] 60 VUs  1m10.0s/2m0s
+
+running (1m11.0s), 60/60 VUs, 21315 complete and 0 interrupted iterations
+rebalance   [  59% ] 60 VUs  1m11.0s/2m0s
+
+running (1m12.0s), 60/60 VUs, 21641 complete and 0 interrupted iterations
+rebalance   [  60% ] 60 VUs  1m12.0s/2m0s
+
+running (1m13.0s), 60/60 VUs, 21985 complete and 0 interrupted iterations
+rebalance   [  61% ] 60 VUs  1m13.0s/2m0s
+
+running (1m14.0s), 60/60 VUs, 22333 complete and 0 interrupted iterations
+rebalance   [  62% ] 60 VUs  1m14.0s/2m0s
+
+running (1m15.0s), 60/60 VUs, 22649 complete and 0 interrupted iterations
+rebalance   [  62% ] 60 VUs  1m15.0s/2m0s
+
+running (1m16.0s), 60/60 VUs, 22919 complete and 0 interrupted iterations
+rebalance   [  63% ] 60 VUs  1m16.0s/2m0s
+
+running (1m17.0s), 60/60 VUs, 23057 complete and 0 interrupted iterations
+rebalance   [  64% ] 60 VUs  1m17.0s/2m0s
+
+running (1m18.0s), 60/60 VUs, 23234 complete and 0 interrupted iterations
+rebalance   [  65% ] 60 VUs  1m18.0s/2m0s
+
+running (1m19.0s), 60/60 VUs, 23487 complete and 0 interrupted iterations
+rebalance   [  66% ] 60 VUs  1m19.0s/2m0s
+
+running (1m20.0s), 60/60 VUs, 23753 complete and 0 interrupted iterations
+rebalance   [  67% ] 60 VUs  1m20.0s/2m0s
+
+running (1m21.0s), 60/60 VUs, 24047 complete and 0 interrupted iterations
+rebalance   [  67% ] 60 VUs  1m21.0s/2m0s
+
+running (1m22.0s), 60/60 VUs, 24314 complete and 0 interrupted iterations
+rebalance   [  68% ] 60 VUs  1m22.0s/2m0s
+
+running (1m23.0s), 60/60 VUs, 24577 complete and 0 interrupted iterations
+rebalance   [  69% ] 60 VUs  1m23.0s/2m0s
+
+running (1m24.0s), 60/60 VUs, 24925 complete and 0 interrupted iterations
+rebalance   [  70% ] 60 VUs  1m24.0s/2m0s
+
+running (1m25.0s), 60/60 VUs, 25242 complete and 0 interrupted iterations
+rebalance   [  71% ] 60 VUs  1m25.0s/2m0s
+
+running (1m26.0s), 60/60 VUs, 25546 complete and 0 interrupted iterations
+rebalance   [  72% ] 60 VUs  1m26.0s/2m0s
+
+running (1m27.0s), 60/60 VUs, 25810 complete and 0 interrupted iterations
+rebalance   [  72% ] 60 VUs  1m27.0s/2m0s
+
+running (1m28.0s), 60/60 VUs, 26080 complete and 0 interrupted iterations
+rebalance   [  73% ] 60 VUs  1m28.0s/2m0s
+
+running (1m29.0s), 60/60 VUs, 26380 complete and 0 interrupted iterations
+rebalance   [  74% ] 60 VUs  1m29.0s/2m0s
+
+running (1m30.0s), 60/60 VUs, 26619 complete and 0 interrupted iterations
+rebalance   [  75% ] 60 VUs  1m30.0s/2m0s
+
+running (1m31.0s), 60/60 VUs, 26948 complete and 0 interrupted iterations
+rebalance   [  76% ] 60 VUs  1m31.0s/2m0s
+
+running (1m32.0s), 60/60 VUs, 27261 complete and 0 interrupted iterations
+rebalance   [  77% ] 60 VUs  1m32.0s/2m0s
+
+running (1m33.0s), 60/60 VUs, 27581 complete and 0 interrupted iterations
+rebalance   [  77% ] 60 VUs  1m33.0s/2m0s
+
+running (1m34.0s), 60/60 VUs, 27911 complete and 0 interrupted iterations
+rebalance   [  78% ] 60 VUs  1m34.0s/2m0s
+
+running (1m35.0s), 60/60 VUs, 28226 complete and 0 interrupted iterations
+rebalance   [  79% ] 60 VUs  1m35.0s/2m0s
+
+running (1m36.0s), 60/60 VUs, 28529 complete and 0 interrupted iterations
+rebalance   [  80% ] 60 VUs  1m36.0s/2m0s
+
+running (1m37.0s), 60/60 VUs, 28816 complete and 0 interrupted iterations
+rebalance   [  81% ] 60 VUs  1m37.0s/2m0s
+
+running (1m38.0s), 60/60 VUs, 29075 complete and 0 interrupted iterations
+rebalance   [  82% ] 60 VUs  1m38.0s/2m0s
+
+running (1m39.0s), 60/60 VUs, 29349 complete and 0 interrupted iterations
+rebalance   [  82% ] 60 VUs  1m39.0s/2m0s
+
+running (1m40.0s), 60/60 VUs, 29666 complete and 0 interrupted iterations
+rebalance   [  83% ] 60 VUs  1m40.0s/2m0s
+
+running (1m41.0s), 60/60 VUs, 30009 complete and 0 interrupted iterations
+rebalance   [  84% ] 60 VUs  1m41.0s/2m0s
+
+running (1m42.0s), 60/60 VUs, 30322 complete and 0 interrupted iterations
+rebalance   [  85% ] 60 VUs  1m42.0s/2m0s
+
+running (1m43.0s), 60/60 VUs, 30647 complete and 0 interrupted iterations
+rebalance   [  86% ] 60 VUs  1m43.0s/2m0s
+
+running (1m44.0s), 60/60 VUs, 30989 complete and 0 interrupted iterations
+rebalance   [  87% ] 60 VUs  1m44.0s/2m0s
+
+running (1m45.0s), 60/60 VUs, 31313 complete and 0 interrupted iterations
+rebalance   [  87% ] 60 VUs  1m45.0s/2m0s
+
+running (1m46.0s), 60/60 VUs, 31607 complete and 0 interrupted iterations
+rebalance   [  88% ] 60 VUs  1m46.0s/2m0s
+
+running (1m47.0s), 60/60 VUs, 31896 complete and 0 interrupted iterations
+rebalance   [  89% ] 60 VUs  1m47.0s/2m0s
+
+running (1m48.0s), 60/60 VUs, 32158 complete and 0 interrupted iterations
+rebalance   [  90% ] 60 VUs  1m48.0s/2m0s
+
+running (1m49.0s), 60/60 VUs, 32442 complete and 0 interrupted iterations
+rebalance   [  91% ] 60 VUs  1m49.0s/2m0s
+
+running (1m50.0s), 60/60 VUs, 32747 complete and 0 interrupted iterations
+rebalance   [  92% ] 60 VUs  1m50.0s/2m0s
+
+running (1m51.0s), 60/60 VUs, 33091 complete and 0 interrupted iterations
+rebalance   [  92% ] 60 VUs  1m51.0s/2m0s
+
+running (1m52.0s), 60/60 VUs, 33392 complete and 0 interrupted iterations
+rebalance   [  93% ] 60 VUs  1m52.0s/2m0s
+
+running (1m53.0s), 60/60 VUs, 33715 complete and 0 interrupted iterations
+rebalance   [  94% ] 60 VUs  1m53.0s/2m0s
+
+running (1m54.0s), 60/60 VUs, 34059 complete and 0 interrupted iterations
+rebalance   [  95% ] 60 VUs  1m54.0s/2m0s
+
+running (1m55.0s), 60/60 VUs, 34385 complete and 0 interrupted iterations
+rebalance   [  96% ] 60 VUs  1m55.0s/2m0s
+
+running (1m56.0s), 60/60 VUs, 34689 complete and 0 interrupted iterations
+rebalance   [  97% ] 60 VUs  1m56.0s/2m0s
+
+running (1m57.0s), 60/60 VUs, 34981 complete and 0 interrupted iterations
+rebalance   [  97% ] 60 VUs  1m57.0s/2m0s
+
+running (1m58.0s), 60/60 VUs, 35226 complete and 0 interrupted iterations
+rebalance   [  98% ] 60 VUs  1m58.0s/2m0s
+
+running (1m59.0s), 60/60 VUs, 35490 complete and 0 interrupted iterations
+rebalance   [  99% ] 60 VUs  1m59.0s/2m0s
+
+running (2m00.0s), 60/60 VUs, 35819 complete and 0 interrupted iterations
+rebalance   [ 100% ] 60 VUs  2m00.0s/2m0s
+k6 REBALANCE TEST
+API: http://127.0.0.1:4567
+
+http_reqs: {"count":114880,"rate":955.9082199533864}
+iterations: {"count":35880,"rate":298.55490017346364}
+checks: {"rate":1,"passes":111260,"fails":0}
+http_req_failed: {"rate":0,"passes":0,"fails":114880}
+http_req_duration: {"max":1559.4198,"avg":31.19253232155339,"med":16.95595,"p(95)":94.41297999999998,"p(99)":176.40056999999905}
+
+THRESHOLDS
+PASS http_req_duration{shard:other}: max>=0
+PASS http_req_failed: rate<0.01
+PASS http_req_failed{shard:7}: rate<0.01
+PASS http_req_duration{shard:3}: max>=0
+PASS checks: rate>0.99
+PASS http_req_failed{shard:3}: rate<0.01
+PASS http_req_duration{shard:7}: max>=0
+PASS http_req_failed{shard:other}: rate<0.01
+
+running (2m00.2s), 00/60 VUs, 35880 complete and 0 interrupted iterations
+rebalance ✓ [ 100% ] 60 VUs  2m0s

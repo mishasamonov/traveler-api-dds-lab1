@@ -1,0 +1,21 @@
+$ node tools/shard-exec.js /sql/120_plpgsql_document_check.sql --dry-run
+16:53:54.158 run shard_exec_20261120165354_f7e430: /sql/120_plpgsql_document_check.sql (1468 bytes) on 16 shards, mapping v1, DRY RUN
+shard | server      | database | status | ms | rows | error                                                             
+------+-------------+----------+--------+----+------+-------------------------------------------------------------------
+0     | postgres_00 | db_0     | FAILED | 53 |      | 42883 function location_document_valid(jsonb, uuid) does not exist
+1     | postgres_00 | db_1     | FAILED | 55 |      | 42883 function location_document_valid(jsonb, uuid) does not exist
+2     | postgres_00 | db_2     | FAILED | 45 |      | 42883 function location_document_valid(jsonb, uuid) does not exist
+3     | postgres_00 | db_3     | FAILED | 60 |      | 42883 function location_document_valid(jsonb, uuid) does not exist
+4     | postgres_01 | db_4     | FAILED | 45 |      | 42883 function location_document_valid(jsonb, uuid) does not exist
+5     | postgres_01 | db_5     | FAILED | 56 |      | 42883 function location_document_valid(jsonb, uuid) does not exist
+6     | postgres_01 | db_6     | FAILED | 68 |      | 42883 function location_document_valid(jsonb, uuid) does not exist
+7     | postgres_01 | db_7     | FAILED | 56 |      | 42883 function location_document_valid(jsonb, uuid) does not exist
+8     | postgres_02 | db_8     | FAILED | 56 |      | 42883 function location_document_valid(jsonb, uuid) does not exist
+9     | postgres_02 | db_9     | FAILED | 55 |      | 42883 function location_document_valid(jsonb, uuid) does not exist
+a     | postgres_02 | db_a     | FAILED | 57 |      | 42883 function location_document_valid(jsonb, uuid) does not exist
+b     | postgres_02 | db_b     | FAILED | 55 |      | 42883 function location_document_valid(jsonb, uuid) does not exist
+c     | postgres_03 | db_c     | FAILED | 55 |      | 42883 function location_document_valid(jsonb, uuid) does not exist
+d     | postgres_03 | db_d     | FAILED | 62 |      | 42883 function location_document_valid(jsonb, uuid) does not exist
+e     | postgres_03 | db_e     | FAILED | 55 |      | 42883 function location_document_valid(jsonb, uuid) does not exist
+f     | postgres_03 | db_f     | FAILED | 63 |      | 42883 function location_document_valid(jsonb, uuid) does not exist
+16:53:54.294 ROLLBACK on all 16: 16 shard(s) failed; total 134 ms

@@ -1,0 +1,31 @@
+jsonb_bench=# EXPLAIN (ANALYZE, BUFFERS, COSTS OFF) SELECT p.*, COUNT(l.id)::integer AS location_count
+FROM legacy_travel_plans p LEFT JOIN legacy_locations l ON l.travel_plan_id = p.id
+WHERE p.id = ANY(ARRAY['d54a8bf9-e4b2-5a8f-4024-4e538958ffb0', 'efbbadc7-94f7-9b0d-8fc0-0bfe89ffd476', '2d1226e1-3ead-ea0c-7428-b27656f6ef13', 'ce35281c-ae2e-f9c7-c090-437eff7353e9', '7b779ba3-a422-1cb1-31cc-b8530da1a315', '1892a65e-7eec-46d2-c5e8-3271c8c6c03f', '1ae6a06d-3dd9-bf48-bec2-53e0f99c067f', '92afebf7-ea2a-a15a-9fd0-885527e130ce', '67741869-4695-0566-acf9-5ced1817e5e6', '77ea8eff-6f47-a781-41a6-d5ef9f4f3c8b', 'f2f34c5d-f43a-ccce-6c48-2c5efff6627b', '4cc129ae-764b-b096-f3ff-7ec26a8d37fb', '49d3a814-9d0c-aecd-f6be-0d5632c3b9f0', '73ee2df0-4811-52ff-b409-d1a65e51561b', '76780160-7acf-c3d3-f5ca-e5273532cb76', '5642c544-9888-401c-3239-c8082a33bff8', '1904f5e6-57b5-fd79-0d87-c1af4359ceea', '67d500f9-9ef6-cfd0-bba1-db8cd1719dd6', '5ad2d1d9-16e4-a2c9-1b93-c30f218582b4', 'ca7319e8-fe35-505e-ac17-883273d59a00']::uuid[]) GROUP BY p.id;
+                                                                                                                                                                                                                                                                                                                                                                                                          QUERY PLAN                                                                                                                                                                                                                                                                                                                                                                                                          
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ HashAggregate (actual time=0.521..0.526 rows=20 loops=1)
+   Group Key: p.id
+   Batches: 1  Memory Usage: 24kB
+   Buffers: shared hit=161
+   ->  Nested Loop Left Join (actual time=0.067..0.492 rows=60 loops=1)
+         Buffers: shared hit=161
+         ->  Bitmap Heap Scan on legacy_travel_plans p (actual time=0.052..0.054 rows=20 loops=1)
+               Recheck Cond: (id = ANY ('{d54a8bf9-e4b2-5a8f-4024-4e538958ffb0,efbbadc7-94f7-9b0d-8fc0-0bfe89ffd476,2d1226e1-3ead-ea0c-7428-b27656f6ef13,ce35281c-ae2e-f9c7-c090-437eff7353e9,7b779ba3-a422-1cb1-31cc-b8530da1a315,1892a65e-7eec-46d2-c5e8-3271c8c6c03f,1ae6a06d-3dd9-bf48-bec2-53e0f99c067f,92afebf7-ea2a-a15a-9fd0-885527e130ce,67741869-4695-0566-acf9-5ced1817e5e6,77ea8eff-6f47-a781-41a6-d5ef9f4f3c8b,f2f34c5d-f43a-ccce-6c48-2c5efff6627b,4cc129ae-764b-b096-f3ff-7ec26a8d37fb,49d3a814-9d0c-aecd-f6be-0d5632c3b9f0,73ee2df0-4811-52ff-b409-d1a65e51561b,76780160-7acf-c3d3-f5ca-e5273532cb76,5642c544-9888-401c-3239-c8082a33bff8,1904f5e6-57b5-fd79-0d87-c1af4359ceea,67d500f9-9ef6-cfd0-bba1-db8cd1719dd6,5ad2d1d9-16e4-a2c9-1b93-c30f218582b4,ca7319e8-fe35-505e-ac17-883273d59a00}'::uuid[]))
+               Heap Blocks: exact=1
+               Buffers: shared hit=41
+               ->  Bitmap Index Scan on legacy_travel_plans_pkey (actual time=0.049..0.049 rows=20 loops=1)
+                     Index Cond: (id = ANY ('{d54a8bf9-e4b2-5a8f-4024-4e538958ffb0,efbbadc7-94f7-9b0d-8fc0-0bfe89ffd476,2d1226e1-3ead-ea0c-7428-b27656f6ef13,ce35281c-ae2e-f9c7-c090-437eff7353e9,7b779ba3-a422-1cb1-31cc-b8530da1a315,1892a65e-7eec-46d2-c5e8-3271c8c6c03f,1ae6a06d-3dd9-bf48-bec2-53e0f99c067f,92afebf7-ea2a-a15a-9fd0-885527e130ce,67741869-4695-0566-acf9-5ced1817e5e6,77ea8eff-6f47-a781-41a6-d5ef9f4f3c8b,f2f34c5d-f43a-ccce-6c48-2c5efff6627b,4cc129ae-764b-b096-f3ff-7ec26a8d37fb,49d3a814-9d0c-aecd-f6be-0d5632c3b9f0,73ee2df0-4811-52ff-b409-d1a65e51561b,76780160-7acf-c3d3-f5ca-e5273532cb76,5642c544-9888-401c-3239-c8082a33bff8,1904f5e6-57b5-fd79-0d87-c1af4359ceea,67d500f9-9ef6-cfd0-bba1-db8cd1719dd6,5ad2d1d9-16e4-a2c9-1b93-c30f218582b4,ca7319e8-fe35-505e-ac17-883273d59a00}'::uuid[]))
+                     Buffers: shared hit=40
+         ->  Bitmap Heap Scan on legacy_locations l (actual time=0.013..0.014 rows=3 loops=20)
+               Recheck Cond: (travel_plan_id = p.id)
+               Heap Blocks: exact=60
+               Buffers: shared hit=120
+               ->  Bitmap Index Scan on legacy_idx_locations_plan_order (actual time=0.011..0.011 rows=3 loops=20)
+                     Index Cond: (travel_plan_id = p.id)
+                     Buffers: shared hit=60
+ Planning:
+   Buffers: shared hit=14
+ Planning Time: 0.255 ms
+ Execution Time: 0.602 ms
+(24 rows)
+

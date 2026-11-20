@@ -1,0 +1,17 @@
+database | plan_documents before -> after VACUUM FULL | dead tuples
+db_0 |     1688 kB ->    240 kB | dead tuples before: 0
+db_1 |     1032 kB ->    240 kB | dead tuples before: 0
+db_2 |     1376 kB ->    272 kB | dead tuples before: 0
+db_3 |     2192 kB ->    240 kB | dead tuples before: 0
+db_4 |     2712 kB ->    264 kB | dead tuples before: 0
+db_5 |     1512 kB ->    248 kB | dead tuples before: 0
+db_6 |      680 kB ->    240 kB | dead tuples before: 0
+db_7 |     1384 kB ->    272 kB | dead tuples before: 0
+db_8 |     1984 kB ->    248 kB | dead tuples before: 0
+db_9 |     1416 kB ->    256 kB | dead tuples before: 0
+db_a |      672 kB ->    216 kB | dead tuples before: 0
+db_b |     1904 kB ->    264 kB | dead tuples before: 0
+db_c |     1936 kB ->    256 kB | dead tuples before: 0
+db_d |     1840 kB ->    264 kB | dead tuples before: 0
+db_e |     1064 kB ->    256 kB | dead tuples before: 0
+db_f |     1304 kB ->    256 kB | dead tuples before: 0

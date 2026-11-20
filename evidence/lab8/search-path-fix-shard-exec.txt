@@ -1,0 +1,21 @@
+$ node tools/shard-exec.js /app/db/migrations/002_plan_documents.sql /sql/120_plpgsql_document_check.sql
+16:54:12.288 run shard_exec_20261120165412_57fc30: /app/db/migrations/002_plan_documents.sql + /sql/120_plpgsql_document_check.sql (9153 bytes) on 16 shards, mapping v1
+shard | server      | database | status    | ms  | result                                                       
+------+-------------+----------+-----------+-----+--------------------------------------------------------------
+0     | postgres_00 | db_0     | committed | 256 | documents=114 check=all valid language=plpgsql search_path=""
+1     | postgres_00 | db_1     | committed | 343 | documents=117 check=all valid language=plpgsql search_path=""
+2     | postgres_00 | db_2     | committed | 437 | documents=141 check=all valid language=plpgsql search_path=""
+3     | postgres_00 | db_3     | committed | 345 | documents=117 check=all valid language=plpgsql search_path=""
+4     | postgres_01 | db_4     | committed | 439 | documents=135 check=all valid language=plpgsql search_path=""
+5     | postgres_01 | db_5     | committed | 344 | documents=119 check=all valid language=plpgsql search_path=""
+6     | postgres_01 | db_6     | committed | 337 | documents=113 check=all valid language=plpgsql search_path=""
+7     | postgres_01 | db_7     | committed | 432 | documents=141 check=all valid language=plpgsql search_path=""
+8     | postgres_02 | db_8     | committed | 401 | documents=119 check=all valid language=plpgsql search_path=""
+9     | postgres_02 | db_9     | committed | 401 | documents=127 check=all valid language=plpgsql search_path=""
+a     | postgres_02 | db_a     | committed | 309 | documents=103 check=all valid language=plpgsql search_path=""
+b     | postgres_02 | db_b     | committed | 309 | documents=134 check=all valid language=plpgsql search_path=""
+c     | postgres_03 | db_c     | committed | 391 | documents=125 check=all valid language=plpgsql search_path=""
+d     | postgres_03 | db_d     | committed | 385 | documents=135 check=all valid language=plpgsql search_path=""
+e     | postgres_03 | db_e     | committed | 291 | documents=129 check=all valid language=plpgsql search_path=""
+f     | postgres_03 | db_f     | committed | 296 | documents=131 check=all valid language=plpgsql search_path=""
+16:54:12.837 COMMIT on all 16 shards; total 544 ms

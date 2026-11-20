@@ -391,6 +391,20 @@ def shard_sizes(tag):
     print('SIZES', tag, {k: sum(r[k] for r in rows) for k in ('relational', 'legacy', 'jsonb', 'database')}, flush=True)
 
 
+def vacuum_full():
+    """How much of plan_documents is live data after the load tests (dead versions of updated documents)."""
+    lines = []
+    for shard in SHARDS:
+        s, db = server_of(shard), f'db_{shard}'
+        before = psql(s, db, "SELECT pg_total_relation_size('plan_documents'), n_dead_tup FROM pg_stat_user_tables WHERE relname = 'plan_documents'")[0]
+        psql(s, db, 'VACUUM FULL ANALYZE plan_documents')
+        after = psql(s, db, "SELECT pg_total_relation_size('plan_documents')")[0][0]
+        lines.append(f'{db} | {int(before[0]) / 1024:>8.0f} kB -> {int(after) / 1024:>6.0f} kB | dead tuples before: {before[1]}')
+    shard_sizes('after-vacuum')
+    save('vacuum-full.txt', 'database | plan_documents before -> after VACUUM FULL | dead tuples\n' + '\n'.join(lines) + '\n')
+    print('\n'.join(lines), flush=True)
+
+
 def contract():
     shard_sizes('before-contract')
     code, text = tool('tools/shard-exec.js', '/sql/110_drop_legacy.sql', check=False)
@@ -440,6 +454,15 @@ SIZES_SQL = """SELECT relname AS "table",
   pg_size_pretty(pg_total_relation_size(c.oid)) AS total
 FROM pg_class c WHERE relkind = 'r' AND relnamespace = 'public'::regnamespace AND relname <> 'storage_migrations'
 ORDER BY relname"""
+
+
+MARK = '@@MEASURED@@'
+
+
+def measured(service, q, runs=2):
+    """Run q several times in ONE psql session (warm caches, compiled PL/pgSQL) and return the output of the last run."""
+    script = (q + ';' + NL) * (runs - 1) + f'\\echo {MARK}' + NL + q + ';' + NL
+    return psql_text(service, BENCH, stdin=script).split(MARK + NL, 1)[1]
 
 
 def explain():
@@ -492,10 +515,9 @@ FROM plan_documents WHERE id = ANY(ARRAY[{page}]::uuid[])"""],
     for name, statements in queries.items():
         parts = []
         for q in statements:
-            psql_text(s, BENCH, q)  # warm-up: the measured run has a warm cache
             shown = [f'{BENCH}=# {line}' if line.startswith(('SET', 'EXPLAIN')) else line for line in q.split(NL)]
             parts.append(NL.join(shown) + ';' + NL)
-            parts.append(psql_text(s, BENCH, q))
+            parts.append(measured(s, q))
         save(f'{name}.txt', ''.join(parts))
 
     # WAL written by one location update, relational row vs whole document.
@@ -509,8 +531,9 @@ FROM plan_documents WHERE id = ANY(ARRAY[{page}]::uuid[])"""],
                f"WHERE id = '{pid}'")
         row = {'locations': n, 'doc_bytes': int(psql(s, BENCH, f"SELECT pg_column_size(doc) FROM plan_documents WHERE id = '{pid}'")[0][0])}
         for kind, q in (('relational', rel), ('jsonb', doc)):
-            for attempt in range(4):  # the first run may write full-page images after a checkpoint
-                out = psql_text(s, BENCH, f'BEGIN; EXPLAIN (ANALYZE, WAL, COSTS OFF) {q}; ROLLBACK;')
+            # 4 runs in one session: the first ones may write full-page images after a
+            # checkpoint and compile the PL/pgSQL CHECK; the last one is measured.
+            out = measured(s, f'BEGIN; EXPLAIN (ANALYZE, WAL, COSTS OFF) {q}; ROLLBACK', runs=4)
             m = re.search(r'WAL: records=(\d+)(?: fpi=(\d+))? bytes=(\d+)', out)
             t = re.search(r'Execution Time: ([\d.]+) ms', out)
             row[kind] = {'records': int(m.group(1)), 'fpi': int(m.group(2) or 0), 'bytes': int(m.group(3)), 'ms': float(t.group(1))}
@@ -541,7 +564,7 @@ if __name__ == '__main__':
     a = p.parse_args()
     actions = {'build': build, 'up': lambda: up(not a.keep), 'seed': seed, 'hurl': lambda: sys.exit(hurl(a.tag or 'hurl')),
                'bench': lambda: bench(a.tag), 'dump': lambda: dump(a.tag), 'migrate': migrate, 'rollback-check': lambda: rollback_check(a.tag or 'rollback-dry-run'),
-               'document': document_sample, 'check-demo': check_demo, 'check-cost': lambda: check_cost(a.tag), 'sizes': lambda: shard_sizes(a.tag), 'contract': contract, 'rebalance': rebalance,
+               'document': document_sample, 'check-demo': check_demo, 'check-cost': lambda: check_cost(a.tag), 'sizes': lambda: shard_sizes(a.tag), 'contract': contract, 'vacuum-full': vacuum_full,'rebalance': rebalance,
                'explain': explain, 'snapshot': lambda: snapshot(a.tag or 'snapshot'), 'down': lambda: dc('down'), 'stop': lambda: dc('stop')}
     if a.action not in actions: raise SystemExit(f'unknown action {a.action}')
     actions[a.action]()

@@ -1,0 +1,114 @@
+[
+  {
+    "shard": "0",
+    "relational": 0,
+    "legacy": 0,
+    "jsonb": 245760,
+    "database": 8371223
+  },
+  {
+    "shard": "1",
+    "relational": 0,
+    "legacy": 0,
+    "jsonb": 245760,
+    "database": 8379415
+  },
+  {
+    "shard": "2",
+    "relational": 0,
+    "legacy": 0,
+    "jsonb": 278528,
+    "database": 8403991
+  },
+  {
+    "shard": "3",
+    "relational": 0,
+    "legacy": 0,
+    "jsonb": 245760,
+    "database": 8371223
+  },
+  {
+    "shard": "4",
+    "relational": 0,
+    "legacy": 0,
+    "jsonb": 270336,
+    "database": 8387607
+  },
+  {
+    "shard": "5",
+    "relational": 0,
+    "legacy": 0,
+    "jsonb": 253952,
+    "database": 8379415
+  },
+  {
+    "shard": "6",
+    "relational": 0,
+    "legacy": 0,
+    "jsonb": 245760,
+    "database": 8395799
+  },
+  {
+    "shard": "7",
+    "relational": 0,
+    "legacy": 0,
+    "jsonb": 278528,
+    "database": 8379415
+  },
+  {
+    "shard": "8",
+    "relational": 0,
+    "legacy": 0,
+    "jsonb": 253952,
+    "database": 8363031
+  },
+  {
+    "shard": "9",
+    "relational": 0,
+    "legacy": 0,
+    "jsonb": 262144,
+    "database": 8387607
+  },
+  {
+    "shard": "a",
+    "relational": 0,
+    "legacy": 0,
+    "jsonb": 221184,
+    "database": 8371223
+  },
+  {
+    "shard": "b",
+    "relational": 0,
+    "legacy": 0,
+    "jsonb": 270336,
+    "database": 8379415
+  },
+  {
+    "shard": "c",
+    "relational": 0,
+    "legacy": 0,
+    "jsonb": 262144,
+    "database": 8387607
+  },
+  {
+    "shard": "d",
+    "relational": 0,
+    "legacy": 0,
+    "jsonb": 270336,
+    "database": 8395799
+  },
+  {
+    "shard": "e",
+    "relational": 0,
+    "legacy": 0,
+    "jsonb": 262144,
+    "database": 8379415
+  },
+  {
+    "shard": "f",
+    "relational": 0,
+    "legacy": 0,
+    "jsonb": 262144,
+    "database": 8379415
+  }
+]

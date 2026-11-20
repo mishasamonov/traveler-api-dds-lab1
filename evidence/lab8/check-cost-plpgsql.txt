@@ -1,0 +1,4 @@
+UPDATE of one location in a document (db_0, 3 locations), EXPLAIN ANALYZE, runs 2-6, transaction rolled back
+CHECK plan_document_valid, LANGUAGE plpgsql : 0.306  0.322  0.341  0.467  0.367  | avg 0.361 ms
+without the CHECK (dropped in the transaction):  0.079  0.083  0.070  0.161  0.087  | avg 0.096 ms
+cost of the CHECK: 0.265 ms per UPDATE

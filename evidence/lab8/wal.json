@@ -1,0 +1,66 @@
+[
+  {
+    "locations": 3,
+    "doc_bytes": 1463,
+    "relational": {
+      "records": 5,
+      "fpi": 0,
+      "bytes": 488,
+      "ms": 0.171
+    },
+    "jsonb": {
+      "records": 5,
+      "fpi": 0,
+      "bytes": 2358,
+      "ms": 0.484
+    }
+  },
+  {
+    "locations": 20,
+    "doc_bytes": 1736,
+    "relational": {
+      "records": 5,
+      "fpi": 0,
+      "bytes": 488,
+      "ms": 0.252
+    },
+    "jsonb": {
+      "records": 5,
+      "fpi": 0,
+      "bytes": 4542,
+      "ms": 1.236
+    }
+  },
+  {
+    "locations": 100,
+    "doc_bytes": 6750,
+    "relational": {
+      "records": 5,
+      "fpi": 0,
+      "bytes": 488,
+      "ms": 0.216
+    },
+    "jsonb": {
+      "records": 19,
+      "fpi": 0,
+      "bytes": 19381,
+      "ms": 50.189
+    }
+  },
+  {
+    "locations": 300,
+    "doc_bytes": 19384,
+    "relational": {
+      "records": 5,
+      "fpi": 0,
+      "bytes": 488,
+      "ms": 0.155
+    },
+    "jsonb": {
+      "records": 42,
+      "fpi": 0,
+      "bytes": 55800,
+      "ms": 82.653
+    }
+  }
+]

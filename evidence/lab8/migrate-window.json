@@ -1,0 +1,19 @@
+{
+  "migration_s": 3.401062250137329,
+  "probe": {
+    "http://127.0.0.1:4567/health": {
+      "down_from": "17:24:24.304",
+      "back_at": "17:24:31.318",
+      "unavailable_s": 7.13,
+      "before": "relational",
+      "after": "jsonb"
+    },
+    "http://127.0.0.1:4568/health": {
+      "down_from": "17:24:24.308",
+      "back_at": "17:24:31.133",
+      "unavailable_s": 6.93,
+      "before": "relational",
+      "after": "jsonb"
+    }
+  }
+}

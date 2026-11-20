@@ -1,0 +1,50 @@
+\set VERBOSITY terse
+-- two locations with visit_order 1
+BEGIN;
+BEGIN
+UPDATE plan_documents SET doc = jsonb_set(doc, '{locations,1,visit_order}', '1') WHERE id = '00f3c464-f806-ee8e-1626-a0f8d851cc90';
+ERROR:  new row for relation "plan_documents" violates check constraint "plan_document_valid"
+ROLLBACK;
+ROLLBACK
+-- location id that ends with 1 (another shard)
+BEGIN;
+BEGIN
+UPDATE plan_documents SET doc = jsonb_set(doc, '{locations,0,id}', to_jsonb(overlay(doc->'locations'->0->>'id' PLACING '1' FROM 36))) WHERE id = '00f3c464-f806-ee8e-1626-a0f8d851cc90';
+ERROR:  new row for relation "plan_documents" violates check constraint "plan_document_valid"
+ROLLBACK;
+ROLLBACK
+-- location without the key "name"
+BEGIN;
+BEGIN
+UPDATE plan_documents SET doc = doc #- '{locations,0,name}' WHERE id = '00f3c464-f806-ee8e-1626-a0f8d851cc90';
+ERROR:  new row for relation "plan_documents" violates check constraint "plan_document_valid"
+ROLLBACK;
+ROLLBACK
+-- unknown key "owner"
+BEGIN;
+BEGIN
+UPDATE plan_documents SET doc = doc || '{"owner": "someone"}' WHERE id = '00f3c464-f806-ee8e-1626-a0f8d851cc90';
+ERROR:  new row for relation "plan_documents" violates check constraint "plan_document_valid"
+ROLLBACK;
+ROLLBACK
+-- currency in lower case
+BEGIN;
+BEGIN
+UPDATE plan_documents SET doc = doc || '{"currency": "eur"}' WHERE id = '00f3c464-f806-ee8e-1626-a0f8d851cc90';
+ERROR:  new row for relation "plan_documents" violates check constraint "plan_document_valid"
+ROLLBACK;
+ROLLBACK
+-- latitude 91
+BEGIN;
+BEGIN
+UPDATE plan_documents SET doc = jsonb_set(doc, '{locations,0,latitude}', '91') WHERE id = '00f3c464-f806-ee8e-1626-a0f8d851cc90';
+ERROR:  new row for relation "plan_documents" violates check constraint "plan_document_valid"
+ROLLBACK;
+ROLLBACK
+-- valid change: notes of the first location
+BEGIN;
+BEGIN
+UPDATE plan_documents SET doc = jsonb_set(doc, '{locations,0,notes}', '"checked"') WHERE id = '00f3c464-f806-ee8e-1626-a0f8d851cc90';
+UPDATE 1
+ROLLBACK;
+ROLLBACK

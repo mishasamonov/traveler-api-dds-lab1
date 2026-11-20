@@ -1,0 +1,6 @@
+$ psql -d db_0 -c "SELECT ... FROM storage_migrations"
+        name         | plans | locations |  plans_md5   |          migrated_at          
+---------------------+-------+-----------+--------------+-------------------------------
+ relational_to_jsonb |   114 |       342 | 9e7b79ed7ffb | 2026-11-20 16:24:26.353444+00
+(1 row)
+

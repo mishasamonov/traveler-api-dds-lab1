@@ -1,0 +1,60 @@
+$ psql -d db_0 -c "SELECT id, version, created_at, updated_at, pg_column_size(doc) FROM plan_documents WHERE id = '00f3c464-f806-ee8e-1626-a0f8d851cc90'"
+                  id                  | version |          created_at           |          updated_at           | doc_bytes 
+--------------------------------------+---------+-------------------------------+-------------------------------+-----------
+ 00f3c464-f806-ee8e-1626-a0f8d851cc90 |      86 | 2026-11-20 16:18:16.899361+00 | 2026-11-20 16:21:18.195687+00 |      1304
+(1 row)
+
+$ psql -d db_0 -At -c "SELECT jsonb_pretty(doc) FROM plan_documents WHERE id = '00f3c464-f806-ee8e-1626-a0f8d851cc90'"
+{
+    "title": "Baseline trip 1033",
+    "budget": 184.00,
+    "currency": "EUR",
+    "end_date": null,
+    "is_public": false,
+    "locations": [
+        {
+            "id": "cfa6c166-f4b7-d6ec-ac1f-7f920e27ff60",
+            "name": "Location 1",
+            "notes": "iteration 266",
+            "budget": 100.00,
+            "address": null,
+            "version": 353,
+            "latitude": 48.856600,
+            "longitude": 2.352200,
+            "created_at": "2026-11-20T16:18:16.899361+00:00",
+            "visit_order": 1,
+            "arrival_date": null,
+            "departure_date": null
+        },
+        {
+            "id": "58cc097a-f4da-5b13-ebdb-9128353c1cf0",
+            "name": "Location 2",
+            "notes": null,
+            "budget": 100.00,
+            "address": null,
+            "version": 1,
+            "latitude": 48.856600,
+            "longitude": 2.352200,
+            "created_at": "2026-11-20T16:18:16.899361+00:00",
+            "visit_order": 2,
+            "arrival_date": null,
+            "departure_date": null
+        },
+        {
+            "id": "edd0b8af-b8cb-de25-9643-1ed0a82ddc80",
+            "name": "Location 3",
+            "notes": null,
+            "budget": 100.00,
+            "address": null,
+            "version": 1,
+            "latitude": 48.856600,
+            "longitude": 2.352200,
+            "created_at": "2026-11-20T16:18:16.899361+00:00",
+            "visit_order": 3,
+            "arrival_date": null,
+            "departure_date": null
+        }
+    ],
+    "start_date": null,
+    "description": "Travel itinerary Travel itinerary Travel itinerary Travel itinerary Travel itinerary Travel itinerary Travel itinerary Travel itinerary "
+}

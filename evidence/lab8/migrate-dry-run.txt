@@ -1,0 +1,21 @@
+$ node tools/shard-exec.js /app/db/migrations/002_plan_documents.sql /sql/100_migrate_to_jsonb.sql --dry-run
+16:24:19.645 run shard_exec_20261120162419_4b2149: /app/db/migrations/002_plan_documents.sql + /sql/100_migrate_to_jsonb.sql (12190 bytes) on 16 shards, mapping v1, DRY RUN
+shard | server      | database | status                | ms   | result                                                     
+------+-------------+----------+-----------------------+------+------------------------------------------------------------
+0     | postgres_00 | db_0     | rolled back (dry run) | 1686 | plans=114 locations=342 check=rows equal plans_md5=9e7b79ed
+1     | postgres_00 | db_1     | rolled back (dry run) | 1700 | plans=117 locations=351 check=rows equal plans_md5=4b46cc8a
+2     | postgres_00 | db_2     | rolled back (dry run) | 1782 | plans=141 locations=423 check=rows equal plans_md5=3c2ae5b0
+3     | postgres_00 | db_3     | rolled back (dry run) | 1493 | plans=117 locations=351 check=rows equal plans_md5=334298b5
+4     | postgres_01 | db_4     | rolled back (dry run) | 1684 | plans=135 locations=405 check=rows equal plans_md5=cab6f23b
+5     | postgres_01 | db_5     | rolled back (dry run) | 1576 | plans=119 locations=357 check=rows equal plans_md5=2dbe47f9
+6     | postgres_01 | db_6     | rolled back (dry run) | 1779 | plans=113 locations=339 check=rows equal plans_md5=e0aaf3bf
+7     | postgres_01 | db_7     | rolled back (dry run) | 1691 | plans=141 locations=423 check=rows equal plans_md5=33bc1eae
+8     | postgres_02 | db_8     | rolled back (dry run) | 1361 | plans=119 locations=357 check=rows equal plans_md5=5494e102
+9     | postgres_02 | db_9     | rolled back (dry run) | 1353 | plans=127 locations=381 check=rows equal plans_md5=28173a7f
+a     | postgres_02 | db_a     | rolled back (dry run) | 1253 | plans=103 locations=309 check=rows equal plans_md5=b84af817
+b     | postgres_02 | db_b     | rolled back (dry run) | 1455 | plans=134 locations=402 check=rows equal plans_md5=2b25eed7
+c     | postgres_03 | db_c     | rolled back (dry run) | 1132 | plans=125 locations=375 check=rows equal plans_md5=9164edde
+d     | postgres_03 | db_d     | rolled back (dry run) | 1340 | plans=135 locations=405 check=rows equal plans_md5=fcab0992
+e     | postgres_03 | db_e     | rolled back (dry run) | 1234 | plans=129 locations=387 check=rows equal plans_md5=a7fba5cf
+f     | postgres_03 | db_f     | rolled back (dry run) | 1330 | plans=131 locations=393 check=rows equal plans_md5=358cf3b5
+16:24:21.534 DRY RUN: everything rolled back; total 1885 ms

@@ -1,0 +1,13 @@
+jsonb_bench=# BEGIN; EXPLAIN (ANALYZE, WAL, COSTS OFF) UPDATE plan_documents SET doc = jsonb_set(doc, '{locations,0}', (doc->'locations'->0) || jsonb_build_object('notes', 'WAL test', 'version', (doc->'locations'->0->>'version')::int + 1)) WHERE id = '2c163fc0-e287-c43d-fe5a-171e74c7fa5d'; ROLLBACK;
+BEGIN
+                                               QUERY PLAN                                               
+--------------------------------------------------------------------------------------------------------
+ Update on plan_documents (actual time=50.130..50.130 rows=0 loops=1)
+   WAL: records=19 bytes=19381
+   ->  Index Scan using plan_documents_pkey on plan_documents (actual time=0.426..0.521 rows=1 loops=1)
+         Index Cond: (id = '2c163fc0-e287-c43d-fe5a-171e74c7fa5d'::uuid)
+ Planning Time: 0.259 ms
+ Execution Time: 50.189 ms
+(6 rows)
+
+ROLLBACK

@@ -1,0 +1,21 @@
+$ node tools/shard-exec.js /app/db/migrations/001_schema.sql /sql/190_rollback_to_relational.sql --dry-run
+16:24:51.259 run shard_exec_20261120162451_7ade08: /app/db/migrations/001_schema.sql + /sql/190_rollback_to_relational.sql (4990 bytes) on 16 shards, mapping v1, DRY RUN
+shard | server      | database | status                | ms  | result                                                        
+------+-------------+----------+-----------------------+-----+---------------------------------------------------------------
+0     | postgres_00 | db_0     | rolled back (dry run) | 872 | plans=114 locations=342 plans_md5=9e7b79ed same_as_before=true
+1     | postgres_00 | db_1     | rolled back (dry run) | 677 | plans=117 locations=351 plans_md5=4b46cc8a same_as_before=true
+2     | postgres_00 | db_2     | rolled back (dry run) | 867 | plans=141 locations=423 plans_md5=3c2ae5b0 same_as_before=true
+3     | postgres_00 | db_3     | rolled back (dry run) | 766 | plans=117 locations=351 plans_md5=334298b5 same_as_before=true
+4     | postgres_01 | db_4     | rolled back (dry run) | 762 | plans=135 locations=405 plans_md5=cab6f23b same_as_before=true
+5     | postgres_01 | db_5     | rolled back (dry run) | 665 | plans=119 locations=357 plans_md5=2dbe47f9 same_as_before=true
+6     | postgres_01 | db_6     | rolled back (dry run) | 765 | plans=113 locations=339 plans_md5=e0aaf3bf same_as_before=true
+7     | postgres_01 | db_7     | rolled back (dry run) | 773 | plans=141 locations=423 plans_md5=33bc1eae same_as_before=true
+8     | postgres_02 | db_8     | rolled back (dry run) | 734 | plans=119 locations=357 plans_md5=5494e102 same_as_before=true
+9     | postgres_02 | db_9     | rolled back (dry run) | 741 | plans=127 locations=381 plans_md5=28173a7f same_as_before=true
+a     | postgres_02 | db_a     | rolled back (dry run) | 835 | plans=103 locations=309 plans_md5=b84af817 same_as_before=true
+b     | postgres_02 | db_b     | rolled back (dry run) | 827 | plans=134 locations=402 plans_md5=2b25eed7 same_as_before=true
+c     | postgres_03 | db_c     | rolled back (dry run) | 716 | plans=125 locations=375 plans_md5=9164edde same_as_before=true
+d     | postgres_03 | db_d     | rolled back (dry run) | 823 | plans=135 locations=405 plans_md5=fcab0992 same_as_before=true
+e     | postgres_03 | db_e     | rolled back (dry run) | 819 | plans=129 locations=387 plans_md5=a7fba5cf same_as_before=true
+f     | postgres_03 | db_f     | rolled back (dry run) | 818 | plans=131 locations=393 plans_md5=358cf3b5 same_as_before=true
+16:24:52.189 DRY RUN: everything rolled back; total 926 ms

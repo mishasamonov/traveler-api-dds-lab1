@@ -1,0 +1,93 @@
+[
+  {
+    "query": "SELECT id, (extract($2 FROM created_at) * $3)::bigint AS sort_key FROM plan_documents ORDER BY created_at DESC, id LIMIT $1",
+    "calls": 288064,
+    "ms": 48665.23716199996,
+    "rows": 26824744,
+    "wal": 147043
+  },
+  {
+    "query": "SELECT id, doc - $2 AS doc, version, created_at, updated_at, jsonb_array_length(doc->$3) AS location_count FROM plan_documents WHERE id = ANY($1::uuid[])",
+    "calls": 20179,
+    "ms": 3754.112031999997,
+    "rows": 359455,
+    "wal": 4247
+  },
+  {
+    "query": "SELECT id, doc, version, created_at, updated_at FROM plan_documents WHERE id = $1",
+    "calls": 18204,
+    "ms": 1127.3982250000004,
+    "rows": 18204,
+    "wal": 1527
+  },
+  {
+    "query": "BEGIN",
+    "calls": 4501,
+    "ms": 5.340356000000001,
+    "rows": 0,
+    "wal": 0
+  },
+  {
+    "query": "COMMIT",
+    "calls": 4501,
+    "ms": 7.2080899999999986,
+    "rows": 0,
+    "wal": 0
+  },
+  {
+    "query": "SELECT doc - $2 AS doc FROM plan_documents WHERE id = $1",
+    "calls": 4501,
+    "ms": 234.63483999999994,
+    "rows": 4501,
+    "wal": 307
+  },
+  {
+    "query": "SELECT id, doc->$2 AS locations FROM plan_documents WHERE doc->$3 @> $1::jsonb FOR UPDATE",
+    "calls": 4501,
+    "ms": 702.535597,
+    "rows": 4501,
+    "wal": 276549
+  },
+  {
+    "query": "UPDATE plan_documents SET doc = doc || $1::jsonb, version = version + $4, updated_at = now() WHERE id = $2 AND version = $3 RETURNING id, doc - $5 AS doc, version, created_at, updated_at",
+    "calls": 4501,
+    "ms": 7967.208240000001,
+    "rows": 4501,
+    "wal": 10137763
+  },
+  {
+    "query": "UPDATE plan_documents SET doc = jsonb_set(doc, $3, $2::jsonb) WHERE id = $1",
+    "calls": 4501,
+    "ms": 7659.531226000002,
+    "rows": 4501,
+    "wal": 9338898
+  },
+  {
+    "query": "SELECT $1",
+    "calls": 1072,
+    "ms": 4.750456,
+    "rows": 1072,
+    "wal": 0
+  },
+  {
+    "query": "DELETE FROM plan_documents WHERE id = $1",
+    "calls": 542,
+    "ms": 33.895516,
+    "rows": 542,
+    "wal": 42072
+  },
+  {
+    "query": "INSERT INTO plan_documents (id, doc) VALUES ($1, $2) RETURNING id, doc, version, created_at, updated_at",
+    "calls": 542,
+    "ms": 778.4847260000001,
+    "rows": 542,
+    "wal": 356799
+  },
+  {
+    "query": "UPDATE plan_documents SET doc = jsonb_set(doc, $3, doc->$4 || jsonb_build_array($2::jsonb || jsonb_build_object( $5, (SELECT coalesce(max((l->>$6)::int), $7) + $8 FROM jsonb_array_elements(doc->$9) l), $10, now()))) WHERE id = $1 RETURNING doc->$11->$12 AS location",
+    "calls": 542,
+    "ms": 841.6448829999999,
+    "rows": 542,
+    "wal": 574550
+  }
+]

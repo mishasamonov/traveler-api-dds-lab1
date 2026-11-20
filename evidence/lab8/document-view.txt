@@ -1,0 +1,8 @@
+$ psql -d db_0 -c "SELECT ... FROM locations_view WHERE travel_plan_id = '00f3c464-f806-ee8e-1626-a0f8d851cc90'"
+                  id                  |    name    | visit_order | latitude  | budget | version 
+--------------------------------------+------------+-------------+-----------+--------+---------
+ cfa6c166-f4b7-d6ec-ac1f-7f920e27ff60 | Location 1 |           1 | 48.856600 | 100.00 |     353
+ 58cc097a-f4da-5b13-ebdb-9128353c1cf0 | Location 2 |           2 | 48.856600 | 100.00 |       1
+ edd0b8af-b8cb-de25-9643-1ed0a82ddc80 | Location 3 |           3 | 48.856600 | 100.00 |       1
+(3 rows)
+

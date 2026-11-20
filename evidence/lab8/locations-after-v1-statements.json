@@ -1,0 +1,58 @@
+[
+  {
+    "query": "BEGIN",
+    "calls": 11033,
+    "ms": 17.733222000000012,
+    "rows": 0,
+    "wal": 0
+  },
+  {
+    "query": "COMMIT",
+    "calls": 11033,
+    "ms": 17.341164,
+    "rows": 0,
+    "wal": 0
+  },
+  {
+    "query": "SELECT id, doc, version, created_at, updated_at FROM plan_documents WHERE id = $1",
+    "calls": 11033,
+    "ms": 1684.836584,
+    "rows": 11033,
+    "wal": 71925
+  },
+  {
+    "query": "SELECT id, doc->$2 AS locations FROM plan_documents WHERE doc->$3 @> $1::jsonb FOR UPDATE",
+    "calls": 11033,
+    "ms": 7669.901998,
+    "rows": 11033,
+    "wal": 757420
+  },
+  {
+    "query": "UPDATE plan_documents SET doc = jsonb_set(doc, $3, $2::jsonb) WHERE id = $1",
+    "calls": 11033,
+    "ms": 74765.96546300002,
+    "rows": 11033,
+    "wal": 22468095
+  },
+  {
+    "query": "UPDATE plan_documents SET doc = jsonb_set(doc, $3, (SELECT coalesce(jsonb_agg(l ORDER BY n), $4::jsonb) FROM jsonb_array_elements(doc->$5) WITH ORDINALITY e(l, n) WHERE l->>$6 <> $2)) WHERE doc->$7 @> $1::jsonb",
+    "calls": 11033,
+    "ms": 144924.882239,
+    "rows": 11033,
+    "wal": 22753327
+  },
+  {
+    "query": "UPDATE plan_documents SET doc = jsonb_set(doc, $3, doc->$4 || jsonb_build_array($2::jsonb || jsonb_build_object( $5, (SELECT coalesce(max((l->>$6)::int), $7) + $8 FROM jsonb_array_elements(doc->$9) l), $10, now()))) WHERE id = $1 RETURNING doc->$11->$12 AS location",
+    "calls": 11033,
+    "ms": 145012.03714800003,
+    "rows": 11033,
+    "wal": 27205997
+  },
+  {
+    "query": "SELECT $1",
+    "calls": 384,
+    "ms": 2.9318229999999996,
+    "rows": 384,
+    "wal": 0
+  }
+]

@@ -1,0 +1,10 @@
+$ psql -d db_0 -c "\dt"
+                 List of relations
+ Schema |        Name         | Type  |   Owner    
+--------+---------------------+-------+------------
+ public | legacy_locations    | table | lab6_admin
+ public | legacy_travel_plans | table | lab6_admin
+ public | plan_documents      | table | lab6_admin
+ public | storage_migrations  | table | lab6_admin
+(4 rows)
+

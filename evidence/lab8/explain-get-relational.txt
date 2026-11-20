@@ -1,0 +1,28 @@
+jsonb_bench=# EXPLAIN (ANALYZE, BUFFERS, COSTS OFF) SELECT * FROM legacy_travel_plans WHERE id = 'f2af4bce-395a-1b5a-d659-10d6bb6763f1';
+                                                 QUERY PLAN                                                 
+------------------------------------------------------------------------------------------------------------
+ Index Scan using legacy_travel_plans_pkey on legacy_travel_plans (actual time=0.028..0.029 rows=1 loops=1)
+   Index Cond: (id = 'f2af4bce-395a-1b5a-d659-10d6bb6763f1'::uuid)
+   Buffers: shared hit=3
+ Planning Time: 0.051 ms
+ Execution Time: 0.055 ms
+(5 rows)
+
+jsonb_bench=# EXPLAIN (ANALYZE, BUFFERS, COSTS OFF) SELECT * FROM legacy_locations WHERE travel_plan_id = 'f2af4bce-395a-1b5a-d659-10d6bb6763f1' ORDER BY visit_order;
+                                                 QUERY PLAN                                                 
+------------------------------------------------------------------------------------------------------------
+ Sort (actual time=0.032..0.033 rows=3 loops=1)
+   Sort Key: visit_order
+   Sort Method: quicksort  Memory: 25kB
+   Buffers: shared hit=6
+   ->  Bitmap Heap Scan on legacy_locations (actual time=0.016..0.020 rows=3 loops=1)
+         Recheck Cond: (travel_plan_id = 'f2af4bce-395a-1b5a-d659-10d6bb6763f1'::uuid)
+         Heap Blocks: exact=3
+         Buffers: shared hit=6
+         ->  Bitmap Index Scan on legacy_idx_locations_plan_order (actual time=0.014..0.014 rows=3 loops=1)
+               Index Cond: (travel_plan_id = 'f2af4bce-395a-1b5a-d659-10d6bb6763f1'::uuid)
+               Buffers: shared hit=3
+ Planning Time: 0.046 ms
+ Execution Time: 0.073 ms
+(13 rows)
+

@@ -1,0 +1,16 @@
+k6 LOCATIONS TEST
+API: http://127.0.0.1:4567
+
+http_reqs: {"count":44132,"rate":732.1545450500787}
+iterations: {"count":11033,"rate":183.03863626251967}
+checks: {"rate":1,"passes":44132,"fails":0}
+http_req_failed: {"rate":0,"passes":0,"fails":44132}
+http_req_duration: {"avg":55.3635430390646,"med":43.4354,"p(90)":103.06963,"p(95)":111.02395999999997,"p(99)":191.78853300000003,"max":354.0262}
+
+THRESHOLDS
+PASS http_req_failed: rate<0.01
+PASS http_req_duration{name:POST location}: max>=0
+PASS http_req_duration{name:DELETE location}: max>=0
+PASS http_req_duration{name:GET plan}: max>=0
+PASS http_req_duration{name:PUT location}: max>=0
+PASS checks: rate>0.99

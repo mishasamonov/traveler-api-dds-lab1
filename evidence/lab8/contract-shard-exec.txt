@@ -1,0 +1,21 @@
+$ node tools/shard-exec.js /sql/110_drop_legacy.sql
+16:45:42.050 run shard_exec_20261120164542_ccbabf: /sql/110_drop_legacy.sql (626 bytes) on 16 shards, mapping v1
+shard | server      | database | status    | ms  | result                          
+------+-------------+----------+-----------+-----+---------------------------------
+0     | postgres_00 | db_0     | committed | 221 | plans=114 plan_documents=1688 kB
+1     | postgres_00 | db_1     | committed | 218 | plans=117 plan_documents=1032 kB
+2     | postgres_00 | db_2     | committed | 213 | plans=141 plan_documents=1376 kB
+3     | postgres_00 | db_3     | committed | 213 | plans=117 plan_documents=2192 kB
+4     | postgres_01 | db_4     | committed | 111 | plans=135 plan_documents=2712 kB
+5     | postgres_01 | db_5     | committed | 112 | plans=119 plan_documents=1512 kB
+6     | postgres_01 | db_6     | committed | 204 | plans=113 plan_documents=680 kB 
+7     | postgres_01 | db_7     | committed | 211 | plans=141 plan_documents=1384 kB
+8     | postgres_02 | db_8     | committed | 75  | plans=119 plan_documents=1984 kB
+9     | postgres_02 | db_9     | committed | 168 | plans=127 plan_documents=1416 kB
+a     | postgres_02 | db_a     | committed | 87  | plans=103 plan_documents=672 kB 
+b     | postgres_02 | db_b     | committed | 74  | plans=134 plan_documents=1904 kB
+c     | postgres_03 | db_c     | committed | 162 | plans=125 plan_documents=1936 kB
+d     | postgres_03 | db_d     | committed | 157 | plans=135 plan_documents=1840 kB
+e     | postgres_03 | db_e     | committed | 158 | plans=129 plan_documents=1064 kB
+f     | postgres_03 | db_f     | committed | 154 | plans=131 plan_documents=1304 kB
+16:45:42.436 COMMIT on all 16 shards; total 383 ms

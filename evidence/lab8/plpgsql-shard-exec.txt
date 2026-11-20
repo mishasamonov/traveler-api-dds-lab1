@@ -1,0 +1,21 @@
+$ node tools/shard-exec.js /app/db/migrations/002_plan_documents.sql /sql/120_plpgsql_document_check.sql
+16:34:18.593 run shard_exec_20261120163418_f8a7a7: /app/db/migrations/002_plan_documents.sql + /sql/120_plpgsql_document_check.sql (8631 bytes) on 16 shards, mapping v1
+shard | server      | database | status    | ms  | result                                        
+------+-------------+----------+-----------+-----+-----------------------------------------------
+0     | postgres_00 | db_0     | committed | 421 | documents=114 check=all valid language=plpgsql
+1     | postgres_00 | db_1     | committed | 300 | documents=117 check=all valid language=plpgsql
+2     | postgres_00 | db_2     | committed | 403 | documents=141 check=all valid language=plpgsql
+3     | postgres_00 | db_3     | committed | 407 | documents=117 check=all valid language=plpgsql
+4     | postgres_01 | db_4     | committed | 496 | documents=135 check=all valid language=plpgsql
+5     | postgres_01 | db_5     | committed | 499 | documents=119 check=all valid language=plpgsql
+6     | postgres_01 | db_6     | committed | 406 | documents=113 check=all valid language=plpgsql
+7     | postgres_01 | db_7     | committed | 400 | documents=141 check=all valid language=plpgsql
+8     | postgres_02 | db_8     | committed | 370 | documents=119 check=all valid language=plpgsql
+9     | postgres_02 | db_9     | committed | 272 | documents=127 check=all valid language=plpgsql
+a     | postgres_02 | db_a     | committed | 273 | documents=103 check=all valid language=plpgsql
+b     | postgres_02 | db_b     | committed | 372 | documents=134 check=all valid language=plpgsql
+c     | postgres_03 | db_c     | committed | 260 | documents=125 check=all valid language=plpgsql
+d     | postgres_03 | db_d     | committed | 362 | documents=135 check=all valid language=plpgsql
+e     | postgres_03 | db_e     | committed | 352 | documents=129 check=all valid language=plpgsql
+f     | postgres_03 | db_f     | committed | 348 | documents=131 check=all valid language=plpgsql
+16:34:19.191 COMMIT on all 16 shards; total 594 ms

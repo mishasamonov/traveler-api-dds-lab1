@@ -1,0 +1,17 @@
+$ psql -d db_0 -c "\d plan_documents"
+                     Table "public.plan_documents"
+   Column   |           Type           | Collation | Nullable | Default 
+------------+--------------------------+-----------+----------+---------
+ id         | uuid                     |           | not null | 
+ doc        | jsonb                    |           | not null | 
+ version    | integer                  |           | not null | 1
+ created_at | timestamp with time zone |           | not null | now()
+ updated_at | timestamp with time zone |           | not null | now()
+Indexes:
+    "plan_documents_pkey" PRIMARY KEY, btree (id)
+    "plan_documents_created" btree (created_at DESC, id)
+    "plan_documents_location_ids" gin ((doc -> 'locations'::text) jsonb_path_ops)
+Check constraints:
+    "plan_document_valid" CHECK (plan_document_valid(doc, id))
+    "plan_documents_version_check" CHECK (version > 0)
+

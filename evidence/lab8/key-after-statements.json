@@ -1,0 +1,16 @@
+[
+  {
+    "query": "SELECT id, doc, version, created_at, updated_at FROM plan_documents WHERE id = $1",
+    "calls": 57987,
+    "ms": 3360.1655250000013,
+    "rows": 57987,
+    "wal": 0
+  },
+  {
+    "query": "SELECT $1",
+    "calls": 300,
+    "ms": 1.815929,
+    "rows": 300,
+    "wal": 0
+  }
+]

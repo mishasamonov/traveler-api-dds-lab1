@@ -1,0 +1,11 @@
+{
+  "exitCode": 99,
+  "startMs": 1795191507896,
+  "endMs": 1795191678974,
+  "events": [
+    {
+      "start": "17:18:27",
+      "api": "traveler-api:lab7"
+    }
+  ]
+}

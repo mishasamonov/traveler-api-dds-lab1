@@ -1,0 +1,28 @@
+{
+  "exitCode": 0,
+  "startMs": 1795193202466,
+  "endMs": 1795193549184,
+  "events": [
+    {
+      "k6Start": "17:46:42"
+    },
+    {
+      "move": "db_3",
+      "target": "postgres_03",
+      "start": "17:47:17",
+      "startMs": 1795193237536,
+      "end": "17:49:56",
+      "endMs": 1795193396215,
+      "exitCode": 1
+    },
+    {
+      "move": "db_7",
+      "target": "postgres_02",
+      "start": "17:49:56",
+      "startMs": 1795193396216,
+      "end": "17:52:29",
+      "endMs": 1795193549183,
+      "exitCode": 1
+    }
+  ]
+}

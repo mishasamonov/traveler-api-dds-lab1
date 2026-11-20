@@ -1,0 +1,20 @@
+16:18:16.793 run shard_exec_20261120161816_d51160: /sql/000_seed_lab2_dataset.sql (1120 bytes) on 16 shards, mapping v1
+shard | server      | database | status    | ms  | rows   
+------+-------------+----------+-----------+-----+--------
+0     | postgres_00 | db_0     | committed | 560 | 114,342
+1     | postgres_00 | db_1     | committed | 548 | 117,351
+2     | postgres_00 | db_2     | committed | 657 | 141,423
+3     | postgres_00 | db_3     | committed | 676 | 117,351
+4     | postgres_01 | db_4     | committed | 560 | 135,405
+5     | postgres_01 | db_5     | committed | 644 | 119,357
+6     | postgres_01 | db_6     | committed | 446 | 113,339
+7     | postgres_01 | db_7     | committed | 657 | 141,423
+8     | postgres_02 | db_8     | committed | 616 | 119,357
+9     | postgres_02 | db_9     | committed | 619 | 127,381
+a     | postgres_02 | db_a     | committed | 611 | 103,309
+b     | postgres_02 | db_b     | committed | 623 | 134,402
+c     | postgres_03 | db_c     | committed | 603 | 125,375
+d     | postgres_03 | db_d     | committed | 603 | 135,405
+e     | postgres_03 | db_e     | committed | 598 | 129,387
+f     | postgres_03 | db_f     | committed | 598 | 131,393
+16:18:17.635 COMMIT on all 16 shards; total 837 ms

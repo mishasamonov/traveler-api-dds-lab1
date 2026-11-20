@@ -1,0 +1,10 @@
+jsonb_bench=# EXPLAIN (ANALYZE, BUFFERS, COSTS OFF) SELECT travel_plan_id FROM legacy_locations WHERE id = '0bf440c8-ede8-b712-c5f8-e92fc5524f51';
+                                              QUERY PLAN                                              
+------------------------------------------------------------------------------------------------------
+ Index Scan using legacy_locations_pkey on legacy_locations (actual time=0.021..0.022 rows=1 loops=1)
+   Index Cond: (id = '0bf440c8-ede8-b712-c5f8-e92fc5524f51'::uuid)
+   Buffers: shared hit=4
+ Planning Time: 0.031 ms
+ Execution Time: 0.042 ms
+(5 rows)
+

@@ -1,0 +1,16 @@
+jsonb_bench=# SET enable_bitmapscan = off; SET enable_indexscan = off;
+jsonb_bench=# EXPLAIN (ANALYZE, BUFFERS, COSTS OFF) SELECT id FROM plan_documents WHERE doc->'locations' @> '[{"id": "0bf440c8-ede8-b712-c5f8-e92fc5524f51"}]';
+SET
+SET
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Seq Scan on plan_documents (actual time=0.836..93.307 rows=1 loops=1)
+   Filter: ((doc -> 'locations'::text) @> '[{"id": "0bf440c8-ede8-b712-c5f8-e92fc5524f51"}]'::jsonb)
+   Rows Removed by Filter: 50002
+   Buffers: shared hit=7220 read=2787
+ Planning:
+   Buffers: shared hit=1
+ Planning Time: 0.064 ms
+ Execution Time: 93.321 ms
+(8 rows)
+

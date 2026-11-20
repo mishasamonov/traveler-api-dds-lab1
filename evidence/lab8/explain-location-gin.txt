@@ -1,0 +1,16 @@
+jsonb_bench=# EXPLAIN (ANALYZE, BUFFERS, COSTS OFF) SELECT id FROM plan_documents WHERE doc->'locations' @> '[{"id": "0bf440c8-ede8-b712-c5f8-e92fc5524f51"}]';
+                                                  QUERY PLAN                                                   
+---------------------------------------------------------------------------------------------------------------
+ Bitmap Heap Scan on plan_documents (actual time=0.015..0.015 rows=1 loops=1)
+   Recheck Cond: ((doc -> 'locations'::text) @> '[{"id": "0bf440c8-ede8-b712-c5f8-e92fc5524f51"}]'::jsonb)
+   Heap Blocks: exact=1
+   Buffers: shared hit=5
+   ->  Bitmap Index Scan on plan_documents_location_ids (actual time=0.008..0.008 rows=1 loops=1)
+         Index Cond: ((doc -> 'locations'::text) @> '[{"id": "0bf440c8-ede8-b712-c5f8-e92fc5524f51"}]'::jsonb)
+         Buffers: shared hit=4
+ Planning:
+   Buffers: shared hit=1
+ Planning Time: 0.039 ms
+ Execution Time: 0.057 ms
+(11 rows)
+

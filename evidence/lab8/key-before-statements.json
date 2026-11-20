@@ -1,0 +1,23 @@
+[
+  {
+    "query": "SELECT * FROM locations WHERE travel_plan_id = $1 ORDER BY visit_order",
+    "calls": 49334,
+    "ms": 1736.0290579999996,
+    "rows": 148002,
+    "wal": 622
+  },
+  {
+    "query": "SELECT * FROM travel_plans WHERE id = $1",
+    "calls": 49334,
+    "ms": 1514.3592469999996,
+    "rows": 49334,
+    "wal": 0
+  },
+  {
+    "query": "SELECT $1",
+    "calls": 300,
+    "ms": 1.478589,
+    "rows": 300,
+    "wal": 0
+  }
+]

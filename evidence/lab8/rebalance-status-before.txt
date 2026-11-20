@@ -1,0 +1,7 @@
+mapping file v1
+server      | registry | mapped              | databases          
+------------+----------+---------------------+--------------------
+postgres_00 | v1       | db_0 db_1 db_2 db_3 | db_0 db_1 db_2 db_3
+postgres_01 | v1       | db_4 db_5 db_6 db_7 | db_4 db_5 db_6 db_7
+postgres_02 | v1       | db_8 db_9 db_a db_b | db_8 db_9 db_a db_b
+postgres_03 | v1       | db_c db_d db_e db_f | db_c db_d db_e db_f

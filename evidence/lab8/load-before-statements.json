@@ -1,0 +1,114 @@
+[
+  {
+    "query": "SELECT id, (extract($2 FROM created_at) * $3)::bigint AS sort_key FROM travel_plans ORDER BY created_at DESC, id LIMIT $1",
+    "calls": 293568,
+    "ms": 51914.83098799995,
+    "rows": 27244411,
+    "wal": 100794
+  },
+  {
+    "query": "SELECT * FROM travel_plans WHERE id = $1",
+    "calls": 23135,
+    "ms": 752.4207130000002,
+    "rows": 23135,
+    "wal": 12875
+  },
+  {
+    "query": "SELECT p.*, COUNT(l.id)::integer AS location_count FROM travel_plans p LEFT JOIN locations l ON l.travel_plan_id = p.id WHERE p.id = ANY($1::uuid[]) GROUP BY p.id",
+    "calls": 20987,
+    "ms": 3615.6369639999984,
+    "rows": 366035,
+    "wal": 7832
+  },
+  {
+    "query": "SELECT * FROM locations WHERE travel_plan_id = $1 ORDER BY visit_order",
+    "calls": 18548,
+    "ms": 845.3297149999996,
+    "rows": 55644,
+    "wal": 91014
+  },
+  {
+    "query": "BEGIN",
+    "calls": 5135,
+    "ms": 7.2509049999999995,
+    "rows": 0,
+    "wal": 0
+  },
+  {
+    "query": "COMMIT",
+    "calls": 5135,
+    "ms": 7.624882000000001,
+    "rows": 0,
+    "wal": 0
+  },
+  {
+    "query": "SELECT id FROM travel_plans WHERE id = $1 FOR UPDATE",
+    "calls": 5135,
+    "ms": 266.92893499999997,
+    "rows": 5135,
+    "wal": 290281
+  },
+  {
+    "query": "SELECT * FROM locations WHERE id = $1 FOR UPDATE",
+    "calls": 4587,
+    "ms": 266.382702,
+    "rows": 4587,
+    "wal": 249160
+  },
+  {
+    "query": "SELECT travel_plan_id FROM locations WHERE id = $1",
+    "calls": 4587,
+    "ms": 207.52072499999997,
+    "rows": 4587,
+    "wal": 5162
+  },
+  {
+    "query": "UPDATE locations SET notes = $1, version = version + $4 WHERE id = $2 AND version = $3 RETURNING *",
+    "calls": 4587,
+    "ms": 694.264928,
+    "rows": 4587,
+    "wal": 804084
+  },
+  {
+    "query": "UPDATE travel_plans SET budget = $1, version = version + $4 WHERE id = $2 AND version = $3 RETURNING *",
+    "calls": 4587,
+    "ms": 900.8275209999997,
+    "rows": 4587,
+    "wal": 2176642
+  },
+  {
+    "query": "SELECT $1",
+    "calls": 1072,
+    "ms": 5.202427,
+    "rows": 1072,
+    "wal": 0
+  },
+  {
+    "query": "DELETE FROM travel_plans WHERE id = $1",
+    "calls": 548,
+    "ms": 106.467389,
+    "rows": 548,
+    "wal": 95079
+  },
+  {
+    "query": "INSERT INTO locations (id, name, travel_plan_id, visit_order) VALUES ($1, $2, $3, $4) RETURNING *",
+    "calls": 548,
+    "ms": 137.71836,
+    "rows": 548,
+    "wal": 216617
+  },
+  {
+    "query": "INSERT INTO travel_plans (id, title) VALUES ($1, $2) RETURNING *",
+    "calls": 548,
+    "ms": 57.565269,
+    "rows": 548,
+    "wal": 144124
+  },
+  {
+    "query": "SELECT COALESCE(MAX(visit_order), $2) + $3 AS next FROM locations WHERE travel_plan_id = $1",
+    "calls": 548,
+    "ms": 15.713799000000002,
+    "rows": 548,
+    "wal": 0
+  }
+]

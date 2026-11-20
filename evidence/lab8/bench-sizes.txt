@@ -1,0 +1,37 @@
+$ psql -d jsonb_bench -f 001_schema.sql -f sql/150_bench_dataset.sql   # 16.3 s
+ plans | locations 
+-------+-----------
+ 50003 |    150420
+(1 row)
+
+
+$ psql -d jsonb_bench -c "<table sizes>"   # relational tables
+    table     | heap  |   toast    | indexes | total 
+--------------+-------+------------+---------+-------
+ locations    | 21 MB | 8192 bytes | 22 MB   | 43 MB
+ travel_plans | 12 MB | 8192 bytes | 2464 kB | 14 MB
+(2 rows)
+
+
+$ psql -d jsonb_bench --single-transaction -f 002_plan_documents.sql -f sql/100_migrate_to_jsonb.sql   # 39.5 s
+ plans | locations |   check    | plans_md5 
+-------+-----------+------------+-----------
+ 50003 |    150420 | rows equal | 464405b3
+(1 row)
+
+
+$ psql -d jsonb_bench -c "<table sizes>"   # after the migration (legacy_* = old tables)
+        table        | heap  |   toast    | indexes | total 
+---------------------+-------+------------+---------+-------
+ legacy_locations    | 21 MB | 8192 bytes | 22 MB   | 43 MB
+ legacy_travel_plans | 12 MB | 8192 bytes | 2464 kB | 14 MB
+ plan_documents      | 78 MB | 80 kB      | 16 MB   | 94 MB
+(3 rows)
+
+
+$ psql -d jsonb_bench -c "<average row and document size, bytes>"
+ avg_doc_bytes | doc_3_locations | plan_row_bytes | location_row_bytes 
+---------------+-----------------+----------------+--------------------
+          1466 |            1466 |            240 |                144
+(1 row)
+

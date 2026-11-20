@@ -1,0 +1,13 @@
+SERVICE          IMAGE                                                   STATUS
+grafana          grafana/grafana:12.1.1                                  Up 6 minutes (healthy)
+pg_exporter_00   quay.io/prometheuscommunity/postgres-exporter:v0.17.1   Up 6 minutes
+pg_exporter_01   quay.io/prometheuscommunity/postgres-exporter:v0.17.1   Up 6 minutes
+pg_exporter_02   quay.io/prometheuscommunity/postgres-exporter:v0.17.1   Up 6 minutes
+pg_exporter_03   quay.io/prometheuscommunity/postgres-exporter:v0.17.1   Up 6 minutes
+postgres_00      postgres:16.15-alpine                                   Up 6 minutes (healthy)
+postgres_01      postgres:16.15-alpine                                   Up 6 minutes (healthy)
+postgres_02      postgres:16.15-alpine                                   Up 6 minutes (healthy)
+postgres_03      postgres:16.15-alpine                                   Up 6 minutes (healthy)
+prometheus       prom/prometheus:v3.5.0                                  Up 6 minutes (healthy)
+web              traveler-api:lab8                                       Up 8 seconds (healthy)
+web2             traveler-api:lab8                                       Up 8 seconds (healthy)

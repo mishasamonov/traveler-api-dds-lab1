@@ -1,0 +1,215 @@
+$ k6 run -o experimental-prometheus-rw --tag testid=locations-before tests/performance-tests/locations-test.js
+
+         /\      Grafana   /‾‾/  
+    /\  /  \     |\  __   /  /   
+   /  \/    \    | |/ /  /   ‾‾\ 
+  /          \   |   (  |  (‾)  |
+ / __________ \  |_|\_\  \_____/ 
+
+
+     execution: local
+        script: tests/performance-tests/locations-test.js
+        output: Prometheus remote write (http://127.0.0.1:9090/api/v1/write)
+
+     scenarios: (100.00%) 1 scenario, 50 max VUs, 1m10s max duration (incl. graceful stop):
+              * locations: 50 looping VUs for 1m0s (gracefulStop: 10s)
+
+
+running (0m01.0s), 50/50 VUs, 183 complete and 0 interrupted iterations
+locations   [   2% ] 50 VUs  0m01.0s/1m0s
+
+running (0m02.0s), 50/50 VUs, 393 complete and 0 interrupted iterations
+locations   [   3% ] 50 VUs  0m02.0s/1m0s
+
+running (0m03.0s), 50/50 VUs, 602 complete and 0 interrupted iterations
+locations   [   5% ] 50 VUs  0m03.0s/1m0s
+
+running (0m04.0s), 50/50 VUs, 789 complete and 0 interrupted iterations
+locations   [   7% ] 50 VUs  0m04.0s/1m0s
+
+running (0m05.0s), 50/50 VUs, 1042 complete and 0 interrupted iterations
+locations   [   8% ] 50 VUs  0m05.0s/1m0s
+
+running (0m06.0s), 50/50 VUs, 1284 complete and 0 interrupted iterations
+locations   [  10% ] 50 VUs  0m06.0s/1m0s
+
+running (0m07.0s), 50/50 VUs, 1532 complete and 0 interrupted iterations
+locations   [  12% ] 50 VUs  0m07.0s/1m0s
+
+running (0m08.0s), 50/50 VUs, 1796 complete and 0 interrupted iterations
+locations   [  13% ] 50 VUs  0m08.0s/1m0s
+
+running (0m09.0s), 50/50 VUs, 2048 complete and 0 interrupted iterations
+locations   [  15% ] 50 VUs  0m09.0s/1m0s
+
+running (0m10.0s), 50/50 VUs, 2296 complete and 0 interrupted iterations
+locations   [  17% ] 50 VUs  0m10.0s/1m0s
+
+running (0m11.0s), 50/50 VUs, 2554 complete and 0 interrupted iterations
+locations   [  18% ] 50 VUs  0m11.0s/1m0s
+
+running (0m12.0s), 50/50 VUs, 2774 complete and 0 interrupted iterations
+locations   [  20% ] 50 VUs  0m12.0s/1m0s
+
+running (0m13.0s), 50/50 VUs, 2992 complete and 0 interrupted iterations
+locations   [  22% ] 50 VUs  0m13.0s/1m0s
+
+running (0m14.0s), 50/50 VUs, 3193 complete and 0 interrupted iterations
+locations   [  23% ] 50 VUs  0m14.0s/1m0s
+
+running (0m15.0s), 50/50 VUs, 3429 complete and 0 interrupted iterations
+locations   [  25% ] 50 VUs  0m15.0s/1m0s
+
+running (0m16.0s), 50/50 VUs, 3672 complete and 0 interrupted iterations
+locations   [  27% ] 50 VUs  0m16.0s/1m0s
+
+running (0m17.0s), 50/50 VUs, 3921 complete and 0 interrupted iterations
+locations   [  28% ] 50 VUs  0m17.0s/1m0s
+
+running (0m18.0s), 50/50 VUs, 4156 complete and 0 interrupted iterations
+locations   [  30% ] 50 VUs  0m18.0s/1m0s
+
+running (0m19.0s), 50/50 VUs, 4407 complete and 0 interrupted iterations
+locations   [  32% ] 50 VUs  0m19.0s/1m0s
+
+running (0m20.0s), 50/50 VUs, 4644 complete and 0 interrupted iterations
+locations   [  33% ] 50 VUs  0m20.0s/1m0s
+
+running (0m21.0s), 50/50 VUs, 4883 complete and 0 interrupted iterations
+locations   [  35% ] 50 VUs  0m21.0s/1m0s
+
+running (0m22.0s), 50/50 VUs, 5103 complete and 0 interrupted iterations
+locations   [  37% ] 50 VUs  0m22.0s/1m0s
+
+running (0m23.0s), 50/50 VUs, 5261 complete and 0 interrupted iterations
+locations   [  38% ] 50 VUs  0m23.0s/1m0s
+
+running (0m24.0s), 50/50 VUs, 5428 complete and 0 interrupted iterations
+locations   [  40% ] 50 VUs  0m24.0s/1m0s
+
+running (0m25.0s), 50/50 VUs, 5652 complete and 0 interrupted iterations
+locations   [  42% ] 50 VUs  0m25.0s/1m0s
+
+running (0m26.0s), 50/50 VUs, 5838 complete and 0 interrupted iterations
+locations   [  43% ] 50 VUs  0m26.0s/1m0s
+
+running (0m27.0s), 50/50 VUs, 6058 complete and 0 interrupted iterations
+locations   [  45% ] 50 VUs  0m27.0s/1m0s
+
+running (0m28.0s), 50/50 VUs, 6291 complete and 0 interrupted iterations
+locations   [  47% ] 50 VUs  0m28.0s/1m0s
+
+running (0m29.0s), 50/50 VUs, 6446 complete and 0 interrupted iterations
+locations   [  48% ] 50 VUs  0m29.0s/1m0s
+
+running (0m30.0s), 50/50 VUs, 6690 complete and 0 interrupted iterations
+locations   [  50% ] 50 VUs  0m30.0s/1m0s
+
+running (0m31.0s), 50/50 VUs, 6904 complete and 0 interrupted iterations
+locations   [  52% ] 50 VUs  0m31.0s/1m0s
+
+running (0m32.0s), 50/50 VUs, 7124 complete and 0 interrupted iterations
+locations   [  53% ] 50 VUs  0m32.0s/1m0s
+
+running (0m33.0s), 50/50 VUs, 7329 complete and 0 interrupted iterations
+locations   [  55% ] 50 VUs  0m33.0s/1m0s
+
+running (0m34.0s), 50/50 VUs, 7509 complete and 0 interrupted iterations
+locations   [  57% ] 50 VUs  0m34.0s/1m0s
+
+running (0m35.0s), 50/50 VUs, 7733 complete and 0 interrupted iterations
+locations   [  58% ] 50 VUs  0m35.0s/1m0s
+
+running (0m36.0s), 50/50 VUs, 7978 complete and 0 interrupted iterations
+locations   [  60% ] 50 VUs  0m36.0s/1m0s
+
+running (0m37.0s), 50/50 VUs, 8205 complete and 0 interrupted iterations
+locations   [  62% ] 50 VUs  0m37.0s/1m0s
+
+running (0m38.0s), 50/50 VUs, 8440 complete and 0 interrupted iterations
+locations   [  63% ] 50 VUs  0m38.0s/1m0s
+
+running (0m39.0s), 50/50 VUs, 8681 complete and 0 interrupted iterations
+locations   [  65% ] 50 VUs  0m39.0s/1m0s
+
+running (0m40.0s), 50/50 VUs, 8919 complete and 0 interrupted iterations
+locations   [  67% ] 50 VUs  0m40.0s/1m0s
+
+running (0m41.0s), 50/50 VUs, 9164 complete and 0 interrupted iterations
+locations   [  68% ] 50 VUs  0m41.0s/1m0s
+
+running (0m42.0s), 50/50 VUs, 9377 complete and 0 interrupted iterations
+locations   [  70% ] 50 VUs  0m42.0s/1m0s
+
+running (0m43.0s), 50/50 VUs, 9582 complete and 0 interrupted iterations
+locations   [  72% ] 50 VUs  0m43.0s/1m0s
+
+running (0m44.0s), 50/50 VUs, 9758 complete and 0 interrupted iterations
+locations   [  73% ] 50 VUs  0m44.0s/1m0s
+
+running (0m45.0s), 50/50 VUs, 10008 complete and 0 interrupted iterations
+locations   [  75% ] 50 VUs  0m45.0s/1m0s
+
+running (0m46.0s), 50/50 VUs, 10233 complete and 0 interrupted iterations
+locations   [  77% ] 50 VUs  0m46.0s/1m0s
+
+running (0m47.0s), 50/50 VUs, 10476 complete and 0 interrupted iterations
+locations   [  78% ] 50 VUs  0m47.0s/1m0s
+
+running (0m48.0s), 50/50 VUs, 10697 complete and 0 interrupted iterations
+locations   [  80% ] 50 VUs  0m48.0s/1m0s
+
+running (0m49.0s), 50/50 VUs, 10920 complete and 0 interrupted iterations
+locations   [  82% ] 50 VUs  0m49.0s/1m0s
+
+running (0m50.0s), 50/50 VUs, 11162 complete and 0 interrupted iterations
+locations   [  83% ] 50 VUs  0m50.0s/1m0s
+
+running (0m51.0s), 50/50 VUs, 11371 complete and 0 interrupted iterations
+locations   [  85% ] 50 VUs  0m51.0s/1m0s
+
+running (0m52.0s), 50/50 VUs, 11594 complete and 0 interrupted iterations
+locations   [  87% ] 50 VUs  0m52.0s/1m0s
+
+running (0m53.0s), 50/50 VUs, 11801 complete and 0 interrupted iterations
+locations   [  88% ] 50 VUs  0m53.0s/1m0s
+
+running (0m54.0s), 50/50 VUs, 11980 complete and 0 interrupted iterations
+locations   [  90% ] 50 VUs  0m54.0s/1m0s
+
+running (0m55.0s), 50/50 VUs, 12191 complete and 0 interrupted iterations
+locations   [  92% ] 50 VUs  0m55.0s/1m0s
+
+running (0m56.0s), 50/50 VUs, 12413 complete and 0 interrupted iterations
+locations   [  93% ] 50 VUs  0m56.0s/1m0s
+
+running (0m57.0s), 50/50 VUs, 12652 complete and 0 interrupted iterations
+locations   [  95% ] 50 VUs  0m57.0s/1m0s
+
+running (0m58.0s), 50/50 VUs, 12903 complete and 0 interrupted iterations
+locations   [  97% ] 50 VUs  0m58.0s/1m0s
+
+running (0m59.0s), 50/50 VUs, 13129 complete and 0 interrupted iterations
+locations   [  98% ] 50 VUs  0m59.0s/1m0s
+
+running (1m00.0s), 50/50 VUs, 13371 complete and 0 interrupted iterations
+locations   [ 100% ] 50 VUs  1m00.0s/1m0s
+k6 LOCATIONS TEST
+API: http://127.0.0.1:4567
+
+http_reqs: {"count":53700,"rate":893.2055767923914}
+iterations: {"count":13425,"rate":223.30139419809785}
+checks: {"rate":1,"passes":53700,"fails":0}
+http_req_failed: {"rate":0,"passes":0,"fails":53700}
+http_req_duration: {"avg":43.17311904841691,"med":39.9468,"p(90)":69.94037999999999,"p(95)":82.74768999999993,"p(99)":111.29940200000006,"max":302.5718}
+
+THRESHOLDS
+PASS http_req_failed: rate<0.01
+PASS http_req_duration{name:GET plan}: max>=0
+PASS checks: rate>0.99
+PASS http_req_duration{name:POST location}: max>=0
+PASS http_req_duration{name:PUT location}: max>=0
+PASS http_req_duration{name:DELETE location}: max>=0
+
+running (1m00.1s), 00/50 VUs, 13425 complete and 0 interrupted iterations
+locations ✓ [ 100% ] 50 VUs  1m0s

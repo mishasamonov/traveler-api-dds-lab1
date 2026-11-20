@@ -1,0 +1,7 @@
+$ docker logs traveler_lab8-postgres_03-1 | grep -E "ERROR|CONTEXT"   # subscriber of db_3, first attempts
+2026-11-20 16:47:25.567 UTC [5132] ERROR:  could not start initial contents copy for table "public.storage_migrations": ERROR:  permission denied for table storage_migrations
+2026-11-20 16:47:25.671 UTC [5133] ERROR:  function location_document_valid(jsonb, uuid) does not exist at character 5
+2026-11-20 16:47:25.671 UTC [5133] CONTEXT:  PL/pgSQL function public.plan_document_valid(jsonb,uuid) line 25 at IF
+2026-11-20 16:47:27.179 UTC [5151] ERROR:  function location_document_valid(jsonb, uuid) does not exist at character 5
+2026-11-20 16:47:27.179 UTC [5151] CONTEXT:  PL/pgSQL function public.plan_document_valid(jsonb,uuid) line 25 at IF
+2026-11-20 16:47:27.213 UTC [5150] ERROR:  could not start initial contents copy for table "public.storage_migrations": ERROR:  permission denied for table storage_migrations

@@ -1,0 +1,9 @@
+17:24:18.766  dry run of 002 + 100 on 16 shards, the relational API (traveler-api:lab7) keeps serving
+17:24:21.984  dry run exit 0
+17:24:23.984  maintenance window: stop web, web2 (traveler-api:lab7)
+17:24:25.146  API stopped; shard-exec 002 + 100 with two-phase commit
+17:24:28.548  shard-exec exit 0 after 3.4 s (including the tools container start)
+17:24:28.549  start web, web2 with traveler-api:lab8 (JSONB)
+17:24:36.642  web, web2 healthy
+17:24:38.652  http://127.0.0.1:4567/health: unavailable 7.13 s (relational -> jsonb)
+17:24:38.652  http://127.0.0.1:4568/health: unavailable 6.93 s (relational -> jsonb)
