@@ -1,18 +1,21 @@
-# TravelerAPI laboratory 7
+# TravelerAPI laboratory 8
 
-Monitoring of the sharded TravelerAPI with Prometheus and Grafana: prom-client metrics in
-the API, one postgres_exporter per PostgreSQL service, alerting rules and two provisioned
-Grafana dashboards.
+Migration of the sharded TravelerAPI from relational tables to JSONB documents in
+PostgreSQL: one row per travel plan with its locations embedded, the same REST API,
+an atomic migration of all 16 shards (two-phase commit), a verified way back and the
+laboratory 6-7 infrastructure (rebalancing, Prometheus, Grafana) working on the new
+layout.
 
-See [README-LAB7.md](README-LAB7.md). Previous laboratory: sharding
-([README-LAB6.md](README-LAB6.md)).
+See [README-LAB8.md](README-LAB8.md). Previous laboratories: monitoring
+([README-LAB7.md](README-LAB7.md)), sharding ([README-LAB6.md](README-LAB6.md)).
 
 ```powershell
 python scripts/lab7/bootstrap-env.py
-python scripts/lab7/lab7.py up
-python scripts/lab7/lab7.py seed
+python scripts/lab8/lab8.py up
+python scripts/lab8/lab8.py seed
+python scripts/lab8/lab8.py migrate
 ```
 
-Grafana: http://127.0.0.1:3000, Prometheus: http://127.0.0.1:9090.
-Measured results and screenshots are in `evidence/lab7/`.
+Grafana: http://127.0.0.1:3001, Prometheus: http://127.0.0.1:9090.
+Measured results and screenshots are in `evidence/lab8/`.
 Secrets are excluded from Git and archives.

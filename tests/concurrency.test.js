@@ -1,7 +1,7 @@
 const { test } = require('node:test');
 const assert = require('node:assert/strict');
 
-const base = 'http://127.0.0.1:4567';
+const base = process.env.API_URL || 'http://127.0.0.1:4567';
 async function request(method, path, body) {
   const response = await fetch(`${base}${path}`, {
     method,

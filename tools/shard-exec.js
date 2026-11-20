@@ -1,6 +1,9 @@
 #!/usr/bin/env node
 // Apply one DDL/DML script to all 16 shard databases atomically.
-//   node tools/shard-exec.js <file.sql> [--dry-run] [--mapping file]
+//   node tools/shard-exec.js <file.sql> [<file2.sql> ...] [--dry-run] [--mapping file]
+// Several files are executed one after another in the same transaction
+// (laboratory 8: schema 002 + data migration 100 in one atomic step).
+// The first row of the last statement (if it returns rows) is shown per shard.
 //   node tools/shard-exec.js --recover <gid-prefix> commit|rollback
 // Phase 1: BEGIN + whole file on every shard (in parallel).
 // Phase 2: only if all 16 succeeded -> PREPARE TRANSACTION on every shard.
@@ -11,13 +14,13 @@ const crypto = require('node:crypto');
 const { SHARDS, readMapping, connect, ms, now, log, table } = require('./common');
 
 function parse(argv) {
-  const args = { dryRun: false, mapping: undefined };
+  const args = { dryRun: false, mapping: undefined, files: [] };
   for (let i = 0; i < argv.length; i++) {
     if (argv[i] === '--dry-run') args.dryRun = true;
     else if (argv[i] === '--show-prepared') args.showPrepared = true;
     else if (argv[i] === '--mapping') args.mapping = argv[++i];
     else if (argv[i] === '--recover') { args.recover = argv[++i]; args.decision = argv[++i]; }
-    else args.file = argv[i];
+    else args.files.push(argv[i]);
   }
   return args;
 }
@@ -51,9 +54,10 @@ async function main() {
   const args = parse(process.argv.slice(2));
   const mapping = readMapping(args.mapping);
   if (args.recover) return recover(args.recover, args.decision, mapping);
-  if (!args.file) throw new Error('Usage: shard-exec.js <file.sql> [--dry-run]');
-  const sql = fs.readFileSync(args.file, 'utf8');
+  if (!args.files.length) throw new Error('Usage: shard-exec.js <file.sql> [<file2.sql> ...] [--dry-run]');
+  const sql = args.files.map(f => fs.readFileSync(f, 'utf8')).join('\n');
   check(sql);
+  args.file = args.files.join(' + ');
   const run = `shard_exec_${new Date().toISOString().replace(/\D/g, '').slice(0, 14)}_${crypto.randomBytes(3).toString('hex')}`;
   log(`run ${run}: ${args.file} (${Buffer.byteLength(sql)} bytes) on 16 shards, mapping v${mapping.version}${args.dryRun ? ', DRY RUN' : ''}`);
 
@@ -68,7 +72,9 @@ async function main() {
       await t.client.query('BEGIN');
       const result = await t.client.query(sql);
       const results = Array.isArray(result) ? result : [result];
-      t.rows = results.map(r => r.rowCount ?? '-').join(',');
+      t.rows = results.map(r => r.rowCount ?? '-').filter(r => r !== '-').join(',');
+      const last = results[results.length - 1];
+      if (last && last.rows && last.rows.length) t.result = Object.entries(last.rows[0]).map(([k, v]) => `${k}=${v}`).join(' ');
       t.status = 'executed';
     } catch (error) {
       t.status = 'FAILED';
@@ -117,8 +123,11 @@ async function main() {
     }
   }
   await Promise.all(shards.map(t => t.client && t.client.end().catch(() => {})));
-  console.log(table(shards.map(t => ({ shard: t.shard, server: t.host, database: t.database, status: t.status, rows: t.rows, ms: t.ms, error: t.error })),
-    ['shard', 'server', 'database', 'status', 'rows', 'ms', 'error']));
+  const columns = ['shard', 'server', 'database', 'status', 'ms'];
+  if (shards.some(t => t.result)) columns.push('result'); else columns.push('rows');
+  if (shards.some(t => t.error)) columns.push('error');
+  console.log(table(shards.map(t => ({ shard: t.shard, server: t.host, database: t.database, status: t.status, rows: t.rows, ms: t.ms, result: t.result, error: t.error })),
+    columns));
   log(`${outcome}; total ${ms(started)} ms`);
   process.exitCode = outcome.startsWith('COMMIT') || outcome.startsWith('DRY') ? 0 : 1;
 }

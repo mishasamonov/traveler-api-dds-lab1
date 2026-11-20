@@ -1,0 +1,27 @@
+# Laboratory 8: migration of TravelerAPI to JSONB documents.
+# Overlay for the stack of laboratories 6-7 (python scripts/lab8/lab8.py does it all):
+#   docker compose -f docker-compose.lab6.yml -f docker-compose.monitoring.yml -f docker-compose.lab8.yml up -d --no-build
+#
+# API_IMAGE selects the API version:
+#   traveler-api:lab7  - relational tables (the state before the migration)
+#   traveler-api:lab8  - plan_documents (JSONB), the default
+# The images are built by lab8.py; --no-build keeps compose from re-tagging them.
+#
+# pg_stat_statements counts the SQL statements of the API (calls, time, WAL)
+# before and after the migration.
+x-pg-command: &pg-command [postgres, -c, 'listen_addresses=*', -c, 'wal_level=logical',
+  -c, 'max_connections=300', -c, 'max_prepared_transactions=64',
+  -c, 'max_replication_slots=20', -c, 'max_wal_senders=20',
+  -c, 'max_logical_replication_workers=8', -c, 'max_worker_processes=16',
+  -c, 'password_encryption=scram-sha-256', -c, 'max_slot_wal_keep_size=1GB',
+  -c, 'shared_preload_libraries=pg_stat_statements', -c, 'pg_stat_statements.max=2000']
+
+services:
+  postgres_00: {command: *pg-command}
+  postgres_01: {command: *pg-command}
+  postgres_02: {command: *pg-command}
+  postgres_03: {command: *pg-command}
+  web: {image: '${API_IMAGE:-traveler-api:lab8}'}
+  web2: {image: '${API_IMAGE:-traveler-api:lab8}'}
+  # The CLI tools (shard-exec, rebalance) always come from the laboratory 8 image.
+  tools: {image: 'traveler-api:lab8'}

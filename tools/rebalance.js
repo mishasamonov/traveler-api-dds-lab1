@@ -23,11 +23,33 @@ const step = async (name, fn) => {
   return result;
 };
 
-const FINGERPRINT = `SELECT
-  (SELECT count(*) FROM travel_plans)::int AS plans,
-  (SELECT count(*) FROM locations)::int AS locations,
-  (SELECT md5(coalesce(string_agg(row_to_json(t)::text, E'\\n' ORDER BY id), '')) FROM travel_plans t) AS plans_md5,
-  (SELECT md5(coalesce(string_agg(row_to_json(t)::text, E'\\n' ORDER BY id), '')) FROM locations t) AS locations_md5`;
+// Two storage layouts. Laboratory 8 moved the data into one JSONB table, so a
+// moving shard has one data table to copy and lock instead of two, and no
+// deferred UNIQUE constraint that the row-by-row apply could not handle.
+const LAYOUTS = {
+  relational: {
+    tables: ['travel_plans', 'locations'],
+    schema: ['db/migrations/001_schema.sql'],
+    fingerprint: `SELECT
+      (SELECT count(*) FROM travel_plans)::int AS plans,
+      (SELECT count(*) FROM locations)::int AS locations,
+      (SELECT md5(coalesce(string_agg(row_to_json(t)::text, E'\\n' ORDER BY id), '')) FROM travel_plans t) AS plans_md5,
+      (SELECT md5(coalesce(string_agg(row_to_json(t)::text, E'\\n' ORDER BY id), '')) FROM locations t) AS locations_md5`,
+  },
+  jsonb: {
+    tables: ['plan_documents', 'storage_migrations'],
+    schema: ['db/migrations/002_plan_documents.sql'],
+    fingerprint: `SELECT
+      (SELECT count(*) FROM plan_documents)::int AS plans,
+      (SELECT coalesce(sum(jsonb_array_length(doc->'locations')), 0) FROM plan_documents)::int AS locations,
+      (SELECT md5(coalesce(string_agg(row_to_json(t)::text, E'\\n' ORDER BY id), '')) FROM plan_documents t) AS documents_md5,
+      (SELECT count(*) FROM storage_migrations)::int AS audit_rows`,
+  },
+};
+async function layoutOf(client) {
+  const { rows } = await client.query("SELECT to_regclass('public.plan_documents') IS NOT NULL AS jsonb");
+  return rows[0].jsonb ? 'jsonb' : 'relational';
+}
 
 async function registryVersion(host) {
   const c = await connect(host, 'shard_registry');
@@ -48,28 +70,29 @@ async function move(database, target, options) {
   const srcAdmin = await connect(source, 'postgres');
   const tgtAdmin = await connect(target, 'postgres');
   let src = await connect(source, database, { application_name: 'rebalance' });
-  let tgt, lock, switched = false;
+  let tgt, lock, switched = false, layout, L;
   try {
     await step('0. pre-checks', async () => {
       const exists = await tgtAdmin.query('SELECT 1 FROM pg_database WHERE datname = $1', [database]);
       if (exists.rowCount) throw new Error(`${database} already exists on ${target}`);
-      const before = (await src.query(FINGERPRINT)).rows[0];
-      log(`   source ${source}/${database}: ${before.plans} plans, ${before.locations} locations`);
+      layout = await layoutOf(src); L = LAYOUTS[layout];
+      const before = (await src.query(L.fingerprint)).rows[0];
+      log(`   source ${source}/${database}: layout ${layout} (${L.tables.join(', ')}), ${before.plans} plans, ${before.locations} locations`);
     });
 
     await step('1. create target database and logical replication', async () => {
       await tgtAdmin.query(`CREATE DATABASE ${database}`);
       await tgtAdmin.query(`REVOKE ALL ON DATABASE ${database} FROM PUBLIC`);
       tgt = await connect(target, database, { application_name: 'rebalance' });
-      await tgt.query(fs.readFileSync('db/migrations/001_schema.sql', 'utf8'));
-      // Row-by-row apply cannot defer the unique order constraint the way the
-      // API transaction does (SET CONSTRAINTS ... DEFERRED), so it is restored
-      // after the final sync, inside the lock window.
-      await tgt.query('ALTER TABLE locations DROP CONSTRAINT unique_plan_order');
+      for (const file of L.schema) await tgt.query(fs.readFileSync(file, 'utf8'));
+      // Relational layout: row-by-row apply cannot defer the unique order
+      // constraint the way the API transaction does (SET CONSTRAINTS ... DEFERRED),
+      // so it is restored after the final sync, inside the lock window.
+      if (layout === 'relational') await tgt.query('ALTER TABLE locations DROP CONSTRAINT unique_plan_order');
       await tgt.query(`REVOKE CREATE ON SCHEMA public FROM PUBLIC; GRANT USAGE ON SCHEMA public TO ${APP}, ${REPL};
         GRANT SELECT ON ALL TABLES IN SCHEMA public TO ${REPL}`);
       await src.query(`DROP PUBLICATION IF EXISTS ${pub}`);
-      await src.query(`CREATE PUBLICATION ${pub} FOR TABLE travel_plans, locations`);
+      await src.query(`CREATE PUBLICATION ${pub} FOR TABLE ${L.tables.join(', ')}`);
       const conn = `host=${source} port=5432 dbname=${database} user=${REPL} password=${process.env.REPL_PASSWORD} application_name=${sub}`;
       await tgt.query(`CREATE SUBSCRIPTION ${sub} CONNECTION '${conn}' PUBLICATION ${pub} WITH (copy_data = true, slot_name = '${sub}')`);
       log(`   publication ${pub} on ${source}, subscription ${sub} on ${target}`);
@@ -79,15 +102,15 @@ async function move(database, target, options) {
       for (let i = 0; ; i++) {
         const { rows } = await tgt.query(`SELECT count(*)::int AS tables, count(*) FILTER (WHERE srsubstate = 'r')::int AS ready
           FROM pg_subscription_rel r JOIN pg_subscription s ON s.oid = r.srsubid WHERE s.subname = $1`, [sub]);
-        if (rows[0].tables === 2 && rows[0].ready === 2) break;
-        if (i % 4 === 0) log(`   tables ready ${rows[0].ready}/2`);
+        if (rows[0].tables === L.tables.length && rows[0].ready === L.tables.length) break;
+        if (i % 4 === 0) log(`   tables ready ${rows[0].ready}/${L.tables.length}`);
         if (i > 600) throw new Error('Initial synchronization timeout');
         await sleep(250);
       }
       const lag = await srcAdmin.query(`SELECT pg_wal_lsn_diff(pg_current_wal_lsn(), confirmed_flush_lsn)::bigint AS lag
         FROM pg_replication_slots WHERE slot_name = $1`, [sub]);
-      const copy = (await tgt.query('SELECT (SELECT count(*) FROM travel_plans)::int AS plans, (SELECT count(*) FROM locations)::int AS locations')).rows[0];
-      log(`   srsubstate=r for both tables; target has ${copy.plans} plans, ${copy.locations} locations; slot lag ${lag.rows[0]?.lag} bytes`);
+      const copy = (await tgt.query(L.fingerprint)).rows[0];
+      log(`   srsubstate=r for ${L.tables.join(', ')}; target has ${copy.plans} plans, ${copy.locations} locations; slot lag ${lag.rows[0]?.lag} bytes`);
     });
 
     let lockStart, lockedAt;
@@ -101,7 +124,7 @@ async function move(database, target, options) {
         await lock.query('BEGIN');
         lockStart = now();
         try {
-          await lock.query('LOCK TABLE travel_plans, locations IN ACCESS EXCLUSIVE MODE');
+          await lock.query(`LOCK TABLE ${L.tables.join(', ')} IN ACCESS EXCLUSIVE MODE`);
           break;
         } catch (error) {
           await lock.query('ROLLBACK');
@@ -120,8 +143,8 @@ async function move(database, target, options) {
         if (i > 400) throw new Error('Subscriber did not reach the lock LSN');
         await sleep(25);
       }
-      const a = (await lock.query(FINGERPRINT)).rows[0];
-      const b = (await tgt.query(FINGERPRINT)).rows[0];
+      const a = (await lock.query(L.fingerprint)).rows[0];
+      const b = (await tgt.query(L.fingerprint)).rows[0];
       log(`   source ${JSON.stringify(a)}`);
       log(`   target ${JSON.stringify(b)}`);
       if (JSON.stringify(a) !== JSON.stringify(b)) throw new Error('Source and target differ under the lock; aborting');
@@ -137,7 +160,7 @@ async function move(database, target, options) {
         if (!r.rows[0].active) { await srcAdmin.query('SELECT pg_drop_replication_slot($1)', [sub]); break; }
         await sleep(25);
       }
-      await tgt.query(`ALTER TABLE locations ADD CONSTRAINT unique_plan_order UNIQUE (travel_plan_id, visit_order) DEFERRABLE INITIALLY IMMEDIATE`);
+      if (layout === 'relational') await tgt.query(`ALTER TABLE locations ADD CONSTRAINT unique_plan_order UNIQUE (travel_plan_id, visit_order) DEFERRABLE INITIALLY IMMEDIATE`);
       await tgt.query(`GRANT CONNECT ON DATABASE ${database} TO ${APP}, ${REPL};
         GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO ${APP}`);
       await tgt.query(`COMMENT ON DATABASE ${database} IS 'TravelerAPI shard ${shard}, moved from ${source}'`);
@@ -172,7 +195,7 @@ async function move(database, target, options) {
 
     let lockMs;
     await step('6. revoke API privileges on the old database and release the lock', async () => {
-      await lock.query(`REVOKE ALL ON travel_plans, locations FROM ${APP}`);
+      await lock.query(`REVOKE ALL ON ${L.tables.join(', ')} FROM ${APP}`);
       await lock.query(`REVOKE CONNECT ON DATABASE ${database} FROM ${APP}, PUBLIC`);
       await lock.query(`COMMENT ON DATABASE ${database} IS 'MOVED to ${target} (mapping v${version})'`);
       await lock.query(`DROP PUBLICATION ${pub}`);

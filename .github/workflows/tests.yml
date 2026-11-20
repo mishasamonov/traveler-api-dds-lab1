@@ -37,6 +37,7 @@ jobs:
       - name: Install Hurl runtime dependency
         run: sudo apt-get update && sudo apt-get install -y libxml2
       - run: npm ci
-      - run: node scripts/lab6/ci-init.js
+      # Laboratory 8: relational schema + dataset, migration to JSONB (with its row check), contract.
+      - run: node scripts/lab8/ci-init.js
       - run: bash scripts/run-ci-tests.sh
 
