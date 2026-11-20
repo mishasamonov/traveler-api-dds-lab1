@@ -24,6 +24,10 @@ Files:
   verification (the documents read back as rows must equal the old rows), privileges,
   old tables renamed to `legacy_*`.
 * [`sql/110_drop_legacy.sql`](sql/110_drop_legacy.sql) - contract step.
+* [`sql/120_plpgsql_document_check.sql`](sql/120_plpgsql_document_check.sql) - schema change
+  after the migration, applied with 002 while the API runs: the CHECK functions became
+  PL/pgSQL (the first SQL-language version was planned again for every UPDATE and took
+  1.3 ms of a 1.5 ms update), every stored document is checked with the new version.
 * [`sql/190_rollback_to_relational.sql`](sql/190_rollback_to_relational.sql) - the way
   back (with `001_schema.sql`), compares the fingerprint with the one saved before the
   migration.
@@ -42,6 +46,8 @@ python scripts/lab8/lab8.py migrate         # stop API, 002 + 100 on 16 shards (
 python scripts/lab8/lab8.py dump --tag after # the same md5 of 2 010 API responses
 python scripts/lab8/lab8.py rollback-check  # dry run of the way back: same fingerprint on every shard
 python scripts/lab8/lab8.py hurl --tag hurl-after
+python scripts/lab8/lab8.py check-cost --tag sql   # cost of the CHECK of one UPDATE
+docker compose -f docker-compose.lab6.yml -f docker-compose.monitoring.yml -f docker-compose.lab8.yml --profile tools run --rm tools tools/shard-exec.js /app/db/migrations/002_plan_documents.sql /sql/120_plpgsql_document_check.sql
 python scripts/lab8/lab8.py bench --tag after
 python scripts/lab8/lab8.py explain         # jsonb_bench: sizes, EXPLAIN, WAL per update
 python scripts/lab8/lab8.py contract        # drop legacy tables

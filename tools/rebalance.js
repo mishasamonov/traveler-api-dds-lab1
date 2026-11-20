@@ -92,6 +92,9 @@ async function move(database, target, options) {
       await tgt.query(`REVOKE CREATE ON SCHEMA public FROM PUBLIC; GRANT USAGE ON SCHEMA public TO ${APP}, ${REPL};
         GRANT SELECT ON ALL TABLES IN SCHEMA public TO ${REPL}`);
       await src.query(`DROP PUBLICATION IF EXISTS ${pub}`);
+      // The initial copy reads the tables as the replication role. Tables created
+      // after the database (laboratory 8: storage_migrations) had no grant for it.
+      await src.query(`GRANT SELECT ON ${L.tables.join(', ')} TO ${REPL}`);
       await src.query(`CREATE PUBLICATION ${pub} FOR TABLE ${L.tables.join(', ')}`);
       const conn = `host=${source} port=5432 dbname=${database} user=${REPL} password=${process.env.REPL_PASSWORD} application_name=${sub}`;
       await tgt.query(`CREATE SUBSCRIPTION ${sub} CONNECTION '${conn}' PUBLICATION ${pub} WITH (copy_data = true, slot_name = '${sub}')`);

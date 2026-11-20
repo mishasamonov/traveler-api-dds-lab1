@@ -6,14 +6,23 @@
 --
 -- Applied by tools/shard-exec.js together with sql/100_migrate_to_jsonb.sql,
 -- by tools/rebalance.js on a new target and by the CI initialisation.
+-- Every statement is idempotent: applying the file again updates the schema
+-- (sql/120_plpgsql_document_check.sql).
 
 -- "Schemaless" does not mean "no schema": the rules of the relational schema
 -- (laboratory 2) are kept as one CHECK. Only immutable operations are used:
 -- jsonb operators, regular expressions and numeric casts.
+--
+-- PL/pgSQL, not LANGUAGE sql: a SQL function with subqueries cannot be inlined,
+-- so PostgreSQL planned its body again for every UPDATE (1.3 ms of a 1.5 ms
+-- update, scripts/lab8/lab8.py check-cost). PL/pgSQL keeps the plans of its
+-- statements for the whole session. sql/120_plpgsql_document_check.sql
+-- applies this version to the migrated shards.
 CREATE OR REPLACE FUNCTION location_document_valid(l jsonb, plan_id uuid) RETURNS boolean
-LANGUAGE sql IMMUTABLE PARALLEL SAFE AS $$
+LANGUAGE plpgsql IMMUTABLE PARALLEL SAFE AS $$
+BEGIN
   -- coalesce: a missing key gives NULL, and a CHECK would let NULL through
-  SELECT coalesce(jsonb_typeof(l) = 'object'
+  RETURN coalesce(jsonb_typeof(l) = 'object'
     -- only known keys
     AND l - ARRAY['id', 'name', 'address', 'latitude', 'longitude', 'visit_order', 'arrival_date',
                   'departure_date', 'budget', 'notes', 'version', 'created_at'] = '{}'::jsonb
@@ -34,12 +43,17 @@ LANGUAGE sql IMMUTABLE PARALLEL SAFE AS $$
     AND jsonb_typeof(l->'version') = 'number' AND (l->>'version') ~ '^[1-9][0-9]{0,8}$'
     AND jsonb_typeof(l->'arrival_date') IN ('string', 'null')
     AND jsonb_typeof(l->'departure_date') IN ('string', 'null')
-    AND jsonb_typeof(l->'created_at') = 'string', false)
-$$;
+    AND jsonb_typeof(l->'created_at') = 'string', false);
+END $$;
 
 CREATE OR REPLACE FUNCTION plan_document_valid(doc jsonb, plan_id uuid) RETURNS boolean
-LANGUAGE sql IMMUTABLE PARALLEL SAFE AS $$
-  SELECT coalesce(jsonb_typeof(doc) = 'object'
+LANGUAGE plpgsql IMMUTABLE PARALLEL SAFE AS $$
+DECLARE
+  l jsonb;
+  seen_orders jsonb := '{}';  -- the former UNIQUE (travel_plan_id, visit_order)
+  seen_ids jsonb := '{}';     -- the former primary key of locations
+BEGIN
+  IF NOT coalesce(jsonb_typeof(doc) = 'object'
     AND doc - ARRAY['title', 'description', 'start_date', 'end_date', 'budget', 'currency', 'is_public', 'locations'] = '{}'::jsonb
     AND jsonb_typeof(doc->'title') = 'string' AND length(btrim(doc->>'title')) > 0 AND length(doc->>'title') <= 200
     AND jsonb_typeof(doc->'description') IN ('string', 'null')
@@ -53,13 +67,21 @@ LANGUAGE sql IMMUTABLE PARALLEL SAFE AS $$
              AND scale((doc->>'budget')::numeric) <= 2))
     AND jsonb_typeof(doc->'currency') = 'string' AND doc->>'currency' ~ '^[A-Z]{3}$'
     AND jsonb_typeof(doc->'is_public') = 'boolean'
-    AND jsonb_typeof(doc->'locations') = 'array'
-    AND NOT EXISTS (SELECT 1 FROM jsonb_array_elements(doc->'locations') l
-                    WHERE NOT location_document_valid(l, plan_id))
-    -- the former UNIQUE (travel_plan_id, visit_order) and primary key of locations
-    AND (SELECT count(*) = count(DISTINCT l->'visit_order') AND count(*) = count(DISTINCT l->>'id')
-         FROM jsonb_array_elements(doc->'locations') l), false)
-$$;
+    AND jsonb_typeof(doc->'locations') = 'array', false) THEN
+    RETURN false;
+  END IF;
+  FOR l IN SELECT jsonb_array_elements(doc->'locations') LOOP
+    -- Schema-qualified: logical replication workers (tools/rebalance.js) and
+    -- pg_restore run with an empty search_path, and the CHECK runs there too.
+    IF NOT public.location_document_valid(l, plan_id)
+       OR seen_orders ? (l->>'visit_order') OR seen_ids ? (l->>'id') THEN
+      RETURN false;
+    END IF;
+    seen_orders := seen_orders || jsonb_build_object(l->>'visit_order', true);
+    seen_ids := seen_ids || jsonb_build_object(l->>'id', true);
+  END LOOP;
+  RETURN true;
+END $$;
 
 CREATE TABLE IF NOT EXISTS plan_documents (
   id UUID PRIMARY KEY,
